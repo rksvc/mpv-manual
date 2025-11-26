@@ -64,24 +64,7 @@ def split_by_heading(lines: Iterator[str]):
 
 
 def to_filename(title: str):
-	title = '-'.join(
-		map(
-			lambda s: {
-				'MACOS': 'macOS',
-				'JAVASCRIPT': 'JavaScript',
-				'JSON': 'JSON',
-				'GUI': 'GUI',
-				'IPC': 'IPC',
-				'(LIBMPV)': '(libmpv)',
-				'ON': 'on',
-				'INTO': 'into',
-			}.get(s, s.title())
-			if s.isupper()
-			else s,
-			title.split(),
-		)
-	)
-	return f'{title[0].upper()}{title[1:]}'
+	return '-'.join(re.findall(r'[\w\.]+', title)).lower()
 
 
 parser = argparse.ArgumentParser()
@@ -109,7 +92,7 @@ with open(input) as file:
 				*cur_parent_headings[: cur_heading_line.heading_level - 1],
 				cur_heading_line.heading_title,
 			]
-			hash = '-'.join(re.findall(r'[\w\.]+', cur_heading_line.heading_title)).lower()
+			hash = to_filename(cur_heading_line.heading_title)
 			hash_to_headings[hash] = cur_parent_headings
 			cur_heading_line = line
 
@@ -136,5 +119,25 @@ with open(input) as file:
 		assert not chapter.parent_headings[SKIP_LEVEL:]
 		filename = to_filename(chapter.heading.heading_title)
 		with open((output / filename).with_suffix('.md'), 'w') as file:
+			file.write('---\n')
+			title = ' '.join(
+				map(
+					lambda w: {
+						'MACOS': 'macOS',
+						'JAVASCRIPT': 'JavaScript',
+						'JSON': 'JSON',
+						'GUI': 'GUI',
+						'IPC': 'IPC',
+						'(LIBMPV)': '(libmpv)',
+						'ON': 'on',
+						'INTO': 'into',
+					}.get(w, w.title())
+					if w.isupper()
+					else w,
+					chapter.heading.heading_title.split(),
+				)
+			)
+			file.write(f'title: {title[0].upper()}{title[1:]}\n')
+			file.write('---\n\n')
 			for line in chapter.lines[2:]:  # skip heading
 				file.write(re.sub(r'\(#(.+?)\)', transform_link, line))
