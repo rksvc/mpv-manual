@@ -1,0 +1,10 @@
+.title-ref {
+	font-style: italic;
+}
+
+th:empty {
+	display: none;
+}
+table:has(th:empty) {
+	border-top: 0 !important;
+}
