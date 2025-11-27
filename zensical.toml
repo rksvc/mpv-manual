@@ -15,7 +15,6 @@ features = [
     "content.code.copy",
     "content.footnote.tooltips",
     "navigation.indexes",
-    "navigation.path",
     "navigation.top",
     "navigation.tracking",
     "search.highlight",
