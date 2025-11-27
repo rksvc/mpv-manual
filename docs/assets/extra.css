@@ -8,3 +8,11 @@ th:empty {
 table:has(th:empty) {
 	border-top: 0 !important;
 }
+
+.filter {
+	width: 100%;
+	height: 1.6rem;
+	padding: 0.5rem;
+	border-radius: 0.4rem;
+	background-color: var(--md-default-fg-color--lightest);
+}
