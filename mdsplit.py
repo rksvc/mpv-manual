@@ -147,9 +147,7 @@ with open(input) as file:
 							'(LIBMPV)': '(libmpv)',
 							'ON': 'on',
 							'INTO': 'into',
-						}.get(w, w.title())
-						if w.isupper()
-						else w,
+						}.get(w, w.title()),
 						chapter.heading.heading_title.split(),
 					)
 				)
