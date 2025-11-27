@@ -6,11 +6,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterator
 
+DEFAULT_MAX_LEVEL = 3
+SPECIAL_MAX_LEVEL = 4
+SPECIAL_HEADING = 'COMMAND INTERFACE'
+SKIP_LEVEL = 2
+
 FENCES = ['```']
 MAX_HEADING_LEVEL = 6
-
-MAX_LEVEL = 3
-SKIP_LEVEL = 2
 
 
 @dataclass
@@ -44,12 +46,20 @@ def split_by_heading(lines: Iterator[str]):
 	cur_lines = []
 	within_fence = False
 
+	def parents():
+		return cur_parent_headings[: cur_heading_line.heading_level - 1]
+
 	for line in map(parse_line, lines):
 		if any(line.text.startswith(fence) for fence in FENCES):
 			within_fence = not within_fence
 
-		if not within_fence and isinstance(line, HeadingLine) and line.heading_level <= MAX_LEVEL:
-			yield Chapter(cur_parent_headings[:-1], cur_heading_line, cur_lines)
+		max_level = (
+			SPECIAL_MAX_LEVEL
+			if SPECIAL_HEADING in [*parents(), cur_heading_line.heading_title]
+			else DEFAULT_MAX_LEVEL
+		)
+		if not within_fence and isinstance(line, HeadingLine) and line.heading_level <= max_level:
+			yield Chapter(parents(), cur_heading_line, cur_lines)
 
 			cur_parent_headings = [
 				*cur_parent_headings[: cur_heading_line.heading_level - 1],
@@ -60,7 +70,7 @@ def split_by_heading(lines: Iterator[str]):
 
 		cur_lines.append(line.text)
 
-	yield Chapter(cur_parent_headings[:-1], cur_heading_line, cur_lines)
+	yield Chapter(parents(), cur_heading_line, cur_lines)
 
 
 def to_filename(title: str):
@@ -74,7 +84,6 @@ args = parser.parse_args()
 
 input = Path(args.input)
 output = Path(args.output)
-output.mkdir(parents=True, exist_ok=True)
 
 hash_to_headings: dict[str, list[str]] = {}
 
@@ -96,11 +105,15 @@ with open(input) as file:
 			hash_to_headings[hash] = cur_parent_headings
 			cur_heading_line = line
 
-
 with open(input) as file:
 	for chapter in split_by_heading(file):
 		if chapter.heading.heading_level <= SKIP_LEVEL:
 			continue
+
+		filename = output
+		for h in [*chapter.parent_headings[SKIP_LEVEL:], chapter.heading.heading_title]:
+			filename /= to_filename(h)
+		filename.parent.mkdir(parents=True, exist_ok=True)
 
 		def transform_link(m: re.Match[str]):
 			headings = hash_to_headings.get(m[1])
@@ -108,36 +121,41 @@ with open(input) as file:
 				print(f'Fail to link to #{m[1]}')
 				return m[0]
 
-			page_heading, *headings = headings[SKIP_LEVEL:]
+			max_level = SPECIAL_MAX_LEVEL if SPECIAL_HEADING in headings else DEFAULT_MAX_LEVEL
+			ref = output
+			for h in headings[SKIP_LEVEL:max_level]:
+				ref /= to_filename(h)
+			ref = ref.relative_to(filename.parent, walk_up=True)
 			hash = f'#{m[1].replace(".", "")}'
 			return (
 				f'({hash})'
-				if page_heading == chapter.heading.heading_title
-				else f'({to_filename(page_heading)}.md{hash if headings else ""})'
+				if str(ref) == to_filename(chapter.heading.heading_title)
+				else f'({ref}.md{hash if headings[max_level:] else ""})'
 			)
 
-		assert not chapter.parent_headings[SKIP_LEVEL:]
-		filename = to_filename(chapter.heading.heading_title)
-		with open((output / filename).with_suffix('.md'), 'w') as file:
+		with open(f'{filename}.md', 'w') as file:
 			file.write('---\n')
-			title = ' '.join(
-				map(
-					lambda w: {
-						'MACOS': 'macOS',
-						'JAVASCRIPT': 'JavaScript',
-						'JSON': 'JSON',
-						'GUI': 'GUI',
-						'IPC': 'IPC',
-						'(LIBMPV)': '(libmpv)',
-						'ON': 'on',
-						'INTO': 'into',
-					}.get(w, w.title())
-					if w.isupper()
-					else w,
-					chapter.heading.heading_title.split(),
+			if chapter.heading.heading_level == 3 and chapter.heading.heading_title.isupper():
+				title = ' '.join(
+					map(
+						lambda w: {
+							'MACOS': 'macOS',
+							'JAVASCRIPT': 'JavaScript',
+							'JSON': 'JSON',
+							'GUI': 'GUI',
+							'IPC': 'IPC',
+							'(LIBMPV)': '(libmpv)',
+							'ON': 'on',
+							'INTO': 'into',
+						}.get(w, w.title())
+						if w.isupper()
+						else w,
+						chapter.heading.heading_title.split(),
+					)
 				)
-			)
-			file.write(f'title: {title[0].upper()}{title[1:]}\n')
+				file.write(f'title: {title[0].upper()}{title[1:]}\n')
+			else:
+				file.write(f'title: {chapter.heading.heading_title}\n')
 			file.write('---\n\n')
 			for line in chapter.lines[2:]:  # skip heading
 				file.write(re.sub(r'\(#(.+?)\)', transform_link, line))

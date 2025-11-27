@@ -69,7 +69,7 @@ All configuration files should be encoded in UTF-8.
 
 `~/.config/mpv/input.conf`
 
-:   key bindings (see [INPUT.CONF](command-interface.md#inputconf) section)
+:   key bindings (see [INPUT.CONF](command-interface/input.conf.md) section)
 
 `~/.config/mpv/fonts.conf`
 

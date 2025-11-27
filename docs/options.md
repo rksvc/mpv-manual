@@ -4310,7 +4310,7 @@ intentionally, but overriding them can be controlled with
     possible, also sets the audio stream title.
 
     Properties are expanded. (See [Property
-    Expansion](command-interface.md#property-expansion).)
+    Expansion](command-interface/property-expansion.md).)
 
     <div class="warning" markdown="1">
 
@@ -5790,7 +5790,7 @@ intentionally, but overriding them can be controlled with
     will show the keys and the bound commands on the OSD. Has to be used
     with a dummy video, and the normal ways to quit the player will not
     work (key bindings that normally quit will be shown on OSD only,
-    just like any other binding). See [INPUT.CONF](command-interface.md#inputconf).
+    just like any other binding). See [INPUT.CONF](command-interface/input.conf.md).
 
 `--input-terminal=<yes|no>`
 
@@ -6044,7 +6044,7 @@ intentionally, but overriding them can be controlled with
     default). The message will be visible by default, and as long as no
     other message covers it, and the OSD level isn't changed (see
     `--osd-level`). Expands properties; see [Property
-    Expansion](command-interface.md#property-expansion).
+    Expansion](command-interface/property-expansion.md).
 
 `--osd-msg2=<string>`
 
@@ -6071,7 +6071,7 @@ intentionally, but overriding them can be controlled with
     using the `show-progress` command (by default mapped to `P`), and
     when seeking if enabled with `--osd-on-seek` or `osd-` prefixes in
     input.conf (see `Input Command Prefixes`). Expands properties. See
-    [Property Expansion](command-interface.md#property-expansion).
+    [Property Expansion](command-interface/property-expansion.md).
 
     This option has been replaced with `--osd-msg3`. The only difference
     is that this option implicitly includes `${osd-sym-cc}`. This option
@@ -6084,7 +6084,7 @@ intentionally, but overriding them can be controlled with
     show the message `file:` followed by a space and the currently
     played filename.
 
-    See [Property Expansion](command-interface.md#property-expansion).
+    See [Property Expansion](command-interface/property-expansion.md).
 
 `--osd-playing-msg-duration=<time>`
 
@@ -6956,13 +6956,13 @@ places).
     print the string `file:` followed by a space and the currently
     played filename.
 
-    See [Property Expansion](command-interface.md#property-expansion).
+    See [Property Expansion](command-interface/property-expansion.md).
 
 `--term-status-msg=<string>`
 
 :   Print out a custom string during playback instead of the standard
     status line. Expands properties. See [Property
-    Expansion](command-interface.md#property-expansion).
+    Expansion](command-interface/property-expansion.md).
 
 `--term-title=<string>`
 
@@ -6973,7 +6973,7 @@ places).
     understand the sequence. The latter probably includes the
     regrettable win32.
 
-    Expands properties. See [Property Expansion](command-interface.md#property-expansion).
+    Expands properties. See [Property Expansion](command-interface/property-expansion.md).
 
 `--msg-module`
 

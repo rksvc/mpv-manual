@@ -13,7 +13,7 @@ The following listings are not necessarily complete. See
 User `input.conf` files and Lua scripts can define additional key
 bindings.
 
-See [COMMAND INTERFACE](command-interface.md) and [Key names](command-interface.md#key-names)
+See [COMMAND INTERFACE](command-interface.md) and [Key names](command-interface/key-names.md)
 sections for more details on configuring keybindings.
 
 See also `--input-test` for interactive binding details by key, and the

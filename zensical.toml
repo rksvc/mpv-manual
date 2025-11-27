@@ -16,7 +16,6 @@ features = [
     "content.footnote.tooltips",
     "navigation.indexes",
     "navigation.path",
-    "navigation.prune",
     "navigation.top",
     "navigation.tracking",
     "search.highlight",

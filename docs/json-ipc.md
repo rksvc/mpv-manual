@@ -106,7 +106,7 @@ form:
     { "event": "event_name" }
 
 where `event_name` is the name of the event. Additional event-specific
-fields can also be present. See [List of events](command-interface.md#list-of-events) for a
+fields can also be present. See [List of events](command-interface/list-of-events.md) for a
 list of all supported events.
 
 Because events can occur at any time, it may be difficult at times to
@@ -201,12 +201,12 @@ readable, while some obscure commands basically require using named
 arguments.
 
 Currently, only "proper" commands (as listed by [List of Input
-Commands](command-interface.md#list-of-input-commands)) support named arguments.
+Commands](command-interface/list-of-input-commands.md)) support named arguments.
 
 #### Commands
 
 In addition to the commands described in [List of Input
-Commands](command-interface.md#list-of-input-commands), a few extra commands can also be
+Commands](command-interface/list-of-input-commands.md), a few extra commands can also be
 used as part of the protocol:
 
 `client_name`
@@ -241,7 +241,7 @@ used as part of the protocol:
 `set_property`
 
 :   Set the given property to the given value. See
-    [Properties](command-interface.md#properties) for more information about properties.
+    [Properties](command-interface/properties.md) for more information about properties.
 
     Example:
 
