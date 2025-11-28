@@ -11,7 +11,6 @@ SPECIAL_MAX_LEVEL = 4
 SPECIAL_HEADING = 'COMMAND INTERFACE'
 SKIP_LEVEL = 2
 
-FENCES = ['```']
 MAX_HEADING_LEVEL = 6
 
 
@@ -44,21 +43,17 @@ def split_by_heading(lines: Iterator[str]):
 	cur_parent_headings: list[str] = []
 	cur_heading_line = HeadingLine('# mpv', 1, 'mpv')
 	cur_lines = []
-	within_fence = False
 
 	def parents():
 		return cur_parent_headings[: cur_heading_line.heading_level - 1]
 
 	for line in map(parse_line, lines):
-		if any(line.text.startswith(fence) for fence in FENCES):
-			within_fence = not within_fence
-
 		max_level = (
 			SPECIAL_MAX_LEVEL
 			if SPECIAL_HEADING in [*parents(), cur_heading_line.heading_title]
 			else DEFAULT_MAX_LEVEL
 		)
-		if not within_fence and isinstance(line, HeadingLine) and line.heading_level <= max_level:
+		if isinstance(line, HeadingLine) and line.heading_level <= max_level:
 			yield Chapter(parents(), cur_heading_line, cur_lines)
 
 			cur_parent_headings = [
@@ -90,13 +85,9 @@ hash_to_headings: dict[str, list[str]] = {}
 with open(input) as file:
 	cur_parent_headings: list[str] = []
 	cur_heading_line = HeadingLine('# mpv', 1, 'mpv')
-	within_fence = False
 
 	for line in map(parse_line, file):
-		if any(line.text.startswith(fence) for fence in FENCES):
-			within_fence = not within_fence
-
-		if not within_fence and isinstance(line, HeadingLine):
+		if isinstance(line, HeadingLine):
 			cur_parent_headings = [
 				*cur_parent_headings[: cur_heading_line.heading_level - 1],
 				cur_heading_line.heading_title,
