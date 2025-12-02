@@ -20,6 +20,8 @@ document$.subscribe(() => {
 	}
 
 	for (const dl of document.querySelectorAll('dl')) {
+		if (dl.querySelectorAll('& > dt').length < 7) continue
+
 		const input = document.createElement('input')
 		dl.parentNode.insertBefore(input, dl)
 		input.placeholder = 'Search...'
