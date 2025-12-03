@@ -11,8 +11,6 @@ SPECIAL_MAX_LEVEL = 4
 SPECIAL_HEADING = 'COMMAND INTERFACE'
 SKIP_LEVEL = 2
 
-MAX_HEADING_LEVEL = 6
-
 
 @dataclass
 class Line:
@@ -34,7 +32,6 @@ class Chapter:
 
 def parse_line(line: str):
 	if match := re.match(r'(#+)(.+)', line):
-		assert len(match[1]) <= MAX_HEADING_LEVEL
 		return HeadingLine(line, len(match[1]), match[2].strip())
 	return Line(line)
 
