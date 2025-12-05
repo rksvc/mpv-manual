@@ -6,10 +6,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterator
 
+SKIP_LEVEL = 2
 DEFAULT_MAX_LEVEL = 3
 SPECIAL_MAX_LEVEL = 4
 SPECIAL_HEADING = 'COMMAND INTERFACE'
-SKIP_LEVEL = 2
 
 
 @dataclass
@@ -53,10 +53,7 @@ def split_by_heading(lines: Iterator[str]):
 		if isinstance(line, HeadingLine) and line.heading_level <= max_level:
 			yield Chapter(parents(), cur_heading_line, cur_lines)
 
-			cur_parent_headings = [
-				*cur_parent_headings[: cur_heading_line.heading_level - 1],
-				cur_heading_line.heading_title,
-			]
+			cur_parent_headings = [*parents(), cur_heading_line.heading_title]
 			cur_heading_line = line
 			cur_lines = []
 
@@ -73,13 +70,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument('input', help='input file')
 parser.add_argument('output', help='output folder')
 args = parser.parse_args()
-
-input = Path(args.input)
 output = Path(args.output)
 
 hash_to_headings: dict[str, list[str]] = {}
-
-with open(input) as file:
+with open(args.input) as file:
 	cur_parent_headings: list[str] = []
 	cur_heading_line = HeadingLine('# mpv', 1, 'mpv')
 
@@ -93,7 +87,7 @@ with open(input) as file:
 			hash_to_headings[hash] = cur_parent_headings
 			cur_heading_line = line
 
-with open(input) as file:
+with open(args.input) as file:
 	for chapter in split_by_heading(file):
 		if chapter.heading.heading_level <= SKIP_LEVEL:
 			continue
