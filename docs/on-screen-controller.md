@@ -1,5 +1,5 @@
 ---
-title: On Screen Controller
+title: On screen controller
 ---
 
 The On Screen Controller (short: OSC) is a minimal GUI integrated with

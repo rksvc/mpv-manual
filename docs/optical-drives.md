@@ -1,5 +1,5 @@
 ---
-title: Optical Drives
+title: Optical drives
 ---
 
 Depending on the OS, mpv will choose a different disc device by default.

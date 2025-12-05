@@ -1,5 +1,5 @@
 ---
-title: Interactive Control
+title: Interactive control
 ---
 
 mpv has a fully configurable, command-driven control layer which allows

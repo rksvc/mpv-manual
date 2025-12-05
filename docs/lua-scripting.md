@@ -1,5 +1,5 @@
 ---
-title: Lua Scripting
+title: Lua scripting
 ---
 
 mpv can load Lua scripts. (See [Script location](#script-location).)

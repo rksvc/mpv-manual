@@ -1,5 +1,5 @@
 ---
-title: Pseudo GUI Mode
+title: Pseudo GUI mode
 ---
 
 mpv has no official GUI, other than the OSC ([ON SCREEN

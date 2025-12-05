@@ -1,5 +1,5 @@
 ---
-title: Low Latency Playback
+title: Low latency playback
 ---
 
 mpv is optimized for normal video playback, meaning it actually tries to

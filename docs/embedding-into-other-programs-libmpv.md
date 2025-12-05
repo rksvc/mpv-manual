@@ -1,5 +1,5 @@
 ---
-title: Embedding into Other Programs (libmpv)
+title: Embedding into other programs (libmpv)
 ---
 
 mpv can be embedded into other programs as video/audio playback backend.

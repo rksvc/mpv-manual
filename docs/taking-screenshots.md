@@ -1,5 +1,5 @@
 ---
-title: Taking Screenshots
+title: Taking screenshots
 ---
 
 Screenshots of the currently played file can be taken using the

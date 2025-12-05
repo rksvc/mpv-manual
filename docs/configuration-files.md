@@ -1,5 +1,5 @@
 ---
-title: Configuration Files
+title: Configuration files
 ---
 
 #### Location and Syntax

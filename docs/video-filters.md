@@ -1,5 +1,5 @@
 ---
-title: Video Filters
+title: Video filters
 ---
 
 Video filters allow you to modify the video stream and its properties.

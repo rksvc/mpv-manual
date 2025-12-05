@@ -1,5 +1,5 @@
 ---
-title: Exit Codes
+title: Exit codes
 ---
 
 Normally **mpv** returns 0 as exit code after finishing playback

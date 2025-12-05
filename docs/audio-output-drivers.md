@@ -1,5 +1,5 @@
 ---
-title: Audio Output Drivers
+title: Audio output drivers
 ---
 
 Audio output drivers are interfaces to different audio output

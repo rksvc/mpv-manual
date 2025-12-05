@@ -1,5 +1,5 @@
 ---
-title: C Plugins
+title: C plugins
 ---
 
 You can write C plugins for mpv. These use the libmpv API, although they

@@ -124,22 +124,17 @@ with open(input) as file:
 		with open(f'{filename}.md', 'w') as file:
 			file.write('---\n')
 			if chapter.heading.heading_level == 3 and chapter.heading.heading_title.isupper():
-				title = ' '.join(
-					map(
-						lambda w: {
-							'MACOS': 'macOS',
-							'JAVASCRIPT': 'JavaScript',
-							'JSON': 'JSON',
-							'GUI': 'GUI',
-							'IPC': 'IPC',
-							'(LIBMPV)': '(libmpv)',
-							'ON': 'on',
-							'INTO': 'into',
-						}.get(w, w.title()),
-						chapter.heading.heading_title.split(),
-					)
-				)
-				file.write(f'title: {title[0].upper()}{title[1:]}\n')
+				first, *rest = chapter.heading.heading_title.split()
+				dict = {
+					'MACOS': 'macOS',
+					'WINDOWS': 'Windows',
+					'JAVASCRIPT': 'JavaScript',
+					'JSON': 'JSON',
+					'GUI': 'GUI',
+					'IPC': 'IPC',
+				}
+				title = ' '.join([dict.get(first, first.title()), *(dict.get(w, w.lower()) for w in rest)])
+				file.write(f'title: {title}\n')
 			else:
 				file.write(f'title: {chapter.heading.heading_title}\n')
 			file.write('---\n\n')

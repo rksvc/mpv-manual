@@ -1,5 +1,5 @@
 ---
-title: Audio Filters
+title: Audio filters
 ---
 
 Audio filters allow you to modify the audio stream and its properties.

@@ -1,5 +1,5 @@
 ---
-title: Command Interface
+title: Command interface
 ---
 
 The mpv core can be controlled with commands and properties. A number of

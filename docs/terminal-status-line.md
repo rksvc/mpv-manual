@@ -1,5 +1,5 @@
 ---
-title: Terminal Status Line
+title: Terminal status line
 ---
 
 During playback, mpv shows the playback status on the terminal. It looks

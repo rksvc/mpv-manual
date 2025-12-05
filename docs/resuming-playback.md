@@ -1,5 +1,5 @@
 ---
-title: Resuming Playback
+title: Resuming playback
 ---
 
 mpv is capable of storing the playback position of the currently playing

@@ -1,5 +1,5 @@
 ---
-title: Environment Variables
+title: Environment variables
 ---
 
 There are a number of environment variables that can be used to control

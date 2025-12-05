@@ -1,5 +1,5 @@
 ---
-title: Video Output Drivers
+title: Video output drivers
 ---
 
 Video output drivers are interfaces to different video output
