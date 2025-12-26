@@ -58,5 +58,12 @@ described in [mp.options functions](lua-scripting.md#mpoptions-functions).
 
 :   Default: `~~state/command_history.txt`
 
-    The file path for `persist_history` (see [PATHS](usage.md#paths)).
+    The file path for `persist_history` (see [FILES](files.md)).
+
+`remember_input`
+
+:   Default: yes
+
+    Whether to remember the input line and cursor position when closing
+    the console, and prefill it the next time it is opened.
 

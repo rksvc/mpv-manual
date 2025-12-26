@@ -8,7 +8,6 @@ mpv provides the built-in module `mp`, which contains functions to send
 commands to the mpv core and to retrieve information about playback
 state, user settings, file information, and so on.
 
-These scripts can be used to control mpv in a similar way to slave mode.
 Technically, the Lua code uses the client API internally.
 
 #### Example
@@ -498,7 +497,7 @@ The `mp` module is preloaded, although it can be loaded manually with
     the property will be passed as second argument to `fn`, using
     `mp.get_property_<type>` to retrieve it. This means if `type` is for
     example `string`, `fn` is roughly called as in
-    `fn(name, mp.get_property_string(name))`.
+    `fn(name, mp.get_property(name))`.
 
     If possible, change events are coalesced. If a property is changed a
     bunch of times in a row, only the last change triggers the change
@@ -545,51 +544,50 @@ The `mp` module is preloaded, although it can be loaded manually with
 :   Call the given function periodically. This is like `mp.add_timeout`,
     but the timer is re-added after the function fn is run.
 
-    Returns a timer object. The timer object provides the following methods:
+    Returns a timer object. The timer object provides the following
+    methods:
 
-    :   
-
-        `stop()`
-
-        :   Disable the timer. Does nothing if the timer is already
-            disabled. This will remember the current elapsed time when
-            stopping, so that `resume()` essentially unpauses the timer.
-
-        `kill()`
-
-        :   Disable the timer. Resets the elapsed time. `resume()` will
-            restart the timer.
-
-        `resume()`
-
-        :   Restart the timer. If the timer was disabled with `stop()`,
-            this will resume at the time it was stopped. If the timer
-            was disabled with `kill()`, or if it's a previously fired
-            one-shot timer (added with `add_timeout()`), this starts the
-            timer from the beginning, using the initially configured
-            timeout.
-
-        `is_enabled()`
-
-        :   Whether the timer is currently enabled or was previously
-            disabled (e.g. by `stop()` or `kill()`).
-
-        `timeout` (RW)
-
-        :   This field contains the current timeout period. This value
-            is not updated as time progresses. It's only used to
-            calculate when the timer should fire next when the timer
-            expires.
-
-            If you write this, you can call `t:kill() ; t:resume()` to
-            reset the current timeout to the new one. (`t:stop()` won't
-            use the new timeout.)
-
-        `oneshot` (RW)
-
-        :   Whether the timer is periodic (`false`) or fires just once
-            (`true`). This value is used when the timer expires (but
-            before the timer callback function fn is run).
+    > 
+    >
+    > `stop()`
+    >
+    > :   Disable the timer. Does nothing if the timer is already
+    >     disabled. This will remember the current elapsed time when
+    >     stopping, so that `resume()` essentially unpauses the timer.
+    >
+    > `kill()`
+    >
+    > :   Disable the timer. Resets the elapsed time. `resume()` will
+    >     restart the timer.
+    >
+    > `resume()`
+    >
+    > :   Restart the timer. If the timer was disabled with `stop()`,
+    >     this will resume at the time it was stopped. If the timer was
+    >     disabled with `kill()`, or if it's a previously fired one-shot
+    >     timer (added with `add_timeout()`), this starts the timer from
+    >     the beginning, using the initially configured timeout.
+    >
+    > `is_enabled()`
+    >
+    > :   Whether the timer is currently enabled or was previously
+    >     disabled (e.g. by `stop()` or `kill()`).
+    >
+    > `timeout` (RW)
+    >
+    > :   This field contains the current timeout period. This value is
+    >     not updated as time progresses. It's only used to calculate
+    >     when the timer should fire next when the timer expires.
+    >
+    >     If you write this, you can call `t:kill() ; t:resume()` to
+    >     reset the current timeout to the new one. (`t:stop()` won't
+    >     use the new timeout.)
+    >
+    > `oneshot` (RW)
+    >
+    > :   Whether the timer is periodic (`false`) or fires just once
+    >     (`true`). This value is used when the timer expires (but
+    >     before the timer callback function fn is run).
 
     Note that these are methods, and you have to call them using `:`
     instead of `.` (Refer to

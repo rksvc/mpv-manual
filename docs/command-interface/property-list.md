@@ -722,7 +722,7 @@ read-only.
 `hwdec-current`
 
 :   The current hardware decoding in use. If decoding is active, return
-    one of the values used by the `hwdec` option/property. `no`/false
+    one of the values used by the `hwdec` option/property. `no`
     indicates software decoding. If no decoder is loaded, the property
     is unavailable.
 
@@ -899,6 +899,26 @@ read-only.
     :   Average PQ luminance of a frame, as reported by peak detection
         (in PQ, 0-1)
 
+    `video-params/prim-red-x`, `video-params/prim-red-y`
+
+    :   Red primary chromaticity coordinates, available only if differs
+        from `video-params/primaries`
+
+    `video-params/prim-green-x`, `video-params/prim-green-y`
+
+    :   Green primary chromaticity coordinates, available only if
+        differs from `video-params/primaries`
+
+    `video-params/prim-blue-x`, `video-params/prim-blue-y`
+
+    :   Blue primary chromaticity coordinates, available only if differs
+        from `video-params/primaries`
+
+    `video-params/prim-white-x`, `video-params/prim-white-y`
+
+    :   White point chromaticity coordinates, available only if differs
+        from `video-params/primaries`
+
     When querying the property with the client API using
     `MPV_FORMAT_NODE`, or with Lua `mp.get_property_native`, this will
     return a mpv_node with the following contents:
@@ -932,6 +952,14 @@ read-only.
             "scene-max-b"       MPV_FORMAT_DOUBLE
             "max-pq-y"          MPV_FORMAT_DOUBLE
             "avg-pq-y"          MPV_FORMAT_DOUBLE
+            "prim-red-x"        MPV_FORMAT_DOUBLE
+            "prim-red-y"        MPV_FORMAT_DOUBLE
+            "prim-green-x"      MPV_FORMAT_DOUBLE
+            "prim-green-y"      MPV_FORMAT_DOUBLE
+            "prim-blue-x"       MPV_FORMAT_DOUBLE
+            "prim-blue-y"       MPV_FORMAT_DOUBLE
+            "prim-white-x"      MPV_FORMAT_DOUBLE
+            "prim-white-y"      MPV_FORMAT_DOUBLE
 
 `dwidth`, `dheight`
 
@@ -1042,7 +1070,8 @@ read-only.
 
 `ambient-light`
 
-:   Ambient lighting condition in lux. (macOS only)
+:   Ambient lighting condition in lux. Only observable on macOS (macOS
+    and Linux only)
 
 `display-names`
 
@@ -1160,6 +1189,13 @@ read-only.
 :   Read-only - mpv's window id. May not always be available, i.e due to
     window not being opened yet or not being supported by the VO.
 
+`display-swapchain`
+
+:   Read-only - Direct3D 11 swapchain address. Returns an int64 type
+    value representing the memory address of the D3D11 swapchain. May
+    not always be available, i.e d3d11-output-mode is not set to
+    `composition` or the VO does not support it.
+
 `mouse-pos`
 
 :   Read-only - last known mouse position, normalized to OSD dimensions.
@@ -1210,6 +1246,38 @@ read-only.
                 "x"        MPV_FORMAT_INT64
                 "y"        MPV_FORMAT_INT64
                 "id"       MPV_FORMAT_INT64
+
+`tablet-pos`
+
+:   Read-only - last known tablet tool (pen) position, normalized to OSD
+    dimensions, and tool state.
+
+    Has the following sub-properties:
+
+    `tablet-pos/x`, `tablet-pos/y`
+
+    :   Last known coordinates of the tablet tool.
+
+    `tablet-pos/tool-in-proximity`
+
+    :   Boolean - whether a tablet tool is currently in proximity of the
+        tablet surface / hovers above the tablet surface.
+
+    `tablet-pos/tool-tip`,
+
+    :   The state of the tablet tool tip, `up` or `down.`
+
+    `tablet-pos/tool-stylus-btn1`, `tablet-pos/tool-stylus-btn2`, `tablet-pos/tool-stylus-btn3`
+
+    :   The state of tablet tool side buttons, `pressed` or `released`.
+
+    `tablet-pos/pad-focus`
+
+    :   Boolean - whether a tablet pad is currently focused.
+
+    `tablet-pos/pad-btns/N`
+
+    :   The state of the Nth tablet pad button, `pressed` or `released`.
 
 `sub-ass-extradata`
 
@@ -2300,11 +2368,47 @@ read-only.
 `command-list`
 
 :   The list of input commands. This returns an array of maps, where
-    each map node represents a command. This map currently only has a
-    single entry: `name` for the name of the command. (This property is
-    supposed to be a replacement for `--input-cmdlist`. The option dumps
-    some more information, but it's a valid feature request to extend
-    this property if needed.)
+    each map node represents a command. This map has the following
+    entries:
+
+    `name`
+
+    :   The name of the command.
+
+    `vararg`
+
+    :   Whether the command accepts a variable number of arguments.
+
+    `args`
+
+    :   An array of maps, where each map node represents an argument
+        with the following entries:
+
+        `name`
+
+        :   The name of the argument.
+
+        `type`
+
+        :   The name of the argument type, like `String` or `Integer`.
+
+        `optional`
+
+        :   Whether the argument is optional.
+
+    When querying the property with the client API using
+    `MPV_FORMAT_NODE`, or with Lua `mp.get_property_native`, this will
+    return a mpv_node with the following contents:
+
+        MPV_FORMAT_NODE_ARRAY
+            MPV_FORMAT_NODE_MAP (for each command entry)
+                "name"    MPV_FORMAT_STRING
+                "vararg"  MPV_FORMAT_FLAG
+                "args"    MPV_FORMAT_NODE_ARRAY
+                    MPV_FORMAT_NODE_MAP
+                        "name"     MPV_FORMAT_STRING
+                        "type"     MPV_FORMAT_STRING
+                        "optional" MPV_FORMAT_FLAG
 
 `input-bindings`
 
@@ -2362,22 +2466,22 @@ read-only.
 
 `clipboard`
 
-:   The clipboard contents, only works when native clipboard
-    (`--clipboard-enable`) is supported on the platform. Depending on
-    the platform, some sub-properties, writing to properties, or change
-    notifications are not currently functional.
+:   The clipboard contents. Only works when native clipboard is
+    supported on the platform. Depending on the platform, some
+    sub-properties, writing to properties, or change notifications are
+    not currently functional.
 
     This has a number of sub-properties:
 
     `clipboard/text` (RW)
 
-    :   The text content in the clipboard (Windows, Wayland and macOS
-        only). Writing to this property sets the text clipboard content
-        (Windows only).
+    :   The text content in the clipboard. Writing to this property sets
+        the text clipboard content
 
-    `clipboard/text-primary`
+    `clipboard/text-primary` (RW)
 
-    :   The text content in the primary selection (Wayland only).
+    :   The text content in the primary selection (X11 and Wayland
+        only).
 
     <div class="note" markdown="1">
 

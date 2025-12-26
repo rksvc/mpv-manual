@@ -188,7 +188,7 @@ Be sure that your scripts can handle these "no config" scenarios.
 | `~~home/` | mpv's config dir (for example `~/.config/mpv/`). |
 | `~~global/` | The global config path (such as `/etc/mpv`), if available (not on win32). |
 | `~~osxbundle/` | The macOS bundle resource path (macOS only). |
-| `~~desktop/` | The path to the desktop (win32, macOS). |
+| `~~desktop/` | The path to the desktop. |
 | `~~exe_dir/` | The path to the directory containing `mpv.exe` (for config file purposes, `$MPV_HOME` will override this) (win32 only). |
 | `~~cache/` | The path to application cache data (`~/.cache/mpv/`). On some platforms, this will be the same as `~~home/`. |
 | `~~state/` | The path to application state data (`~/.local/state/mpv/`). On some platforms, this will be the same as `~~home/`. |

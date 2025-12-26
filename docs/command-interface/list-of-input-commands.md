@@ -528,6 +528,14 @@ syntax](flat-command-syntax.md)).
 
     > Marks the track as suitable for the visually impaired.
 
+    \<forced\>
+
+    > Marks the track as forced.
+
+    \<default\>
+
+    > Marks the track as default.
+
     \<attached-picture\> (only for `video-add`)
 
     > Marks the track as an attached picture, same as `albumart`
@@ -1425,22 +1433,30 @@ syntax](flat-command-syntax.md)).
 
     Multiple flags are available (some can be combined with `+`):
 
-    \<subtitles\> (default)
-
-    :   Save the video image, in its original resolution, and with
-        subtitles. Some video outputs may still include the OSD in the
-        output under certain circumstances.
-
     \<video\>
 
-    :   Like `subtitles`, but typically without OSD or subtitles. The
-        exact behavior depends on the selected video output.
+    :   Save the video image in its original resolution, without OSD or
+        subtitles. This is the default when no flag is specified, and it
+        does not need to be explicitly added when combined with other
+        flags.
+
+    \<scaled\>
+
+    :   Save the video image in the current playback resolution.
+
+    \<subtitles\> (default)
+
+    :   Save the video image with subtitles. Some video outputs may
+        still include the OSD in the output under certain circumstances.
+
+    \<osd\>
+
+    :   Save the video image with OSD.
 
     \<window\>
 
-    :   Save the contents of the mpv window. Typically scaled, with OSD
-        and subtitles. The exact behavior depends on the selected video
-        output.
+    :   Save the contents of the mpv window, with OSD and subtitles.
+        This is an alias of `scaled+subtitles+osd`.
 
     \<each-frame\>
 
@@ -1449,6 +1465,9 @@ syntax](flat-command-syntax.md)).
         when using this mode - or you might receive duplicate images in
         cases when a frame was dropped. This flag can be combined with
         the other flags, e.g. `video+each-frame`.
+
+    The exact behaviors of all flags other than `each-frame` depend on
+    the selected video output.
 
     Older mpv versions required passing `single` and `each-frame` as
     second argument (and did not have flags). This syntax is still
@@ -1482,8 +1501,9 @@ syntax](flat-command-syntax.md)).
 `screenshot-raw [<flags> [<format>]]`
 
 :   Return a screenshot in memory. This can be used only through the
-    client API. The MPV_FORMAT_NODE_MAP returned by this command has the
-    `w`, `h`, `stride` fields set to obvious contents.
+    client API or from a script using `mp.command_native`. The
+    MPV_FORMAT_NODE_MAP returned by this command has the `w`, `h`,
+    `stride` fields set to obvious contents.
 
     The `format` field is set to the format of the screenshot image
     data. This can be controlled by the `format` argument. The format

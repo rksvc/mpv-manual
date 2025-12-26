@@ -29,7 +29,7 @@ title: Options
 
 `--slang=<languagecode[,languagecode,...]>`
 
-:   Equivalent to `--alang`, for subtitle tracks.
+:   Analogous to `--alang`, for subtitle tracks.
 
     This is a string list option. See [List Options](usage.md#list-options) for
     details.
@@ -50,7 +50,7 @@ title: Options
 
 `--vlang=<...>`
 
-:   Equivalent to `--alang` and `--slang`, for video tracks.
+:   Analogous to `--alang` and `--slang`, for video tracks.
 
     This is a string list option. See [List Options](usage.md#list-options) for
     details.
@@ -63,8 +63,7 @@ title: Options
 
     `--audio` is an alias for `--aid`.
 
-    `--aid=no` or `--audio=no` disables audio playback. (The latter
-    variant does not work with the client API.)
+    `--aid=no` or `--audio=no` disables audio playback.
 
     <div class="note" markdown="1">
 
@@ -131,8 +130,7 @@ title: Options
 
     `--sub` is an alias for `--sid`.
 
-    `--sid=no` or `--sub=no` disables subtitle decoding. (The latter
-    variant does not work with the client API.)
+    `--sid=no` or `--sub=no` disables subtitle decoding.
 
 `--vid=<ID|auto|no>`
 
@@ -141,8 +139,7 @@ title: Options
 
     `--video` is an alias for `--vid`.
 
-    `--vid=no` or `--video=no` disables video playback. (The latter
-    variant does not work with the client API.)
+    `--vid=no` or `--video=no` disables video playback.
 
     If video is disabled, mpv will try to download the audio only if
     media is streamed with youtube-dl, because it saves bandwidth. This
@@ -1258,18 +1255,17 @@ title: Options
 
     </div>
 
-`--ytdl-format=<ytdl|best|worst|mp4|webm|...>`
+`--ytdl-format=<|ytdl|best|worst|mp4|webm|...>`
 
-:   Video format/quality that is directly passed to youtube-dl. The
+:   Format selection string that is directly passed to youtube-dl. The
     possible values are specific to the website and the video, for a
-    given url the available formats can be found with the command
-    `youtube-dl --list-formats URL`. See youtube-dl's documentation for
-    available aliases. (Default: `bestvideo+bestaudio/best`)
+    given URL the available formats can be found with the command
+    `youtube-dl -F URL`. See youtube-dl's documentation for available
+    aliases. (Default: empty)
 
-    The `ytdl` value does not pass a `--format` option to youtube-dl at
-    all, and thus does not override its default. Note that sometimes
-    youtube-dl returns a format that mpv cannot use, and in these cases
-    the mpv default may work better.
+    An empty value or `ytdl` does not pass a `--format` option to
+    youtube-dl at all, and thus uses its default format selection
+    behavior.
 
 `--ytdl-raw-options=<key>=<value>[,<key>=<value>[,...]]`
 
@@ -1334,6 +1330,12 @@ title: Options
 
 :   Enable the builtin script that lets you select from lists of items
     (default: yes). By default, its keybindings start with the `g` key.
+
+`--load-context-menu=<yes|no>`
+
+:   Enable the builtin script that implements a context menu. Defaults
+    to `yes` on platforms where integration with a native context menu
+    is not implemented, and to `no` on platform where it is.
 
 `--load-positioning=<yes|no>`
 
@@ -1465,7 +1467,7 @@ title: Options
 `--watch-history-path=<path>`
 
 :   The path in which to store the watch history. Default:
-    `~~state/watch_history.jsonl` (see [PATHS](usage.md#paths)).
+    `~~state/watch_history.jsonl` (see [FILES](files.md)).
 
     This file contains one JSON object per line. Its `time` field is the
     UNIX timestamp when the file was opened, its `path` field is the
@@ -1738,35 +1740,36 @@ title: Options
     Actively supported hwdecs:
 
     d3d11va
-    :   requires `--vo=gpu` with `--gpu-context=d3d11` or
-        `--gpu-context=angle` (Windows 8+ only)
+    :   requires `--vo=gpu` or `--vo=gpu-next` with
+        `--gpu-context=d3d11` or `--gpu-context=angle` (Windows 8+ only)
 
     d3d11va-copy
     :   copies video back to system RAM (Windows 8+ only)
 
     videotoolbox
-    :   requires `--vo=gpu` (macOS 10.8 and up), or `--vo=libmpv` (iOS
-        9.0 and up)
+    :   requires `--vo=gpu` or `--vo=gpu-next` (macOS 10.8 and up), or
+        `--vo=libmpv` (iOS 9.0 and up)
 
     videotoolbox-copy
     :   copies video back into system RAM (macOS 10.8 or iOS 9.0 and up)
 
     vaapi
-    :   requires `--vo=gpu`, `--vo=vaapi` or `--vo=dmabuf-wayland`
-        (Linux only)
+    :   requires `--vo=gpu`, `--vo=gpu-next`, `--vo=vaapi` or
+        `--vo=dmabuf-wayland` (Linux only)
 
     vaapi-copy
     :   copies video back into system RAM (Linux with some GPUs or
         Windows)
 
     nvdec
-    :   requires `--vo=gpu` (Any platform CUDA is available)
+    :   requires `--vo=gpu` or `--vo=gpu-next` (Any platform CUDA is
+        available)
 
     nvdec-copy
     :   copies video back to system RAM (Any platform CUDA is available)
 
     drm
-    :   requires `--vo=gpu` (Linux only)
+    :   requires `--vo=gpu` or `--vo=gpu-next` (Linux only)
 
     drm-copy
     :   copies video back to system RAM (Linux only)
@@ -2353,10 +2356,11 @@ title: Options
     You can get the list of allowed codecs with `mpv --vd=help`. Remove
     the prefix, e.g. instead of `lavc:h264` use `h264`.
 
-    By default, this is set to `h264,vc1,hevc,vp8,vp9,av1,prores`. Note
-    that the hardware acceleration special codecs like `h264_vdpau` are
-    not relevant anymore, and in fact have been removed from FFmpeg in
-    this form.
+    By default, this is set to
+    `h264,vc1,hevc,vp8,vp9,av1,prores,prores_raw,ffv1,dpx`. Note that
+    the hardware acceleration special codecs like `h264_vdpau` are not
+    relevant anymore, and in fact have been removed from FFmpeg in this
+    form.
 
     This is usually only needed with broken GPUs, where a codec is
     reported as supported, but decoding causes more problems than it
@@ -2386,6 +2390,17 @@ title: Options
     :   Enable vdpau decoding for h264 and mpeg2 only.
 
     </div>
+
+`--hwdec-threads=<N>`
+
+:   Number of threads used for hardware decoding (default: 4). This, as
+    opposed to vd-queue, enables frame and slice threading in
+    libavcodec. It can help with pipelining the decoding process and
+    improve performance. The exact behavior depends on the hardware
+    decoder API used.
+
+    If this is set to 0, the number of threads will be automatically
+    determined by the number of CPU cores available.
 
 `--hwdec-software-fallback=<yes|no|N>`
 
@@ -2566,7 +2581,7 @@ title: Options
     only mandates an upper limit, the implementation can use a lower
     latency than requested internally. A setting of 1 means that the VO
     will wait for every frame to become visible before starting to
-    render the next frame. (Default: 3)
+    render the next frame. (Default: 2)
 
 #### Audio
 
@@ -2575,7 +2590,7 @@ title: Options
 :   If this is enabled (default), playing with a speed different from
     normal automatically inserts the `scaletempo2` audio filter. You can
     insert filters besides `scaletempo2` and modify their params using
-    \`Conditional auto profiles\`:
+    [Conditional auto profiles](configuration-files.md#conditional-auto-profiles):
 
         [af_insert]
         profile-cond=speed ~= 1
@@ -3075,7 +3090,7 @@ title: Options
 
 `--audio-file-paths=<path1:path2:...>`
 
-:   Equivalent to `--sub-file-paths` option, but for auto-loaded audio
+:   Analogous to `--sub-file-paths` option, but for auto-loaded audio
     files.
 
     This is a path list option. See [List Options](usage.md#list-options) for
@@ -3086,6 +3101,15 @@ title: Options
 :   The application name the player reports to the audio API. Can be
     useful if you want to force a different audio profile (e.g. with
     PulseAudio), or to set your own application name when using libmpv.
+
+`--audio-set-media-role=<yes|no>`
+
+:   If enabled, mpv will set the appropriate media role on supported
+    audio servers to indicate whether mpv is playing a video or an
+    audio-only file. This is disabled by default since per media role
+    volumes have often caused unexpected and confusing behavior.
+
+    Default: no.
 
 `--audio-buffer=<seconds>`
 
@@ -3465,6 +3489,21 @@ intentionally, but overriding them can be controlled with
 
     </div>
 
+`--sub-glyph-limit=<value>`
+
+:   Set the maximum number of cached glyphs in libass cache for the
+    subtitle track. 0 means libass uses its default value.
+
+    Default: 0.
+
+`--sub-bitmap-max-size=<value>`
+
+:   Set the maximum bitmap cache size in libass cache for the subtitle
+    track. 0 means libass uses its default value. This accepts values in
+    MB.
+
+    Default: 0.
+
 `--sub-ass-styles=<filename>`
 
 :   Load all SSA/ASS styles found in the specified file and use them for
@@ -3663,6 +3702,24 @@ intentionally, but overriding them can be controlled with
     which often happen when the video was transcoded, while attempting
     to keep the old subtitles.
 
+`--image-subs-hdr-peak=<sdr|video|10-10000>`
+
+:   Controls the image subtitle diffuse white level in cd/m² (nits) for
+    HDR output (default: sdr). `sdr` is 203 cd/m² for standard SDR
+    white, while `video` uses video metadata. (`--vo=gpu-next` only)
+
+    This also affects image subtitle brightness in HDR tone mapping with
+    `--blend-subtitles=<yes|video>`.
+
+`--sub-hdr-peak=<sdr|10-10000>`
+
+:   Controls the text subtitle and OSD diffuse white level in cd/m²
+    (nits) for HDR output (default: sdr). `sdr` is 203 cd/m² for
+    standard SDR white. (`--vo=gpu-next` only)
+
+    This also affects text subtitle brightness in HDR tone mapping with
+    `--blend-subtitles=<yes|video>`.
+
 `--sub-ass=<yes|no>`
 
 :   Render ASS subtitles natively (default: yes).
@@ -3727,7 +3784,7 @@ intentionally, but overriding them can be controlled with
     subtitles when using drag and drop.
 
     This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    details. Use `--help=sub-auto-exts` to see default extensions.
 
 `--sub-codepage=<codepage>`
 
@@ -3795,8 +3852,21 @@ intentionally, but overriding them can be controlled with
 `--sub-fix-timing=<yes|no>`
 
 :   Adjust subtitle timing is to remove minor gaps or overlaps between
-    subtitles (if the difference is smaller than 210 ms, the gap or
-    overlap is removed).
+    subtitles.
+
+    See also: `--sub-fix-timing-threshold` and `--sub-fix-timing-keep`.
+
+`--sub-fix-timing-threshold=<amount>`
+
+:   Set the threshold in milliseconds for fixing subtitle timing
+    (default: 210). If the gap between two subtitle events is smaller
+    than this, the gap is removed.
+
+`--sub-fix-timing-keep=<amount>`
+
+:   Set the minimum duration in milliseconds for subtitle events to be
+    considered for timing fixes (default: 400). If a subtitle event has
+    a duration smaller than this, its timing is not changed.
 
 `--sub-forced-events-only=<yes|no>`
 
@@ -4179,14 +4249,14 @@ intentionally, but overriding them can be controlled with
 
 `--sub-filter-sdh-enclosures=<string>`
 
-:   Specify a string of characters that `--sub-filter-sdh` will use to
-    potentially remove text. Text that is enclosed within characters
-    specified by this string will be removed. Note that bracket
-    characters with known pairs (such as `(` or `[`) will be mapped
-    internally to their matching right hand character, so you only need
-    to specify left hand characters.
+:   Specify pairs of characters that `--sub-filter-sdh` will use to
+    potentially remove text. This is a string list option. See [List
+    Options](usage.md#list-options) for details. Text that is enclosed within
+    each specified pair will be removed. Note that parenthesis pairs
+    (normal and full width) are treated as a special case and require
+    `--sub-fitler-sdh-harder` to be removed.
 
-    Default: `([（`.
+    Default: `(),[],（）`
 
 `--sub-filter-regex-...=...`
 
@@ -4849,9 +4919,9 @@ intentionally, but overriding them can be controlled with
 `--force-render`
 
 :   Forces mpv to always render frames regardless of the visibility of
-    the window. Currently only affects X11 and Wayland VOs since they
-    are the only ones that have this optimization (i.e. everything else
-    always renders regardless of visibility).
+    the window. Currently only affects X11, Wayland and macvk VOs since
+    they are the only ones that have this optimization (i.e. everything
+    else always renders regardless of visibility).
 
 `--force-window-position`
 
@@ -4940,13 +5010,16 @@ intentionally, but overriding them can be controlled with
     0.33.0, but it is possible to call the `xdg-screensaver` command
     line program from a user script instead.
 
-`--wid=<ID>`
+`--wid=<ID|-1>`
 
 :   This tells mpv to attach to an existing window. If a VO is selected
     that supports this option, it will use that window for video output.
     mpv will scale the video to the size of this window, and will add
     black bars to compensate if the aspect ratio of the video is
     different.
+
+    An ID of value `-1` is interpreted specially, and mpv will detach
+    from the currently attached window to its own window.
 
     On X11, the ID is interpreted as a `Window` on X11. Unlike
     MPlayer/mplayer2, mpv always creates its own window, and sets the
@@ -4957,13 +5030,34 @@ intentionally, but overriding them can be controlled with
     On win32, the ID is interpreted as `HWND`. Pass it as value cast to
     `uint32_t` (all Windows handles are 32-bit), this is important as
     mpv will not accept negative values. mpv will create its own window
-    and set the wid window as parent, like with X11.
+    and set the wid window as parent, like with X11. The value `0` is
+    interpreted specially, and mpv will draw on top of the desktop
+    wallpaper and below desktop icons.
 
     On Android, the ID is interpreted as `android.view.Surface`. Pass it
     as a value cast to `intptr_t`. Use with `--vo=mediacodec_embed` and
     `--hwdec=mediacodec` for direct rendering using MediaCodec, or with
     `--vo=gpu --gpu-context=android` (with or without
     `--hwdec=mediacodec`).
+
+    <div class="note" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Note
+
+    </div>
+
+    On win32, if desktop wallpaper transition occurs (e.g. setting
+    desktop slideshow of multiple images in Windows settings) and an ID
+    value `0` is used, Windows may sometimes destroy the window mpv is
+    attached to. mpv will simply treat this as a quit signal in this
+    case.
+
+    To prevent this from happening, set a static desktop wallpaper, such
+    as single image or pure color.
+
+    </div>
 
 `--window-dragging=<yes|no>`
 
@@ -5142,6 +5236,11 @@ intentionally, but overriding them can be controlled with
 
 :   Some DVDs contain scenes that can be viewed from multiple angles.
     This option tells mpv which angle to use (default: 1).
+
+`--bluray-angle=<ID>`
+
+:   Some Blu-ray discs contain scenes that can be viewed from multiple
+    angles. This option tells mpv which angle to use (default: 1).
 
 #### Equalizer
 
@@ -5600,16 +5699,16 @@ intentionally, but overriding them can be controlled with
 `--prefetch-playlist=<yes|no>`
 
 :   Prefetch next playlist entry while playback of the current entry is
-    ending (default: yes).
-
-    This does not prefill the cache with the video data of the next URL.
-    Prefetching video data is supported only for the current playlist
-    entry, and depends on the demuxer cache settings (on by default).
-    This merely opens the URL of the next playlist entry as soon the
-    current URL is fully read.
+    ending (default: no). This merely opens the URL of the next playlist
+    entry as soon as the current URL is fully read.
 
     This does **not** work with URLs resolved by the `youtube-dl`
     wrapper, and it won't.
+
+    This does not affect HLS streams (`.m3u8` URLs). Such stream by
+    itself is internally a playlist of data segments, but is treated as
+    a single media item by mpv. HLS prefetching depends on the demuxer
+    cache settings and is on by default.
 
     This can occasionally make wrong prefetching decisions. For example,
     it can't predict whether you go backwards in the playlist, and
@@ -5956,6 +6055,13 @@ intentionally, but overriding them can be controlled with
     for compatibility for mouse key bindings and scripts which read
     mouse positions for platforms which do not support
     `--native-touch=no` (e.g. Wayland).
+
+`--input-tablet-emulate-mouse=<yes|no>`
+
+:   Emulate mouse move and button presses for tablet events (default:
+    yes).
+
+    Wayland only.
 
 `--input-dragging-deadzone=<N>`
 
@@ -6317,6 +6423,30 @@ intentionally, but overriding them can be controlled with
 `--osd-fonts-dir=<path>`
 
 :   See `--sub-fonts-dir` for details. Defaults to `~~/fonts`.
+
+`--osd-glyph-limit=<value>`
+
+:   Set the maximum number of cached glyphs in libass cache for the OSD.
+    0 means libass uses its default value.
+
+    Default: 0.
+
+`--osd-bitmap-max-size=<value>`
+
+:   Set the maximum bitmap cache size in libass cache for the OSD. 0
+    means libass uses its default value. This accepts values in MB.
+
+    Default: 0.
+
+`--osd-prune-delay=<-1|seconds>`
+
+:   Set the delay for automatic pruning of events from memory in libass.
+    Disabled by default. See also `--sub-ass-prune-delay`.
+
+`--osd-shaper=<simple|complex>`
+
+:   Set the text layout engine used by libass for the OSD. Default:
+    complex. See also `--sub-shaper`
 
 #### Screenshot
 
@@ -7338,13 +7468,16 @@ places).
 :   Instructs mpv to read the channels list from `<filename>`. The
     default is in the mpv configuration directory (usually
     `~/.config/mpv`) with the filename
-    `channels.conf.{sat,ter,cbl,atsc,isdbt}` (based on your card type)
-    or `channels.conf` as a last resort. Please note that using specific
-    file name with card type is recommended, since the legacy channel
-    format is not fully standardized so autodetection of the delivery
-    system may fail otherwise. For DVB-S/2 cards, a VDR 1.7.x format
-    channel list is recommended as it allows tuning to DVB-S2 channels,
-    enabling subtitles and decoding the PMT (which largely improves the
+    `channels.conf.{sat,sat1,ter,ter1,cbl,atsc,isdbt}` (based on your
+    card type) or `channels.conf` as a last resort. For cards supporting
+    multiple delivery systems of the same kind, i.e. DVB-T/T2 or
+    DVB-S/S2, T2/S2 is assumed, unless the file extension is `ter1` or
+    `sat1`. Please note that using specific file name with card type is
+    recommended, since the legacy channel format is not fully
+    standardized so autodetection of the delivery system may fail
+    otherwise. For DVB-S/2 cards, a VDR 1.7.x format channel list is
+    recommended as it allows tuning to DVB-S2 channels, enabling
+    subtitles and decoding the PMT (which largely improves the
     demuxing). Classic mplayer format channel lists are still supported
     (without these improvements), and for other card types, only limited
     VDR format channel list support is implemented (patches welcome).
@@ -7996,6 +8129,16 @@ them.
     hardware adapters that support D3D11. While the extended GPU
     features will work with WARP, they can be very slow.
 
+`--d3d11-output-mode=<auto|window|composition>`
+
+:   Use a specific output mode for creating the D3D11 swapchain.
+    "composition" will not create a window. If you want to use the D3D11
+    GPU backend in WinUI applications, you need to set this to
+    "composition". "window" will create a window and use the DWM to
+    present the video. "auto" is the same as "window". After creating
+    the swapchain, you can get the swapchain address (int64 type value)
+    by getting the `display-swapchain` property.
+
 `--d3d11-feature-level=<12_1|12_0|11_1|11_0|10_1|10_0|9_3|9_2|9_1>`
 
 :   Select a specific feature level when using the D3D11 GPU backend. By
@@ -8464,6 +8607,23 @@ them.
 
     :   The image, after conversion to RGB, but before
         `--blend-subtitles=video` is applied.
+
+        <div class="note" markdown="1">
+
+        <div class="title" markdown="1">
+
+        Note
+
+        </div>
+
+        With `--vo=gpu`, `MAIN` and `MAINPRESUB` are separate shader
+        stages, this allows rendering overlays directly onto the
+        pre-scaled video stage. `--vo=gpu-next` does not support this
+        feature, and as such, the `MAINPRESUB` shader stage does not
+        exist. It is still valid to refer to this name in shaders, but
+        it is handled identically to `MAIN`.
+
+        </div>
 
     MAIN (resizable)
 
@@ -9016,6 +9176,15 @@ them.
 
     Android with `--gpu-context=android` only.
 
+`--d3d11-composition-size=<WxH>`
+
+:   Set size of the output for d3d11 composition mode. When use
+    composition mode, there is no window, must set the output size by
+    the embedding application.
+
+    Windows with `--gpu-context=d3d11` and
+    `--d3d11-output-mode=composition` only.
+
 `--gpu-sw`
 
 :   Continue even if a software renderer is detected. This only works
@@ -9210,11 +9379,169 @@ them.
 
 `--target-colorspace-hint=<auto|yes|no>`
 
-:   Automatically configure the output colorspace of the display to pass
-    through the input values of the stream (e.g. for HDR passthrough),
-    if possible. In `auto` mode, the target colorspace is only set, if
-    the display signals support for HDR colorspace. Requires a
-    supporting driver and `--vo=gpu-next`. (Default: `no`)
+:   When enabled, output colorspace metadata will be set on the
+    swapchain depending on the GPU context and platform this may affect
+    compositor/display. This can be used for "HDR passthrough" and to
+    set the output colorspace for SDR content. In `auto` mode, the
+    target colorspace is only set if the current display parameters are
+    known. Currently, this is supported on Wayland, D3D11 and winvk
+    contexts. The `yes` option will always try to set the colorspace,
+    you may need to adjust the `--target-*` options to match your
+    display capabilities. Requires a supporting driver and
+    `--vo=gpu-next`. (Default: `auto`)
+
+    <div class="note" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Note
+
+    </div>
+
+    Auto detected target colorspace metadata is not guaranteed to be
+    always best choice. It depends on your compositor, driver, and
+    display capabilities. However in most cases `auto` mode should work
+    fine.
+
+    </div>
+
+`--target-colorspace-hint-mode=<target|source|source-dynamic>`
+
+:   Select which metadata to use for the `--target-colorspace-hint`.
+    (Only for `--vo=gpu-next`)
+
+    target
+
+    :   Uses metadata based on the target display's actual capabilities.
+        This mode adapts the source content to the target display before
+        output. Note: HDR primaries are not overridden by the
+        `--target-prim` option this only affects the enclosing container
+        for the colorspace. `--target-gamut` can be used to limit the
+        output gamut if needed.
+
+    source
+
+    :   Uses the source content's metadata. This is the traditional "HDR
+        passthrough" mode (SDR too), where it is assumed that the
+        compositor and display will handle the colorspace directly and
+        perform any necessary mappings.
+
+    source-dynamic
+
+    :   The same as `source`, but uses dynamic per-scene metadata
+        instead of static HDR10. This is experimental and depends on the
+        display's ability to react to metadata changes. Note that this
+        does not send full HDR10+ or Dolby Vision metadata, but uses
+        that information to produce HDR10 with per-scene luminance
+        values.
+
+    Default is `target`. If target display parameters are not available,
+    this will fall back to `source`. Note that this is done on
+    individual properties basis, i.e. it will merge source params into
+    target for unknown properties, though not the other way around.
+
+    `--target-*` options override the metadata in both modes.
+
+    <div class="note" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Note
+
+    </div>
+
+    The ICC profile always takes precedence over any metadata.
+
+    </div>
+
+    <div class="note" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Note
+
+    </div>
+
+    It is highly recommended to use
+    `--target-colorspace-hint=<auto|yes>` to ensure the output
+    colorspace is set correctly. This is crucial for all non-sRGB
+    content, even SDR, to allow the compositor, driver, and display to
+    properly interpret the signal.
+
+    Unfortunately, it's not as easy as it sounds. While mpv performs
+    high-quality color processing, we cannot guarantee what will happen
+    after the signal leaves mpv. Therefore, you may need to adjust
+    additional settings to ensure proper output. A one-size-fits-all
+    default is not feasible.
+
+    Now with the backstory out of the way:
+
+    For HDR output the default of `target` should work fine, it will
+    automatically infer the best target HDR parameters and surface
+    format. For compatibility, displays are assumed to be in HDR mode,
+    unless it's reported otherwise. (you can override this with
+    `--target-trc`). This way the HDR metadata is set and hopefully the
+    compositor will handle the rest. If the input is SDR, it will be
+    converted to PQ with primaries set to source values.
+
+    For SDR output, for targets where mpv cannot determine whether the
+    target is HDR or SDR, you can use `source` mode. Metadata set will
+    match the input colorspace. In case of HDR input, it will be
+    passthrough as-is. Alternatively, you can use `target` mode and set
+    `--target-trc` to a SDR transfer function. This way any input will
+    be converted to SDR.
+
+    Use the stats display to verify the input and output colorspace
+    settings.
+
+    TL;DR: Use `--target-colorspace-hint=auto` and adjust `--target-*`
+    parameters to match your target display capabilities, until it looks
+    best for you. Use [Conditional auto
+    profiles](configuration-files.md#conditional-auto-profiles) for specific adjustments.
+    Avoid using `--target-colorspace-hint=no` unless it's sRGB content,
+    but even then it's better to set the colorspace metadata.
+
+    </div>
+
+    <div class="note" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Note
+
+    </div>
+
+    Additional chatter about the "HDR passthrough" mode: There is a
+    belief that this mode should send the source HDR signal as-is to the
+    display, and the display will magically handle it, no matter what.
+    This is not always true. In some cases it is better to send the HDR
+    signal tone-mapped to the target display's capabilities, and the
+    best way to do this is within mpv itself.
+
+    This is generally handled by either the compositor or the GPU
+    driver. You can probably find HDR "calibration" options somewhere in
+    your system.
+
+    You can choose which metadata to send to the display and manually
+    tweak it using the `--target-*` options. You can also try
+    `--inverse-tone-mapping` if you want to make everything appear more
+    HDR-like.
+
+    Your mileage may vary, this highly depends on the target display,
+    there is no single answer, but try experimenting, you may be
+    surprised.
+
+    </div>
+
+`--target-colorspace-hint-strict`
+
+:   When enabled (default), the configured swapchain colorspace (with
+    the hint) will be respected. In this mode, the `--target-*` options
+    act only as a hint, while the negotiated swapchain format is used
+    for rendering output. This ensures correct results, since downstream
+    processing depends on the signaled colorspace. When disabled, the
+    swapchain colorspace will be overridden to match the `--target-*`
+    options. (Only for `--vo=gpu-next`)
 
 `--target-prim=<value>`
 
@@ -9269,6 +9596,10 @@ them.
     dci-p3
 
     :   DCI-P3 (Digital Cinema Colorspace), SMPTE RP431-2
+
+    display-p3
+
+    :   DCI-P3 with a D65 white point
 
     v-gamut
 
@@ -9432,12 +9763,93 @@ them.
     and `--target-gamut` to the gamut you want to limit colors to. Takes
     the same values as `--target-prim`. (Only for `--vo=gpu-next`)
 
+    <div class="note" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Note
+
+    </div>
+
+    If the selected gamut is wider, it will be limited to
+    `--target-prim`. Additionally, if `--target-colorspace-hint` is
+    specified, the signaled gamut will be limited to the supported gamut
+    of the swapchain. Which may differ from the requested
+    `--target-prim`.
+
+    </div>
+
 `--target-lut=<file>`
 
 :   Specifies a custom LUT file (in Adobe .cube format) to apply to the
     colors before display on-screen. This LUT is fed values in
     normalized RGB, after encoding into the target colorspace, so after
     the application of `--target-trc`. (Only for `--vo=gpu-next`)
+
+`--hdr-reference-white=<auto|10-1000000>`
+
+:   Specifies the assumed peak brightness of the mastering display for
+    SDR content, in cd/m² (nits). This is used as HDR diffuse white
+    level for SDR content. Essentially this is the SDR brightness in HDR
+    container. Default is 203 cd/m². (Only for `--vo=gpu-next`)
+
+    <div class="note" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Note
+
+    </div>
+
+    This option overrides the `--target-peak` if is set and the target
+    transfer function is SDR. This way you can control SDR output
+    separately from HDR output.
+
+    </div>
+
+`--sdr-adjust-gamma=<auto|yes|no>`
+
+:   SDR transfer functions are often ambiguous or mismatched. Even if
+    files are tagged with a specific function (e.g. `bt.709`), the
+    actual content may not match. For example, most screen capture
+    software tags its output as `bt.709`, but the content is usually a
+    direct sRGB capture.
+
+    On the target side, "sRGB" is also ambiguous, some displays are
+    factory calibrated to a pure power 2.2 gamma, while others may use
+    the sRGB piecewise curve. Both of which are typically configured as
+    "sRGB" in the swapchain configuration. Similar inconsistencies exist
+    across compositor implementations of color management, as different
+    platforms handle this in different ways. See also
+    `--treat-srgb-as-power22`. Additionally, `bt.1886` requires display
+    contrast ratio to be known for correct rendering, which is often
+    unavailable. Use`--target-contrast` to specify it.
+
+    This option controls whether SDR content should have its gamma
+    adjusted. It only applies to the "sRGB" swapchain target
+    configuration, since that is the most common and ambiguous case. If
+    set to `no`, content tagged as `sRGB`, `gamma2.2` or `bt.1886` will
+    be rendered as-is. If set to `yes`, it will be converted based on
+    the available metadata.
+
+    `auto` (default) behaves like `no`, except when `--target-trc` is
+    explicitly set, in which case it behaves like `yes`.
+
+    Generally it's recommended to enable this option, if you can ensure
+    that both source and target metadata is correct.
+
+    (Only for `--vo=gpu-next`)
+
+`--treat-srgb-as-power22=<no|input|output|both|auto>`
+
+:   When enabled, sRGB is (de)linearized using a pure power 2.2 curve
+    instead of the standard sRGB piecewise transfer function.
+
+    `auto` behaves like `both`, with possible platform-specific
+    adjustments to ensure a consistent appearance. Depending on the
+    platform, the sRGB EOTF used by the system compositor may differ.
+
+    The default is `auto`. (Only for `--vo=gpu-next`)
 
 `--tone-mapping=<value>`
 
@@ -9576,9 +9988,10 @@ them.
 
 `--inverse-tone-mapping`
 
-:   If set, allows inverse tone mapping (expanding SDR to HDR). Not
-    supported by all tone mapping curves. Use with caution.
-    (`--vo=gpu-next` only)
+:   If set, allows inverse tone mapping (expanding dynamic range). Can
+    be used for upscaling SDR content to HDR, or for making HDR content
+    brighter. Not supported by all tone mapping curves. Use with
+    caution. (`--vo=gpu-next` only)
 
 `--tone-mapping-max-boost=<1.0..10.0>`
 
@@ -9878,6 +10291,38 @@ them.
     are drawn at the video's native resolution, and scaled along with
     the video.
 
+    <div class="note" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Note
+
+    </div>
+
+    `--vo=gpu-next` with `--blend-subtitles=video` will correctly follow
+    `--video-rotate` if rotated in 90-degree steps.
+
+    </div>
+
+    <div class="warning" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Warning
+
+    </div>
+
+    With `--vo=gpu-next`, the `--blend-subtitles=video` mode blends the
+    subtitles after scaling the video, similar to
+    `--blend-subtitles=yes`. The difference is that the subtitles are
+    rendered at the video's native resolution and then scaled separately
+    to blend with the video. This is useful for performance reasons, as
+    it allows subtitles to be rendered at a lower resolution, but it
+    does not have the same effect as hardsubbing, which would require
+    blending before scaling. This may change in the future.
+
+    </div>
+
     <div class="warning" markdown="1">
 
     <div class="title" markdown="1">
@@ -9908,8 +10353,10 @@ them.
 
     tiles
 
-    :   Blend the frame against a 16x16 gray/white tiles background
-        (default).
+    :   Blend the frame against a checkerboard pattern with colors
+        specified in the `--background-tile-color-0` and
+        `--background-tile-color-1` options and tile size specified in
+        the `--background-tile-size` option (default).
 
     none
 
@@ -9923,13 +10370,29 @@ them.
 
 `--background-color=<color>`
 
-:   Color used to draw parts of the mpv window not covered by video. See
-    the `--sub-color` option for how colors are defined.
+:   Color used to draw parts of the mpv window not covered by video in
+    `--background=color` mode. See the `--sub-color` option for how
+    colors are defined.
 
-`--border-background=<none|color|tiles>`
+`--background-tile-color-0=<color>`, `--background-tile-color-1=<color>`
+
+:   Colors used to draw parts of the mpv window not covered by video in
+    `--background=tiles` mode. See the `--sub-color` option for how
+    colors are defined.
+
+`--background-tile-size=<1-4096>`
+
+:   Tile size used to draw parts of the mpv window not covered by video
+    in `--background=tiles` mode (default: 16).
+
+`--border-background=<none|color|tiles|blur>`
 
 :   Same as `--background` but only applies to the black bar/border area
     of the window. `vo=gpu-next` only. Defaults to `color`.
+
+`--background-blur-radius=<radius>`
+
+:   The blur radius (in pixels) to use for `--border-background=blur`
 
 `--opengl-rectangle-textures`
 
@@ -10294,7 +10757,13 @@ them.
 `--media-controls=<yes|no>`
 
 :   (Windows only) Enable integration of media control interface
-    SystemMediaTransportControls. Default: yes (except for libmpv)
+    SystemMediaTransportControls.
+
+    Windows may display "Unknown app" or show a missing mpv icon in the
+    media control panel. To fully support it, you need to register mpv
+    using the `--register` command.
+
+    Default: yes (except for libmpv)
 
 `--force-media-title=<string>`
 
@@ -10552,6 +11021,11 @@ them.
 
     :   macOS backend.
 
+    `x11`
+
+    :   X11 backend. This backend is only available if the X server
+        supports the `Xfixes` extension.
+
     `wayland`
 
     :   Wayland backend. This backend is only available if the
@@ -10570,9 +11044,7 @@ them.
 
 `--clipboard-monitor=<yes|no>`
 
-:   (Windows, Wayland and macOS only)
-
-    Enable clipboard monitoring so that the `clipboard` property can be
+:   Enable clipboard monitoring so that the `clipboard` property can be
     observed for content changes (default: no). This only affects
     clipboard implementations which use polling to monitor clipboard
     updates. Other platforms currently ignore this option and
@@ -10581,4 +11053,102 @@ them.
     On Wayland, this option only has effect on the `wayland` backend,
     and not for the `vo` backend. See `current-clipboard-backend`
     property for more details.
+
+`--clipboard-xwayland=<yes|no>`
+
+:   Enable X11 clipboard backend in suspected Wayland environments
+    (default: no).
+
+    Depending on the Wayland compositor, using X11 backend may result in
+    mpv unable to acquire clipboard data from native Wayland clients.
+    Disabling the X11 backend when Wayland backend is unavailable makes
+    mpv fallback to the VO backend which allows clipboard to work
+    properly.
+
+`--register`
+
+:   (Windows only) (available also as mpv-register helper)
+
+    Registers mpv as a media player on Windows. This includes adding
+    registry entries to associate mpv with media files and protocols, as
+    well as enabling autoplay handlers for Blu-ray, DVD, and CD-Audio.
+
+    Note that the registration is done in-place, so the current mpv.exe
+    path will be used. If you move mpv after registering it, you can
+    re-run this command to update the registry entries. You can also
+    `--unregister` at any time and using any mpv binary that supports
+    this command, it doesn't have to be specifically the one that was
+    used to register it.
+
+    When using this option, mpv will exit after completing the process.
+    To see a detailed list of operations, run mpv with the `-v` option.
+
+    The list of the file extensions to register, can be controlled with
+    the `--video-exts`, `--audio-exts`, `--image-exts`,
+    `--playlist-exts` and `--archive-exts` options.
+
+    By default, mpv will be registered for the current user. To register
+    it for all users, run mpv as an administrator with this option.
+    However, this is not recommended, as registering it per user is
+    generally preferable.
+
+    You can unregister mpv from the Windows Settings or by running mpv
+    with the `--unregister` option.
+
+`--register-rpath=<string>`
+
+:   (Windows only)
+
+    When registering with `--register`, this option allows you to
+    specify the path(s) to prepend so that mpv can find the necessary
+    DLLs. The specified string will be prepended to the runtime PATH
+    whenever mpv is executed.
+
+    This is useful for setting up paths to external libraries required
+    by mpv without adding them to the global PATH environment variable.
+
+    The format of the string follows the same structure as the PATH
+    environment variable, a semicolon-separated list of paths.
+
+    <div class="note" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Note
+
+    </div>
+
+    This sets the `App Paths` for mpv in the Windows registry, which
+    Windows Shell uses to locate the executable and its dependencies. As
+    a result, mpv can be launched seamlessly in most cases, but not in
+    every scenario. Notably, running mpv from the command line does not
+    use <span class="title-ref">ShellExecute</span> under the hood, it
+    uses <span class="title-ref">CreateProcess</span>, which does not
+    handle the `App Paths` registry key.
+
+    To work around this, you can create a small wrapper PowerShell
+    script that runs `Start-Process <mpv path>` and all will work as
+    expected.
+
+    </div>
+
+`--unregister`
+
+:   (Windows only) (available also as mpv-unregister helper)
+
+    Unregisters mpv as a media player on Windows, undoing all changes
+    made by the `--register` option. This will not remove mpv binary
+    itself.
+
+    You can use any mpv binary that supports this command, to
+    unregister, doesn't have to be specifically the one that was used to
+    register it.
+
+    Windows Settings Application entry is tied to the mpv.exe path. If
+    you remove the binary, it will not work. However, you can still
+    unregister it using this command, register it in a new location, or
+    restore mpv to its original location.
+
+    If mpv was previously registered for all users, run this command as
+    an administrator to remove it for all users.
 

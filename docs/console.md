@@ -115,6 +115,10 @@ Shift+INSERT
 
 :   Paste text (uses the primary selection on X11 and Wayland).
 
+Ctrl+y
+
+:   Copy the current line to the clipboard.
+
 TAB and Ctrl+i
 
 :   Cycle through completions.
@@ -154,13 +158,14 @@ described in [mp.options functions](lua-scripting.md#mpoptions-functions).
 
 ##### Configurable Options
 
-`font`
+`monospace_font`
 
-:   The font name.
+:   Default: platform dependent
 
-    When necessary to align completions in a grid, a monospace font
-    depending on the platform is the default. When there are no
-    completions, `--osd-font` is the default.
+    The monospace font used when there are completions to align in a
+    grid.
+
+    When there are no completions, `--osd-font` is used.
 
 `font_size`
 
@@ -181,6 +186,12 @@ described in [mp.options functions](lua-scripting.md#mpoptions-functions).
 
     The transparency of the menu's background. Ranges from 0 (opaque) to
     255 (fully transparent).
+
+`gap`
+
+:   Default: 0.2
+
+    The gap between menu items, specified as a percentage the font size.
 
 `padding`
 
@@ -225,17 +236,17 @@ described in [mp.options functions](lua-scripting.md#mpoptions-functions).
     Whether to scale the console with the window height. Can be `yes`,
     `no`, or `auto`, which follows the value of `--osd-scale-by-window`.
 
-`selected_color`
+`focused_color`
 
 :   Default: `#222222`
 
-    The color of the selected item.
+    The color of the focused item.
 
-`selected_back_color`
+`focused_back_color`
 
 :   Default: `#FFFFFF`
 
-    The background color of the selected item.
+    The background color of the focused item.
 
 `match_color`
 
@@ -243,11 +254,19 @@ described in [mp.options functions](lua-scripting.md#mpoptions-functions).
 
     The color of characters that match the searched string.
 
+`exact_match`
+
+:   Default: no
+
+    Whether to match menu search queries exactly instead of fuzzily.
+    Without this option, prefixing queries with `'` enables exact
+    matching.
+
 `case_sensitive`
 
-:   Default: no on Windows, yes on other platforms.
+:   Default: no
 
-    Whether autocompletion is case sensitive. Only works with ASCII
+    Whether exact searches are case sensitive. Only works with ASCII
     characters.
 
 `history_dedup`

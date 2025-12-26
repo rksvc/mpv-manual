@@ -161,6 +161,10 @@ v
 
 :   Toggle subtitle visibility.
 
+Alt+v
+
+:   Toggle secondary subtitle visibility.
+
 j and J
 
 :   Cycle through the available subtitles.
@@ -461,19 +465,6 @@ Ctrl+Wheel up/down
     cursor under it.
 
 #### Context Menu
-
-<div class="warning" markdown="1">
-
-<div class="title" markdown="1">
-
-Warning
-
-</div>
-
-This feature is experimental. It may not work with all VOs. A libass
-based fallback may be implemented in the future.
-
-</div>
 
 Context Menu is a menu that pops up on the video window on user
 interaction (mouse right click, etc.).

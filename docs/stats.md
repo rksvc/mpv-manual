@@ -151,19 +151,25 @@ described in [mp.options functions](lua-scripting.md#mpoptions-functions).
 
 `plot_perfdata`
 
-:   Default: yes
+:   Default: no
 
     Show graphs for performance data (page 2).
 
 `plot_vsync_ratio`
 
-:   Default: yes
+:   Default: no
 
 `plot_vsync_jitter`
 
-:   Default: yes
+:   Default: no
 
     Show graphs for vsync and jitter values (page 1). Only when toggled.
+
+`plot_cache`
+
+:   Default: yes
+
+    Show graphs for cache values (page 3). Only when toggled.
 
 `plot_tonemapping_lut`
 

@@ -34,9 +34,3 @@ a-b-c show-text "command run after a, b, c have been pressed"
 
 (This is not shown in the general command syntax.)
 
-If `a` or `a-b` or `b` are already bound, this will run the first
-command that matches, and the multi-key command will never be called.
-Intermediate keys can be remapped to `ignore` in order to avoid this
-issue. The maximum number of (non-modifier) keys for combinations is
-currently 4.
-

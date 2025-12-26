@@ -25,10 +25,10 @@ Note
 
 See `--vo=help` for a list of compiled-in video output drivers.
 
-The recommended output driver is `--vo=gpu`, which is the default. All
-other drivers are for compatibility or special purposes. If the default
-does not work, it will fallback to other drivers (in the same order as
-listed by `--vo=help`).
+The recommended output driver is `--vo=gpu-next`, which is the default.
+All other drivers are for compatibility or special purposes. If the
+default does not work, it will fallback to other drivers (in the same
+order as listed by `--vo=help`).
 
 Note that the default video output driver is subject to change, and must
 not be relied upon. If a certain VO needs to be used (e.g. for `libmpv`
@@ -37,6 +37,19 @@ rendering API), it must be explicitly specified.
 </div>
 
 Available video output drivers are:
+
+`gpu-next`
+
+:   Video renderer based on `libplacebo`. This supports almost the same
+    set of features as `--vo=gpu`. See [GPU renderer
+    options](options.md#gpu-renderer-options) for a list.
+
+    Should generally be faster and higher quality, while also
+    implementing some features specific to `gpu-next`, but some features
+    may be intentionally omitted or there may be functional differences
+    to `--vo=gpu`. See here for a list of known differences:
+
+    <https://github.com/mpv-player/mpv/wiki/GPU-Next-vs-GPU>
 
 `gpu`
 
@@ -70,18 +83,6 @@ Available video output drivers are:
     texture support, and some macOS setups being very slow with `rgb16`
     but fast with `rgb32f`. If you have problems, you can also try
     enabling the `--gpu-dumb-mode=yes` option.
-
-`gpu-next`
-
-:   Experimental video renderer based on `libplacebo`. This supports
-    almost the same set of features as `--vo=gpu`. See [GPU renderer
-    options](options.md#gpu-renderer-options) for a list.
-
-    Should generally be faster and higher quality, but some features may
-    still be missing or misbehave. Expect (and report!) bugs. See here
-    for a list of known differences and bugs:
-
-    <https://github.com/mpv-player/mpv/wiki/GPU-Next-vs-GPU>
 
 `xv` (X11 only)
 
@@ -656,6 +657,15 @@ Available video output drivers are:
         works on the local machine and not via e.g. SSH connections.
 
         This option is not implemented on Windows.
+
+    `--vo-kitty-auto-multiplexer-passthrough=<yes|no>` (default: no)
+
+    :   Automatically detect terminal multiplexer to passthrough escape
+        sequences. This allows the image protocol to work in
+        multiplexers that might not support the kitty image protocol by
+        passing through the escape sequences directly to the terminal.
+
+        Currently only supports tmux and GNU screen.
 
 `sixel`
 

@@ -10,22 +10,21 @@ disabled using the `--load-select=no` option.
 
 #### Key bindings
 
-When using `mp.input.select`, typing printable characters does a fuzzy
-search of the presented items, and key bindings listed in
+When using `mp.input.select`, the key bindings listed in
 [CONSOLE](console.md) are extended with the following:
 
 ENTER, Ctrl+j and Ctrl+m
 
-:   Confirm the selection of the highlighted item.
+:   Select the focused item.
 
 UP and Ctrl+p
 
-:   Select the item above, or the last one when the first item is
+:   Focus the item above, or the last one when the first item is
     selected.
 
 DOWN and Ctrl+n
 
-:   Select the item below, or the first one when the last item is
+:   Focus the item below, or the first one when the last item is
     selected.
 
 PGUP and Ctrl+b
@@ -36,10 +35,14 @@ PGDN and Ctrl+f
 
 :   Scroll down one page.
 
+Ctrl+y
+
+:   Copy the focused item to the clipboard.
+
 MBTN_LEFT
 
-:   Confirm the selection of the highlighted item, or close the console
-    if clicking outside of the menu rectangle.
+:   Select the item under the cursor, or close the console if clicking
+    outside of the menu rectangle.
 
 WHEEL_UP
 
@@ -48,6 +51,12 @@ WHEEL_UP
 WHEEL_DOWN
 
 :   Scroll down.
+
+Typing printable characters does a fuzzy search of the presented items.
+
+If the query starts with `'`, only exact matches are filtered. You can
+also specify multiple search terms delimited by spaces, and only items
+matching all terms are filtered.
 
 #### Script bindings
 
@@ -160,6 +169,20 @@ Available script bindings are:
 :   List the names and values of all properties. You can also select one
     to print its value on the OSD, which is useful for long values that
     get clipped.
+
+`edit-config-file`
+
+:   Open `mpv.conf` in the system text editor, creating it if it doesn't
+    already exist.
+
+`edit-input-conf`
+
+:   Open `input.conf` in the system text editor, creating it if it
+    doesn't already exist.
+
+`open-docs`
+
+:   Open mpv's online documentation in the browser.
 
 `menu`
 
