@@ -36,7 +36,7 @@ document$.subscribe(() => {
 				const keywords = [...input.value.matchAll(/\w+/g).map(m => m[0])]
 				const regExp = new RegExp(keywords.join('|'), 'gi')
 				for (const dt of dl.querySelectorAll('& > dt'))
-					if (dt.innerText.match(regExp)) {
+					if (keywords.every(keyword => dt.innerText.includes(keyword))) {
 						dt.style.display = dt.nextElementSibling.style.display = ''
 						for (const highlight of dt.querySelectorAll('mark'))
 							highlight.outerHTML = highlight.innerHTML
