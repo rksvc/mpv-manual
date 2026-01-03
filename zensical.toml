@@ -1,6 +1,6 @@
 [project]
 site_name = "mpv"
-copyright = "Copyright &copy; 2012-2025 mpv.io"
+copyright = "Copyright &copy; 2012-2026 mpv.io"
 extra_css = ["assets/extra.css"]
 extra_javascript = ["assets/extra.js"]
 
