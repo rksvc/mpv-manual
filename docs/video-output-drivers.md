@@ -680,7 +680,7 @@ Available video output drivers are:
     You may need to use `--profile=sw-fast` to get decent performance.
 
     Note: at the time of writing, `xterm` does not enable sixel by
-    default -launching it as `xterm -ti 340` is one way to enable it.
+    default - launching it as `xterm -ti 340` is one way to enable it.
     Also, `xterm` does not display images bigger than 1000x1000 pixels
     by default.
 

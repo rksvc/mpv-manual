@@ -17,8 +17,8 @@ Examples
 
 - `${time-pos}` expands to `00:14:23` (if playback position is at 14
   minutes 23 seconds)
-- `${=time-pos}` expands to `863.4` (same time, plus 400 milliseconds
-  -milliseconds are normally not shown in the formatted case)
+- `${=time-pos}` expands to `863.4` (same time, plus 400 milliseconds -
+  milliseconds are normally not shown in the formatted case)
 - `${avsync}` expands to `+0.003`
 - `${>avsync}` expands to `+0.0030`
 - `${=avsync}` expands to `0.003028`
