@@ -1,6 +1,7 @@
 # modified from https://github.com/markusstraub/mdsplit/blob/main/mdsplit.py
 
 import argparse
+import copy
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -9,7 +10,8 @@ from typing import Iterator
 SKIP_LEVEL = 2
 DEFAULT_MAX_LEVEL = 3
 SPECIAL_MAX_LEVEL = 4
-SPECIAL_HEADING = 'COMMAND INTERFACE'
+SPECIAL_HEADING = 'Command interface'
+INDEX_HEADING = 'Description'
 
 
 @dataclass
@@ -32,7 +34,20 @@ class Chapter:
 
 def parse_line(line: str):
 	if match := re.match(r'(#+)(.+)', line):
-		return HeadingLine(line, len(match[1]), match[2].strip())
+		level = len(match[1])
+		title = match[2].strip()
+		if level == 3 and title.isupper():
+			first, *rest = title.split()
+			dict = {
+				'MACOS': 'macOS',
+				'WINDOWS': 'Windows',
+				'JAVASCRIPT': 'JavaScript',
+				'JSON': 'JSON',
+				'GUI': 'GUI',
+				'IPC': 'IPC',
+			}
+			title = ' '.join([dict.get(first, first.title()), *(dict.get(w, w.lower()) for w in rest)])
+		return HeadingLine(line, level, title)
 	return Line(line)
 
 
@@ -87,6 +102,11 @@ with open(args.input) as file:
 			hash_to_headings[hash] = cur_parent_headings
 			cur_heading_line = line
 
+with open('zensical.toml') as file:
+	zensical = file.readlines()
+
+NavItems = list[dict[str, 'str | NavItems']]
+nav: NavItems = []
 with open(args.input) as file:
 	for chapter in split_by_heading(file):
 		if chapter.heading.heading_level <= SKIP_LEVEL:
@@ -95,6 +115,14 @@ with open(args.input) as file:
 		filename = output
 		for h in [*chapter.parent_headings[SKIP_LEVEL:], chapter.heading.heading_title]:
 			filename /= to_filename(h)
+		if chapter.heading.heading_title == SPECIAL_HEADING:
+			chapter = copy.deepcopy(chapter)
+			chapter.parent_headings.append(chapter.heading.heading_title)
+			chapter.heading.heading_level += 1
+			filename /= 'index'
+		elif chapter.heading.heading_title == INDEX_HEADING:
+			filename = filename.with_name('index')
+		filename = filename.with_name(f'{filename.name}.md')
 		filename.parent.mkdir(parents=True, exist_ok=True)
 
 		def transform_link(m: re.Match[str]):
@@ -115,22 +143,47 @@ with open(args.input) as file:
 				else f'({ref}.md{hash if headings[max_level:] else ""})'
 			)
 
-		with open(f'{filename}.md', 'w') as file:
+		with open(filename, 'w') as file:
 			file.write('---\n')
-			if chapter.heading.heading_level == 3 and chapter.heading.heading_title.isupper():
-				first, *rest = chapter.heading.heading_title.split()
-				dict = {
-					'MACOS': 'macOS',
-					'WINDOWS': 'Windows',
-					'JAVASCRIPT': 'JavaScript',
-					'JSON': 'JSON',
-					'GUI': 'GUI',
-					'IPC': 'IPC',
-				}
-				title = ' '.join([dict.get(first, first.title()), *(dict.get(w, w.lower()) for w in rest)])
-				file.write(f'title: {title}\n')
-			else:
-				file.write(f'title: {chapter.heading.heading_title}\n')
+			file.write(f'title: {chapter.heading.heading_title}\n')
 			file.write('---\n\n')
 			for line in chapter.lines[2:]:  # skip heading
 				file.write(re.sub(r'\(#(.+?)\)', transform_link, line))
+
+		cursor = nav
+		for h in chapter.parent_headings[SKIP_LEVEL:]:
+			if cursor and h in cursor[-1]:
+				cursor = cursor[-1][h]
+				assert not isinstance(cursor, str)
+			else:
+				children: NavItems = []
+				cursor.append({h: children})
+				cursor = children
+		cursor.append({chapter.heading.heading_title: str(filename.relative_to(output))})
+
+
+with open('zensical.toml', 'w') as file:
+
+	def write(items: NavItems, indent=1):
+		for item in items:
+			k = next(iter(item))
+			v = item[k]
+			file.write(' ' * indent * 4)
+			file.write(f'{{ "{k}" = ')
+			if isinstance(v, str):
+				file.write(f'"{v}" }},\n')
+			else:
+				file.write('[\n')
+				write(v, indent + 1)
+				file.write(' ' * indent * 4)
+				file.write('] },\n')
+
+	in_nav = False
+	for line in zensical:
+		if in_nav and line == ']\n':
+			in_nav = False
+		if not in_nav:
+			file.write(line)
+		if line == 'nav = [\n':
+			in_nav = True
+			write(nav)
