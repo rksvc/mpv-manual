@@ -67,7 +67,7 @@ used. Use `--lavfi-complex` for such a use case. This also applies for
 
 Filters can be manipulated at run time. You can use `@` labels as
 described above in combination with the `vf` command (see [COMMAND
-INTERFACE](command-interface.md)) to get more control over this. Initially
+INTERFACE](command-interface)) to get more control over this. Initially
 disabled filters with `!` are useful for this as well.
 
 <div class="note" markdown="1">

@@ -137,10 +137,11 @@ with open(args.input) as file:
 				ref /= to_filename(h)
 			ref = ref.relative_to(filename.parent, walk_up=True)
 			hash = f'#{m[1].replace(".", "")}'
+			ext = '' if str(ref) == to_filename(SPECIAL_HEADING) else '.md'
 			return (
 				f'({hash})'
 				if str(ref) == to_filename(chapter.heading.heading_title)
-				else f'({ref}.md{hash if headings[max_level:] else ""})'
+				else f'({ref}{ext}{hash if headings[max_level:] else ""})'
 			)
 
 		with open(filename, 'w') as file:
