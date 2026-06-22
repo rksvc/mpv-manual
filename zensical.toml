@@ -109,10 +109,6 @@ toggle.name = "Switch to system preference"
 icon = "fontawesome/brands/github"
 link = "https://github.com/mpv-player/mpv"
 
-[[project.extra.social]]
-icon = "fontawesome/brands/x-twitter"
-link = "https://twitter.com/mpv_player"
-
 [project.markdown_extensions.abbr]
 [project.markdown_extensions.admonition]
 [project.markdown_extensions.attr_list]
