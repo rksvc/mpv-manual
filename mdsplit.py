@@ -169,14 +169,14 @@ with open('zensical.toml', 'w') as file:
 		for item in items:
 			k = next(iter(item))
 			v = item[k]
-			file.write(' ' * indent * 4)
+			file.write(' ' * indent * 2)
 			file.write(f'{{ "{k}" = ')
 			if isinstance(v, str):
 				file.write(f'"{v}" }},\n')
 			else:
 				file.write('[\n')
 				write(v, indent + 1)
-				file.write(' ' * indent * 4)
+				file.write(' ' * indent * 2)
 				file.write('] },\n')
 
 	in_nav = False
