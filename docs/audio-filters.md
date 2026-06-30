@@ -369,4 +369,3 @@ Available filters are:
     automatically if the `--video-sync=display-adrop` option is used. Do
     not use this filter (or the given option); they are extremely low
     quality.
-

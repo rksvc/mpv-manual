@@ -108,8 +108,8 @@ syntax](flat-command-syntax.md)).
 
     For embedded subtitles (like with Matroska), this works only with
     subtitle events that have already been displayed, or are within a
-    short prefetch range. See [Cache](../options.md#cache) for details on how to
-    control the available prefetch range.
+    short prefetch range. See [Cache](../options.md#cache) for details
+    on how to control the available prefetch range.
 
 `frame-step [<frames>] [<flags>]`
 
@@ -239,9 +239,9 @@ syntax](flat-command-syntax.md)).
 `change-list <name> <operation> <value>`
 
 :   This command changes list options as described in [List
-    Options](../usage.md#list-options). The `<name>` parameter is the normal option
-    name, while `<operation>` is the suffix or action used on the
-    option.
+    Options](../usage.md#list-options). The `<name>` parameter is the
+    normal option name, while `<operation>` is the suffix or action used
+    on the option.
 
     Some operations take no value, but the command still requires the
     value parameter. In these cases, the value must be an empty string.
@@ -709,7 +709,9 @@ syntax](flat-command-syntax.md)).
     :   Restore options set by a previous `apply-profile` command for
         this profile. Only works if the profile has `profile-restore`
         set to a relevant mode. Prints a warning if nothing could be
-        done. See [Runtime profiles](../configuration-files.md#runtime-profiles) for details.
+        done. See [Runtime
+        profiles](../configuration-files.md#runtime-profiles) for
+        details.
 
 `load-config-file <filename>`
 
@@ -735,9 +737,9 @@ syntax](flat-command-syntax.md)).
 `show-text <text> [<duration>|-1 [<level>]]`
 
 :   Show text on the OSD. The string can contain properties, which are
-    expanded as described in [Property Expansion](property-expansion.md).
-    This can be used to show playback time, filename, and so on.
-    `no-osd` has no effect on this command.
+    expanded as described in [Property
+    Expansion](property-expansion.md). This can be used to show playback
+    time, filename, and so on. `no-osd` has no effect on this command.
 
     \<duration\>
 
@@ -1276,8 +1278,8 @@ syntax](flat-command-syntax.md)).
     queried from the result value.
 
     This command can be asynchronously aborted via API. Also see
-    [Asynchronous command details](asynchronous-command-details.md). Only
-    the `run` command can start processes in a truly detached way.
+    [Asynchronous command details](asynchronous-command-details.md).
+    Only the `run` command can start processes in a truly detached way.
 
     <div class="note" markdown="1">
 
@@ -1777,4 +1779,3 @@ syntax](flat-command-syntax.md)).
     Menu](../interactive-control.md#context-menu) section for details.
 
 Undocumented commands: `ao-reload` (experimental/internal).
-

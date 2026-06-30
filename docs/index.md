@@ -10,4 +10,3 @@ variety of different video and audio output methods are supported.
 
 Usage examples to get you started quickly can be found at the end of
 this man page.
-

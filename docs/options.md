@@ -13,8 +13,8 @@ title: Options
     matches more subtags will be preferred over one that matches fewer.
     See also `--aid`.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -31,8 +31,8 @@ title: Options
 
 :   Analogous to `--alang`, for subtitle tracks.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -52,8 +52,8 @@ title: Options
 
 :   Analogous to `--alang` and `--slang`, for video tracks.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--aid=<ID|auto|no>`
 
@@ -1021,8 +1021,8 @@ title: Options
     scripts by separating them with the path separator (`:` on Unix, `;`
     on Windows).
 
-    `--scripts` is a path list option. See [List Options](usage.md#list-options)
-    for details.
+    `--scripts` is a path list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--script-opt=<key=value>`, `--script-opts=key1=value1,key2=value2,...`
 
@@ -1063,8 +1063,8 @@ title: Options
 
     The special name `all` resets as many options as possible.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -1283,8 +1283,8 @@ title: Options
     aren't supported and https URLs also bypass the proxy. This is a
     limitation in FFmpeg.
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -1322,7 +1322,8 @@ title: Options
 `--load-auto-profiles=<yes|no|auto>`
 
 :   Enable the builtin script that does auto profiles (default: auto).
-    See [Conditional auto profiles](configuration-files.md#conditional-auto-profiles) for
+    See [Conditional auto
+    profiles](configuration-files.md#conditional-auto-profiles) for
     details. `auto` will load the script, but immediately unload it if
     there are no conditional profiles.
 
@@ -1404,8 +1405,8 @@ title: Options
     See `--help=watch-later-options` for the list of the properties that
     are restored by default.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -1504,9 +1505,9 @@ title: Options
 `--vf=<filter1[=parameter1:parameter2:...],filter2,...>`
 
 :   Specify a list of video filters to apply to the video stream. See
-    [VIDEO FILTERS](video-filters.md) for details and descriptions of the
-    available filters. The option variants `--vf-add`, `--vf-pre`, and
-    `--vf-clr` exist to modify a previously specified list, but you
+    [VIDEO FILTERS](video-filters.md) for details and descriptions of
+    the available filters. The option variants `--vf-add`, `--vf-pre`,
+    and `--vf-clr` exist to modify a previously specified list, but you
     should not need these for typical use.
 
 `--untimed`
@@ -1633,8 +1634,8 @@ title: Options
     decoding due to insufficient CPU resources; and even on modern
     systems, sufficiently complex content (eg: 4K60 AV1) may require it.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="note" markdown="1">
 
@@ -2477,8 +2478,8 @@ title: Options
     mechanism, like `bug`, `gray`, `idct`, `ec`, `vismv`, `skip_top`
     (was `st`), `skip_bottom` (was `sb`), `debug`.
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -2590,7 +2591,8 @@ title: Options
 :   If this is enabled (default), playing with a speed different from
     normal automatically inserts the `scaletempo2` audio filter. You can
     insert filters besides `scaletempo2` and modify their params using
-    [Conditional auto profiles](configuration-files.md#conditional-auto-profiles):
+    [Conditional auto
+    profiles](configuration-files.md#conditional-auto-profiles):
 
         [af_insert]
         profile-cond=speed ~= 1
@@ -2668,9 +2670,9 @@ title: Options
 `--af=<filter1[=parameter1:parameter2:...],filter2,...>`
 
 :   Specify a list of audio filters to apply to the audio stream. See
-    [AUDIO FILTERS](audio-filters.md) for details and descriptions of the
-    available filters. The option variants `--af-add`, `--af-pre`, and
-    `--af-clr` exist to modify a previously specified list, but you
+    [AUDIO FILTERS](audio-filters.md) for details and descriptions of
+    the available filters. The option variants `--af-add`, `--af-pre`,
+    and `--af-clr` exist to modify a previously specified list, but you
     should not need these for typical use.
 
 `--audio-spdif=<codecs>`
@@ -2843,8 +2845,8 @@ title: Options
     unneeded and pass all unknown options through the AVOption system is
     welcome. A full list of AVOptions can be found in the FFmpeg manual.
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--ad-spdif-dtshd=<yes|no>`, `--dtshd=<yes|no>`
 
@@ -2978,8 +2980,8 @@ title: Options
 
 :   Play audio from an external file while viewing a video.
 
-    This is a path list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a path list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--audio-file=<file>`
 
@@ -3085,16 +3087,17 @@ title: Options
     `--audio-file-auto`, `--autocreate-playlist` or
     `--directory-filter-types`.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details. Use `--help=audio-exts` to see default extensions.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details. Use `--help=audio-exts`
+    to see default extensions.
 
 `--audio-file-paths=<path1:path2:...>`
 
 :   Analogous to `--sub-file-paths` option, but for auto-loaded audio
     files.
 
-    This is a path list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a path list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--audio-client-name=<name>`
 
@@ -3193,8 +3196,8 @@ intentionally, but overriding them can be controlled with
     unneeded and pass all unknown options through the AVOption system is
     welcome. A full list of AVOptions can be found in the FFmpeg manual.
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--sub-delay=<sec>`
 
@@ -3219,11 +3222,11 @@ intentionally, but overriding them can be controlled with
     streams.)
 
     `--sub-files` is a path list option (see [List
-    Options](usage.md#list-options) for details), and can take multiple file
-    names separated by `:` (Unix) or `;` (Windows), while `--sub-file`
-    takes a single filename, but can be used multiple times to add
-    multiple files. Technically, `--sub-file` is a CLI/config file only
-    alias for `--sub-files-append`.
+    Options](usage.md#list-options) for details), and can take multiple
+    file names separated by `:` (Unix) or `;` (Windows), while
+    `--sub-file` takes a single filename, but can be used multiple times
+    to add multiple files. Technically, `--sub-file` is a CLI/config
+    file only alias for `--sub-files-append`.
 
 `--secondary-sid=<ID|auto|no>`
 
@@ -3388,8 +3391,8 @@ intentionally, but overriding them can be controlled with
 
 :   Override some style or script info parameters.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -3783,8 +3786,9 @@ intentionally, but overriding them can be controlled with
     that modifying this list will also affect what mpv recognizes as
     subtitles when using drag and drop.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details. Use `--help=sub-auto-exts` to see default extensions.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details. Use
+    `--help=sub-auto-exts` to see default extensions.
 
 `--sub-codepage=<codepage>`
 
@@ -3956,8 +3960,8 @@ intentionally, but overriding them can be controlled with
 
     </div>
 
-    This is a path list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a path list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--sub-visibility=<yes|no>`
 
@@ -4251,10 +4255,10 @@ intentionally, but overriding them can be controlled with
 
 :   Specify pairs of characters that `--sub-filter-sdh` will use to
     potentially remove text. This is a string list option. See [List
-    Options](usage.md#list-options) for details. Text that is enclosed within
-    each specified pair will be removed. Note that parenthesis pairs
-    (normal and full width) are treated as a special case and require
-    `--sub-fitler-sdh-harder` to be removed.
+    Options](usage.md#list-options) for details. Text that is enclosed
+    within each specified pair will be removed. Note that parenthesis
+    pairs (normal and full width) are treated as a special case and
+    require `--sub-fitler-sdh-harder` to be removed.
 
     Default: `(),[],（）`
 
@@ -4262,10 +4266,10 @@ intentionally, but overriding them can be controlled with
 
 :   Set a list of regular expressions to match on text subtitles, and
     remove any lines that match (default: empty). This is a string list
-    option. See [List Options](usage.md#list-options) for details. Normally, you
-    should use `--sub-filter-regex-append=<regex>`, where each option
-    use will append a new regular expression, without having to fight
-    escaping problems.
+    option. See [List Options](usage.md#list-options) for details.
+    Normally, you should use `--sub-filter-regex-append=<regex>`, where
+    each option use will append a new regular expression, without having
+    to fight escaping problems.
 
     List items are matched in order. If a regular expression matches,
     the process is stopped, and the subtitle line is discarded. The text
@@ -5335,8 +5339,8 @@ intentionally, but overriding them can be controlled with
     be found in the FFmpeg manual. Note that some options may conflict
     with mpv options.
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -5757,8 +5761,8 @@ intentionally, but overriding them can be controlled with
     empty, all files are added to the playlist. (Default:
     `video,audio,image,archive,playlist`)
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--autocreate-playlist=<no|filter|same>`
 
@@ -5853,8 +5857,8 @@ intentionally, but overriding them can be controlled with
     idle mode with no file, it will run immediately). When changing
     values at runtime, the commands will also run as soon as possible.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -5889,7 +5893,8 @@ intentionally, but overriding them can be controlled with
     will show the keys and the bound commands on the OSD. Has to be used
     with a dummy video, and the normal ways to quit the player will not
     work (key bindings that normally quit will be shown on OSD only,
-    just like any other binding). See [INPUT.CONF](command-interface/input.conf.md).
+    just like any other binding). See
+    [INPUT.CONF](command-interface/input.conf.md).
 
 `--input-terminal=<yes|no>`
 
@@ -6720,8 +6725,8 @@ intentionally, but overriding them can be controlled with
     encoder. Above options may not be valid and or optimal for other
     encoders.
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -6941,8 +6946,8 @@ places).
 :   Set AVOptions on the SwrContext or AVAudioResampleContext. These
     should be documented by FFmpeg.
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
 #### Terminal
 
@@ -7103,7 +7108,8 @@ places).
     understand the sequence. The latter probably includes the
     regrettable win32.
 
-    Expands properties. See [Property Expansion](command-interface/property-expansion.md).
+    Expands properties. See [Property
+    Expansion](command-interface/property-expansion.md).
 
 `--msg-module`
 
@@ -7341,8 +7347,8 @@ places).
 
 :   Set custom HTTP fields when accessing HTTP stream.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -8340,7 +8346,8 @@ them.
     Each use of the `--glsl-shader` option will add another file to the
     internal list of shaders, while `--glsl-shaders` takes a list of
     files, and overwrites the internal list with it. The latter is a
-    path list option (see [List Options](usage.md#list-options) for details).
+    path list option (see [List Options](usage.md#list-options) for
+    details).
 
     <div class="warning" markdown="1">
 
@@ -9497,9 +9504,10 @@ them.
     TL;DR: Use `--target-colorspace-hint=auto` and adjust `--target-*`
     parameters to match your target display capabilities, until it looks
     best for you. Use [Conditional auto
-    profiles](configuration-files.md#conditional-auto-profiles) for specific adjustments.
-    Avoid using `--target-colorspace-hint=no` unless it's sRGB content,
-    but even then it's better to set the colorspace metadata.
+    profiles](configuration-files.md#conditional-auto-profiles) for
+    specific adjustments. Avoid using `--target-colorspace-hint=no`
+    unless it's sRGB content, but even then it's better to set the
+    colorspace metadata.
 
     </div>
 
@@ -10584,7 +10592,8 @@ them.
         close to 1 for your filter setup. Use (speed \*
         video_speed_correction) to get the actual playback speed in the
         condition. See [Conditional auto
-        profiles](configuration-files.md#conditional-auto-profiles) for details.
+        profiles](configuration-files.md#conditional-auto-profiles) for
+        details.
 
     display-vdrop
     :   Drop or repeat video frames to compensate desyncing video.
@@ -10664,8 +10673,8 @@ them.
     The default includes a common list of tags, call mpv with
     `--list-options` to see it.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--mf-fps=<value>`
 
@@ -10692,8 +10701,8 @@ them.
     available with all protocols, and printing errors for unknown
     options would end up being too noisy.)
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--backdrop-type=<auto|none|mica|acrylic|mica-alt>`
 
@@ -10783,8 +10792,8 @@ them.
     This makes it slightly less intrusive. (In mpv 0.28.0 and before,
     this was not quite strictly enforced.)
 
-    This is a path list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a path list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--external-file=<file>`
 
@@ -10807,8 +10816,8 @@ them.
     so this paragraph describes the behavior coincidentally resulting
     from implementation details.)
 
-    This is a path list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a path list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--cover-art-file=<file>`
 
@@ -10845,8 +10854,9 @@ them.
 :   Image file extensions to try to match when using `--cover-art-auto`,
     `--autocreate-playlist` or `--directory-filter-types`.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details. Use `--help=image-exts` to see default extensions.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details. Use `--help=image-exts`
+    to see default extensions.
 
 `--cover-art-whitelist=filename1,filename2,...`
 
@@ -10857,32 +10867,35 @@ them.
     Default:
     `AlbumArt,Album,cover,front,AlbumArtSmall,Folder,.folder,thumb`
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
 `--video-exts=ext1,ext2,...`
 
 :   Video file extensions to try to match when using
     `--autocreate-playlist` or `--directory-filter-types`.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details. Use `--help=video-exts` to see default extensions.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details. Use `--help=video-exts`
+    to see default extensions.
 
 `--archive-exts=ext1,ext2,...`
 
 :   Archive file extensions to try to match when using
     `--autocreate-playlist` or `--directory-filter-types`.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details. Use `--help=archive-exts` to see the default extensions.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details. Use
+    `--help=archive-exts` to see the default extensions.
 
 `--playlist-exts=ext1,ext2,...`
 
 :   Playlist file extensions to try to match when using
     `--autocreate-playlist` or `--directory-filter-types`.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details. Use `--help=playlist-exts` to see the default extensions.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details. Use
+    `--help=playlist-exts` to see the default extensions.
 
 `--autoload-files=<yes|no>`
 
@@ -11151,4 +11164,3 @@ them.
 
     If mpv was previously registered for all users, run this command as
     an administrator to remove it for all users.
-

@@ -18,4 +18,3 @@ then it won't work, because `b` would override `a-b-c`. However, binding
 `a-b` to `ignore` would allow that, because after `a-b` the longest
 match `a-b` is ignored, and a following `c` would trigger the sequence
 `a-b-c` while `b` alone would still work.
-

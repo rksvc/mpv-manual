@@ -106,8 +106,9 @@ form:
     { "event": "event_name" }
 
 where `event_name` is the name of the event. Additional event-specific
-fields can also be present. See [List of events](command-interface/list-of-events.md) for a
-list of all supported events.
+fields can also be present. See [List of
+events](command-interface/list-of-events.md) for a list of all supported
+events.
 
 Because events can occur at any time, it may be difficult at times to
 determine which response goes with which command. Commands may
@@ -201,13 +202,14 @@ readable, while some obscure commands basically require using named
 arguments.
 
 Currently, only "proper" commands (as listed by [List of Input
-Commands](command-interface/list-of-input-commands.md)) support named arguments.
+Commands](command-interface/list-of-input-commands.md)) support named
+arguments.
 
 #### Commands
 
 In addition to the commands described in [List of Input
-Commands](command-interface/list-of-input-commands.md), a few extra commands can also be
-used as part of the protocol:
+Commands](command-interface/list-of-input-commands.md), a few extra
+commands can also be used as part of the protocol:
 
 `client_name`
 
@@ -241,7 +243,8 @@ used as part of the protocol:
 `set_property`
 
 :   Set the given property to the given value. See
-    [Properties](command-interface/properties.md) for more information about properties.
+    [Properties](command-interface/properties.md) for more information
+    about properties.
 
     Example:
 
@@ -368,11 +371,11 @@ You can create an anonymous IPC connection without having to set
 backend that starts processes.
 
 You can put `.run` file extension in the mpv scripts directory in its
-config directory (see the [FILES](files.md) section for details), or load
-them through other means (see [Script location](lua-scripting.md#script-location)).
-These scripts are simply executed with the OS native mechanism (as if
-you ran them in the shell). They must have a proper shebang and have the
-executable bit set.
+config directory (see the [FILES](files.md) section for details), or
+load them through other means (see [Script
+location](lua-scripting.md#script-location)). These scripts are simply
+executed with the OS native mechanism (as if you ran them in the shell).
+They must have a proper shebang and have the executable bit set.
 
 When executed, a socket (the IPC connection) is passed to them through
 file descriptor inheritance. The file descriptor is indicated as the
@@ -384,4 +387,3 @@ connection. mpv does not attempt to observe or other interact with the
 started script process.
 
 This does not work in Windows yet.
-

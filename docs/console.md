@@ -154,7 +154,8 @@ WHEEL_DOWN
 This script can be customized through a config file
 `script-opts/console.conf` placed in mpv's user directory and through
 the `--script-opts` command-line option. The configuration syntax is
-described in [mp.options functions](lua-scripting.md#mpoptions-functions).
+described in [mp.options
+functions](lua-scripting.md#mpoptions-functions).
 
 ##### Configurable Options
 
@@ -282,4 +283,3 @@ described in [mp.options functions](lua-scripting.md#mpoptions-functions).
     The ratio of font height to font width. Adjusts grid width of
     completions. Values in the range 1.8..2.5 make sense for common
     monospace fonts.
-

@@ -40,4 +40,3 @@ where applicable, properties are expanded - regardless of argument
 quoting. However, expansion can still be prevented with the `raw` prefix
 or `$>`. See [Input Command Prefixes](input-command-prefixes.md) and
 [Property Expansion](property-expansion.md).
-

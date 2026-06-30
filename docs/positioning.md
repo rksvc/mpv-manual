@@ -45,7 +45,8 @@ disabled using the `--load-positioning=no` option.
 This script can be customized through a config file
 `script-opts/positioning.conf` placed in mpv's user directory and
 through the `--script-opts` command-line option. The configuration
-syntax is described in [mp.options functions](lua-scripting.md#mpoptions-functions).
+syntax is described in [mp.options
+functions](lua-scripting.md#mpoptions-functions).
 
 ##### Configurable Options
 
@@ -63,4 +64,3 @@ syntax is described in [mp.options functions](lua-scripting.md#mpoptions-functio
 
     Whether to not print the new value of `--video-zoom` when using
     `cursor-centric-zoom`.
-

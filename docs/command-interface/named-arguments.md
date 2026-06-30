@@ -20,4 +20,3 @@ means you cannot use them for key bindings in input.conf at all.
 Property expansion is disabled by default for these APIs. This can be
 changed with the `expand-properties` prefix. See [Input Command
 Prefixes](input-command-prefixes.md).
-

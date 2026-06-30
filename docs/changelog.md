@@ -23,4 +23,3 @@ There is no real changelog, but you can look at the following things:
   repository, which used to be in place of this section. It documents
   some changes that happened since mplayer2 forked off MPlayer. (Not
   updated anymore.)
-

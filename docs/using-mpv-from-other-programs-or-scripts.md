@@ -46,7 +46,8 @@ There are three choices for using mpv from other programs or scripts:
 
 All these access the client API, which is the sum of the various
 mechanisms provided by the player core, as documented here:
-[OPTIONS](options.md), [List of Input Commands](command-interface/list-of-input-commands.md),
-[Properties](command-interface/properties.md), [List of events](command-interface/list-of-events.md) (also see C
-API), [Hooks](command-interface/hooks.md).
-
+[OPTIONS](options.md), [List of Input
+Commands](command-interface/list-of-input-commands.md),
+[Properties](command-interface/properties.md), [List of
+events](command-interface/list-of-events.md) (also see C API),
+[Hooks](command-interface/hooks.md).

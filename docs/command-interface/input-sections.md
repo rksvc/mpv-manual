@@ -19,4 +19,3 @@ Predefined bindings:
 
 :   Section which is active in encoding mode. It is enabled exclusively,
     so that bindings in the `default` sections are ignored.
-

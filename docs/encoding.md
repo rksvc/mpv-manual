@@ -20,8 +20,8 @@ facility.
 :   Specifies the output format options for libavformat. See
     `--ofopts=help` for a full list of supported options.
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
     `--ofopts-add=<option>`
 
@@ -53,8 +53,8 @@ facility.
 
     </div>
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
     `--oacopts-add=<option>`
 
@@ -90,8 +90,8 @@ facility.
 
     </div>
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
     `--ovcopts-add=<option>`
 
@@ -122,8 +122,8 @@ facility.
     allow almost arbitrary keys, while support in MP4 and MP3 is more
     limited.
 
-    This is a key/value list option. See [List Options](usage.md#list-options)
-    for details.
+    This is a key/value list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -140,8 +140,8 @@ facility.
 :   Specifies metadata to exclude from the output file when copying from
     the input file.
 
-    This is a string list option. See [List Options](usage.md#list-options) for
-    details.
+    This is a string list option. See [List
+    Options](usage.md#list-options) for details.
 
     <div class="admonition" markdown="1">
 
@@ -153,4 +153,3 @@ facility.
         file.
 
     </div>
-

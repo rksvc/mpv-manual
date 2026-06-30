@@ -67,8 +67,8 @@ used. Use `--lavfi-complex` for such a use case. This also applies for
 
 Filters can be manipulated at run time. You can use `@` labels as
 described above in combination with the `vf` command (see [COMMAND
-INTERFACE](command-interface)) to get more control over this. Initially
-disabled filters with `!` are useful for this as well.
+INTERFACE](command-interface/index.md)) to get more control over this.
+Initially disabled filters with `!` are useful for this as well.
 
 <div class="note" markdown="1">
 
@@ -1249,4 +1249,3 @@ Available mpv-only filters are:
     `gpu` filter. There is no mechanism in mpv to prevent this.
 
     </div>
-

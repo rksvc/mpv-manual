@@ -55,4 +55,3 @@ are also listed.
   demuxer in seconds, the second value shows the estimated size of the
   buffered amount in kilobytes. (`demuxer-cache-duration` and
   `demuxer-cache-state` properties.)
-

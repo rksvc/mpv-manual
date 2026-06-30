@@ -15,4 +15,3 @@ merely a way to change an option at runtime.
 Note that many properties are unavailable at startup. See [Details on
 the script initialization and
 lifecycle](../lua-scripting.md#details-on-the-script-initialization-and-lifecycle).
-

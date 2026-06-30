@@ -204,4 +204,3 @@ title: Protocols
 `hex://data`
 
 > Like `memory://`, but the string is interpreted as hexdump.
-

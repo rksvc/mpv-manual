@@ -47,4 +47,3 @@ caveats with some properties (due to historical reasons):
     turn is probably only useful in encoding mode. Normal libmpv users
     should use other mechanisms, such as the `apply-profile` command,
     and the `mpv_load_config_file` API function. Avoid these properties.
-

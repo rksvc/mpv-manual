@@ -30,4 +30,3 @@ resume playback from episode 5.
 
 More options to configure this functionality are listed in [Watch
 Later](options.md#watch-later).
-

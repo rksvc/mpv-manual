@@ -237,4 +237,3 @@ brackets:
 
 The following events also happen, but are deprecated: `idle`, `tick` Use
 `mpv_observe_property()` (Lua: `mp.observe_property()`) instead.
-

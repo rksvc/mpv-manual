@@ -30,7 +30,7 @@ parsed by other components (e.g. filter strings with `vf add`) - in
 these cases, you you would have to double-escape in input.conf, but not
 with the array APIs.
 
-For complex commands, consider using [Named arguments](named-arguments.md)
-instead, which should give slightly more compatibility. Some commands do
-not support named arguments and inherently take an array, though.
-
+For complex commands, consider using [Named
+arguments](named-arguments.md) instead, which should give slightly more
+compatibility. Some commands do not support named arguments and
+inherently take an array, though.

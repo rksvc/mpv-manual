@@ -166,7 +166,8 @@ section.
 This script can be customized through a config file
 `script-opts/osc.conf` placed in mpv's user directory and through the
 `--script-opts` command-line option. The configuration syntax is
-described in [mp.options functions](lua-scripting.md#mpoptions-functions).
+described in [mp.options
+functions](lua-scripting.md#mpoptions-functions).
 
 ##### Command-line Syntax
 
@@ -728,4 +729,3 @@ and to set auto mode (the default) with `b`:
     `yes`, `no`, and `cycle` to toggle between yes and no. If a second
     argument is passed (any value), then the output on the OSD will be
     silenced.
-

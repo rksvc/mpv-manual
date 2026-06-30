@@ -83,4 +83,3 @@ The following hooks are currently defined:
 
 :   Run after an `end-file` event. Useful to drain property changes
     after a file has finished.
-

@@ -57,8 +57,8 @@ Available video output drivers are:
     It supports extended scaling methods, dithering, color management,
     custom shaders, HDR, and more.
 
-    See [GPU renderer options](options.md#gpu-renderer-options) for options
-    specific to this VO.
+    See [GPU renderer options](options.md#gpu-renderer-options) for
+    options specific to this VO.
 
     By default, mpv utilizes settings that balance quality and
     performance. Additionally, two predefined profiles are available:
@@ -1049,4 +1049,3 @@ Available video output drivers are:
     This is a fallback only, and should not be normally used.
 
     </div>
-

@@ -33,4 +33,3 @@ It's also possible to bind a command to a sequence of keys:
 a-b-c show-text "command run after a, b, c have been pressed"
 
 (This is not shown in the general command syntax.)
-

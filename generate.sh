@@ -2,7 +2,5 @@
 if [ ! -e mpv ]; then
     git clone --depth 1 -b release/0.41 https://github.com/mpv-player/mpv
 fi
-pandoc mpv/DOCS/man/mpv.rst -t markdown_mmd -o mpv.md
 find docs -name '*.md' -type f -delete
-python mdsplit.py mpv.md docs
-rm mpv.md
+pandoc mpv/DOCS/man/mpv.rst --lua-filter filter.lua

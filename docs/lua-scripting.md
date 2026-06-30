@@ -121,12 +121,13 @@ The `mp` module is preloaded, although it can be loaded manually with
 `mp.command(string)`
 
 :   Run the given command. This is similar to the commands used in
-    input.conf. See [List of Input Commands](command-interface/list-of-input-commands.md).
+    input.conf. See [List of Input
+    Commands](command-interface/list-of-input-commands.md).
 
     By default, this will show something on the OSD (depending on the
     command), as if it was used in `input.conf`. See [Input Command
-    Prefixes](command-interface/input-command-prefixes.md) how to influence OSD usage per
-    command.
+    Prefixes](command-interface/input-command-prefixes.md) how to
+    influence OSD usage per command.
 
     Returns `true` on success, or `nil, error` on error.
 
@@ -165,8 +166,9 @@ The `mp` module is preloaded, although it can be loaded manually with
     named arguments. This requires at least an entry with the key `name`
     to be present, which must be a string, and contains the command
     name. The special entry `_flags` is optional, and if present, must
-    be an array of [Input Command Prefixes](command-interface/input-command-prefixes.md) to
-    apply. All other entries are interpreted as arguments.
+    be an array of [Input Command
+    Prefixes](command-interface/input-command-prefixes.md) to apply. All
+    other entries are interpreted as arguments.
 
     Returns a result table on success (usually empty), or `def, error`
     on error. `def` is the second parameter provided to the function,
@@ -215,17 +217,18 @@ The `mp` module is preloaded, although it can be loaded manually with
 `mp.del_property(name)`
 
 :   Delete the given property. See `mp.get_property` and
-    [Properties](command-interface/properties.md) for more information about properties.
-    Most properties cannot be deleted.
+    [Properties](command-interface/properties.md) for more information
+    about properties. Most properties cannot be deleted.
 
     Returns true on success, or `nil, error` on error.
 
 `mp.get_property(name [,def])`
 
 :   Return the value of the given property as string. These are the same
-    properties as used in input.conf. See [Properties](command-interface/properties.md) for
-    a list of properties. The returned string is formatted similar to
-    `${=name}` (see [Property Expansion](command-interface/property-expansion.md)).
+    properties as used in input.conf. See
+    [Properties](command-interface/properties.md) for a list of
+    properties. The returned string is formatted similar to `${=name}`
+    (see [Property Expansion](command-interface/property-expansion.md)).
 
     Returns the string on success, or `def, error` on error. `def` is
     the second parameter provided to the function, and is nil if it's
@@ -274,8 +277,8 @@ The `mp` module is preloaded, although it can be loaded manually with
 `mp.set_property(name, value)`
 
 :   Set the given property to the given string value. See
-    `mp.get_property` and [Properties](command-interface/properties.md) for more information
-    about properties.
+    `mp.get_property` and [Properties](command-interface/properties.md)
+    for more information about properties.
 
     Returns true on success, or `nil, error` on error.
 
@@ -479,8 +482,8 @@ The `mp` module is preloaded, although it can be loaded manually with
 
     Returns true if such an event exists, false otherwise.
 
-    See [Events](#events) and [List of events](command-interface/list-of-events.md) for
-    details.
+    See [Events](#events) and [List of
+    events](command-interface/list-of-events.md) for details.
 
 `mp.unregister_event(fn)`
 
@@ -1213,7 +1216,8 @@ Example:
 
     mp.register_event("file-loaded", my_fn)
 
-For the existing event types, see [List of events](command-interface/list-of-events.md).
+For the existing event types, see [List of
+events](command-interface/list-of-events.md).
 
 #### Extras
 
@@ -1248,7 +1252,6 @@ to guarantee a stable interface.
     > :   Continue the hook. Doesn't need to be called unless `defer()`
     >     was called.
 
-    See [Hooks](command-interface/hooks.md) for currently existing hooks and what they do -
-    only the hook list is interesting; handling hook execution is done
-    by the Lua script function automatically.
-
+    See [Hooks](command-interface/hooks.md) for currently existing hooks
+    and what they do - only the hook list is interesting; handling hook
+    execution is done by the Lua script function automatically.

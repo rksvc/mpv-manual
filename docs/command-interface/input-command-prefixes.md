@@ -83,4 +83,3 @@ Multiple prefixes can be specified. They are separated by whitespace.
 
 All of the osd prefixes are still overridden by the global `--osd-level`
 settings.
-

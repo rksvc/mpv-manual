@@ -36,4 +36,3 @@ commands:
 will merely display the binding, even if mapped to quit.)
 
 Also see [Key names](key-names.md).
-

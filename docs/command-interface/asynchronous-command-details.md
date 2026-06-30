@@ -17,4 +17,3 @@ If the player is closed, the core may abort all pending async. commands
 on its own (like a forced `mpv_abort_async_command()` call for each
 pending command on behalf of the API user). This happens at the same
 time `MPV_EVENT_SHUTDOWN` is sent, and there is no way to prevent this.
-

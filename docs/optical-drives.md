@@ -12,4 +12,3 @@ This applies for all optical disc playback (CDDA, DVD, and BD).
 | macOS   | /dev/disk1    |
 | FreeBSD | /dev/cd0      |
 | OpenBSD | /dev/rcd0c    |
-

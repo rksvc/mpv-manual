@@ -83,4 +83,3 @@ accepted as well. Example:
 
 > - `\n` becomes a newline character
 > - `\\` expands to `\`
-

@@ -12,8 +12,8 @@ enabled.
 #### C plugins location
 
 C plugins are put into the mpv scripts directory in its config directory
-(see the [FILES](files.md) section for details). They must have a `.so` or
-`.dll` file extension. They can also be explicitly loaded with the
+(see the [FILES](files.md) section for details). They must have a `.so`
+or `.dll` file extension. They can also be explicitly loaded with the
 `--script` option.
 
 #### API
@@ -60,4 +60,3 @@ symbols dynamically, before calling `mpv_open_cplugin()`.
 See:
 
 - <https://github.com/mpv-player/mpv-examples/tree/master/cplugins>
-

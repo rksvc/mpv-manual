@@ -69,7 +69,8 @@ All configuration files should be encoded in UTF-8.
 
 `~/.config/mpv/input.conf`
 
-:   key bindings (see [INPUT.CONF](command-interface/input.conf.md) section)
+:   key bindings (see [INPUT.CONF](command-interface/input.conf.md)
+    section)
 
 `~/.config/mpv/fonts.conf`
 
@@ -85,8 +86,9 @@ All configuration files should be encoded in UTF-8.
 
 `~/.config/mpv/fonts/`
 
-:   Default location for `--sub-fonts-dir` (see [Subtitles](options.md#subtitles))
-    and `--osd-fonts-dir` (see [OSD](options.md#osd)).
+:   Default location for `--sub-fonts-dir` (see
+    [Subtitles](options.md#subtitles)) and `--osd-fonts-dir` (see
+    [OSD](options.md#osd)).
 
 `~/.config/mpv/scripts/`
 
@@ -129,4 +131,3 @@ All configuration files should be encoded in UTF-8.
 
     Other files in this directory are specific to the corresponding
     scripts as well, and the mpv core doesn't touch them.
-

@@ -12,8 +12,8 @@ Note
 
 Most options can be set at runtime via properties as well. Just remove
 the leading `--` from the option name. These are not documented below,
-see [OPTIONS](../options.md) instead. Only properties which do not exist as
-option with the same name, or which have very different behavior from
+see [OPTIONS](../options.md) instead. Only properties which do not exist
+as option with the same name, or which have very different behavior from
 the options are documented below.
 
 Properties marked as (RW) are writeable, while those that aren't are
@@ -2507,4 +2507,3 @@ read-only.
 `clock`
 
 :   The current local time in hour:minutes format.
-

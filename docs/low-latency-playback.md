@@ -40,4 +40,3 @@ Additional options that can be tried:
 - `--vo=xv`, same
 - without audio `--framedrop=no --speed=1.01` may help for live sources
   (results can be mixed)
-

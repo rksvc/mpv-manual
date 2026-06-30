@@ -433,4 +433,3 @@ callback.
 
 Note: `exit()` is also registered for the `shutdown` event, and its
 implementation is a simple `mp.keep_running = false`.
-

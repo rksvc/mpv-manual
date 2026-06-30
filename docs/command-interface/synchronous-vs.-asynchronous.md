@@ -37,4 +37,3 @@ Currently the following commands have different waiting characteristics
 with sync vs. async: sub-add, audio-add, sub-reload, audio-reload,
 rescan-external-files, screenshot, screenshot-to-file, dump-cache,
 ab-loop-dump-cache.
-

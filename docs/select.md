@@ -61,9 +61,9 @@ matching all terms are filtered.
 #### Script bindings
 
 By default select.lua's script bindings are bound to key sequences
-starting with `g` listed in [Keyboard Control](interactive-control.md#keyboard-control). The
-names of the script bindings listed below can be used to bind them to
-different keys.
+starting with `g` listed in [Keyboard
+Control](interactive-control.md#keyboard-control). The names of the
+script bindings listed below can be used to bind them to different keys.
 
 <div class="admonition" markdown="1">
 
@@ -193,7 +193,8 @@ Available script bindings are:
 This script can be customized through a config file
 `script-opts/select.conf` placed in mpv's user directory and through the
 `--script-opts` command-line option. The configuration syntax is
-described in [mp.options functions](lua-scripting.md#mpoptions-functions).
+described in [mp.options
+functions](lua-scripting.md#mpoptions-functions).
 
 ##### Configurable options
 
@@ -209,4 +210,3 @@ described in [mp.options functions](lua-scripting.md#mpoptions-functions).
 :   Default: yes
 
     Whether to show only the last of history entries with the same path.
-

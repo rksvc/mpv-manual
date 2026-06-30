@@ -22,7 +22,8 @@ the integration is implemented, it is already disabled by default.
 This script can be customized through a config file
 `script-opts/context_menu.conf` placed in mpv's user directory and
 through the `--script-opts` command-line option. The configuration
-syntax is described in [mp.options functions](lua-scripting.md#mpoptions-functions).
+syntax is described in [mp.options
+functions](lua-scripting.md#mpoptions-functions).
 
 ##### Configurable Options
 
@@ -109,4 +110,3 @@ syntax is described in [mp.options functions](lua-scripting.md#mpoptions-functio
 
     The number of seconds to close submenus after the cursor enters a
     parent menu.
-

@@ -374,4 +374,3 @@ the currently played file (*not* the file format).
 
 This feature is very limited, and is considered soft-deprecated. Use
 conditional auto profiles.
-

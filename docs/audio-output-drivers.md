@@ -438,4 +438,3 @@ Available audio output drivers are:
         most cases, but reportedly on some devices there are glitches
         following stream resets under the default setting. In such
         cases, specifying a shorter duration might help.
-

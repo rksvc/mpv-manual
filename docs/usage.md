@@ -505,4 +505,3 @@ command, which takes the suffix (without the `-`) as separate operation
 parameter.
 
 An object settings list can hold up to 100 elements.
-

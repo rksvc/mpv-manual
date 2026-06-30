@@ -55,7 +55,8 @@ On page 4, these key bindings are also active:
 This script can be customized through a config file
 `script-opts/stats.conf` placed in mpv's user directory and through the
 `--script-opts` command-line option. The configuration syntax is
-described in [mp.options functions](lua-scripting.md#mpoptions-functions).
+described in [mp.options
+functions](lua-scripting.md#mpoptions-functions).
 
 ##### Configurable Options
 
@@ -354,4 +355,3 @@ starting mpv.
 If entries have `/time` and `/cpu` variants, the former gives the real
 time (monotonic clock), while the latter the thread CPU time (only if
 the corresponding pthread API works and is supported).
-

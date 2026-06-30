@@ -120,4 +120,3 @@ Comments on some symbolic names:
 :   Pseudo-key that matches any key that produces text. (You should
     probably avoid this if possible, because it might change behavior or
     get removed in the future.)
-

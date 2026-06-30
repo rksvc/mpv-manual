@@ -13,8 +13,9 @@ The following listings are not necessarily complete. See
 User `input.conf` files and Lua scripts can define additional key
 bindings.
 
-See [COMMAND INTERFACE](command-interface) and [Key names](command-interface/key-names.md)
-sections for more details on configuring keybindings.
+See [COMMAND INTERFACE](command-interface/index.md) and [Key
+names](command-interface/key-names.md) sections for more details on
+configuring keybindings.
 
 See also `--input-test` for interactive binding details by key, and the
 [stats](stats.md) built-in script for key bindings list (including print
@@ -476,4 +477,3 @@ interaction (mouse right click, etc.).
 To use this feature, you need to fill the `menu-data` property with menu
 definition data, and add a keybinding to run the `context-menu` command,
 which can be done with a user script.
-

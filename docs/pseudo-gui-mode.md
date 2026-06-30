@@ -3,8 +3,8 @@ title: Pseudo GUI mode
 ---
 
 mpv has no official GUI, other than the OSC ([ON SCREEN
-CONTROLLER](on-screen-controller.md)), which is not a full GUI and is not
-meant to be. However, to compensate for the lack of expected GUI
+CONTROLLER](on-screen-controller.md)), which is not a full GUI and is
+not meant to be. However, to compensate for the lack of expected GUI
 behavior, mpv will in some cases start with some settings changed to
 behave slightly more like a GUI mode.
 
@@ -54,4 +54,3 @@ might change, and not apply your additional settings, and/or use a
 different profile name.
 
 </div>
-

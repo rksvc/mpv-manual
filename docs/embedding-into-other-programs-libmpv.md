@@ -15,4 +15,3 @@ control mpv, further documentation is spread over a few places:
 - <https://mpv.io/manual/master/#list-of-input-commands>
 - <https://mpv.io/manual/master/#properties>
 - <https://github.com/mpv-player/mpv-examples/tree/master/libmpv>
-

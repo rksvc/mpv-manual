@@ -30,4 +30,3 @@ Note that quitting the player manually will always lead to exit code 0,
 overriding the exit code that would be returned normally. Also, the
 `quit` input command can take an exit code: in this case, that exit code
 is returned.
-

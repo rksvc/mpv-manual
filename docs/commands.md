@@ -44,7 +44,8 @@ interactively, and also adds mpv's log to the console's log.
 This script can be customized through a config file
 `script-opts/commands.conf` placed in mpv's user directory and through
 the `--script-opts` command-line option. The configuration syntax is
-described in [mp.options functions](lua-scripting.md#mpoptions-functions).
+described in [mp.options
+functions](lua-scripting.md#mpoptions-functions).
 
 ##### Configurable Options
 
@@ -66,4 +67,3 @@ described in [mp.options functions](lua-scripting.md#mpoptions-functions).
 
     Whether to remember the input line and cursor position when closing
     the console, and prefill it the next time it is opened.
-

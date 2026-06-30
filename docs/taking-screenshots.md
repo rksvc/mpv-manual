@@ -15,4 +15,3 @@ screenshots without subtitles, while `s` includes subtitles.
 
 Unlike with MPlayer, the `screenshot` video filter is not required. This
 filter was never required in mpv, and has been removed.
-

@@ -44,4 +44,3 @@ removed in the future.
 
 Note that mpv likes to mix `/` and `\` path separators for simplicity.
 kernel32.dll accepts this, but cmd.exe does not.
-
