@@ -1,5 +1,17 @@
 local output = 'docs/'
 
+function remove_md(path)
+    for _, file in ipairs(pandoc.system.list_directory(path)) do
+        local _, ext = pandoc.path.split_extension(file)
+        file = pandoc.path.join { path, file }
+        if ext == '.md' then
+            pandoc.system.remove(file)
+        elseif ext == '' then
+            remove_md(file)
+        end
+    end
+end
+
 function to_filename(s)
     local t = {}
     for w in s:gmatch('[%w%.]+') do
@@ -135,6 +147,7 @@ function Pandoc(doc)
         table.insert(cursor, { [title] = filename })
     end
 
+    remove_md(output)
     for _, blk in ipairs(doc.blocks) do
         if blk.tag == 'Header' then
             blk.attr.identifier = ''
