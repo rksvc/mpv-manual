@@ -1,6 +1,6 @@
 {
   "arrowParens": "avoid",
-  "ignorePatterns": ["**/*.md"],
+  "ignorePatterns": ["**/*.md", "/mpv"],
   "objectWrap": "collapse",
   "overrides": [{ "files": ["**/*.css"], "options": { "singleQuote": false, "useTabs": true } }],
   "semi": false,

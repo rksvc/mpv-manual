@@ -1,0 +1,5 @@
+[submodule "mpv"]
+	path = mpv
+	url = https://github.com/mpv-player/mpv
+	branch = release/0.41
+	shallow = true
