@@ -1,6 +1,6 @@
 ## Build
 
 ```sh
-git submodule update --init --depth 1
+git clone --depth 1 -b release/0.41 https://github.com/mpv-player/mpv
 pandoc mpv/DOCS/man/mpv.rst --lua-filter filter.lua
 ```
