@@ -1881,8 +1881,8 @@ read-only.
 
     Example
 
-    - `--osd-msg3='This is ${osd-ass-cc/0}{\\b1}bold text'`
-    - `show-text "This is ${osd-ass-cc/0}{\\b1}bold text"`
+    -   `--osd-msg3='This is ${osd-ass-cc/0}{\\b1}bold text'`
+    -   `show-text "This is ${osd-ass-cc/0}{\\b1}bold text"`
 
     </div>
 

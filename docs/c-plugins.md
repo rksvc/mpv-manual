@@ -59,4 +59,4 @@ symbols dynamically, before calling `mpv_open_cplugin()`.
 
 See:
 
-- <https://github.com/mpv-player/mpv-examples/tree/master/cplugins>
+-   <https://github.com/mpv-player/mpv-examples/tree/master/cplugins>

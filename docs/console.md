@@ -145,9 +145,9 @@ WHEEL_DOWN
 
 #### Known issues
 
-- Non-ASCII keyboard input has restrictions
-- The cursor keys move between Unicode code-points, not grapheme
-  clusters
+-   Non-ASCII keyboard input has restrictions
+-   The cursor keys move between Unicode code-points, not grapheme
+    clusters
 
 #### Configuration
 

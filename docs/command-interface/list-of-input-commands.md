@@ -1618,9 +1618,9 @@ syntax](flat-command-syntax.md)).
 
     Example for input.conf
 
-    - `a vf set vflip` turn the video upside-down on the `a` key
-    - `b vf set ""` remove all video filters on `b`
-    - `c vf toggle gradfun` toggle debanding on `c`
+    -   `a vf set vflip` turn the video upside-down on the `a` key
+    -   `b vf set ""` remove all video filters on `b`
+    -   `c vf toggle gradfun` toggle debanding on `c`
 
     </div>
 
@@ -1628,14 +1628,14 @@ syntax](flat-command-syntax.md)).
 
     Example how to toggle disabled filters at runtime
 
-    - Add something like `vf-add=@deband:!gradfun` to `mpv.conf`. The
-      `@deband:` is the label, an arbitrary, user-given name for this
-      filter entry. The `!` before the filter name disables the filter
-      by default. Everything after this is the normal filter name and
-      possibly filter parameters, like in the normal `--vf` syntax.
-    - Add `a vf toggle @deband` to `input.conf`. This toggles the
-      "disabled" flag for the filter with the label `deband` when the
-      `a` key is hit.
+    -   Add something like `vf-add=@deband:!gradfun` to `mpv.conf`. The
+        `@deband:` is the label, an arbitrary, user-given name for this
+        filter entry. The `!` before the filter name disables the filter
+        by default. Everything after this is the normal filter name and
+        possibly filter parameters, like in the normal `--vf` syntax.
+    -   Add `a vf toggle @deband` to `input.conf`. This toggles the
+        "disabled" flag for the filter with the label `deband` when the
+        `a` key is hit.
 
     </div>
 

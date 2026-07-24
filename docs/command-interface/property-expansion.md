@@ -81,5 +81,5 @@ The following expansions are supported:
 In places where property expansion is allowed, C-style escapes are often
 accepted as well. Example:
 
-> - `\n` becomes a newline character
-> - `\\` expands to `\`
+> -   `\n` becomes a newline character
+> -   `\\` expands to `\`

@@ -2,5 +2,5 @@
 title: Synopsis
 ---
 
-**mpv** \[options\] \[file[\|URL\|](##SUBST##|URL|)PLAYLIST\|-\]  
+**mpv** \[options\] \[file\|URL\|PLAYLIST\|-\]  
 **mpv** \[options\] files

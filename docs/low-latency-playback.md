@@ -35,8 +35,8 @@ reduce latency.
 
 Additional options that can be tried:
 
-- `--opengl-glfinish=yes`, can reduce buffering in the graphics driver
-- `--opengl-swapinterval=0`, same
-- `--vo=xv`, same
-- without audio `--framedrop=no --speed=1.01` may help for live sources
-  (results can be mixed)
+-   `--opengl-glfinish=yes`, can reduce buffering in the graphics driver
+-   `--opengl-swapinterval=0`, same
+-   `--vo=xv`, same
+-   without audio `--framedrop=no --speed=1.01` may help for live
+    sources (results can be mixed)

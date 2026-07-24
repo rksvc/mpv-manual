@@ -10,14 +10,14 @@ behave slightly more like a GUI mode.
 
 Currently this happens only in the following cases:
 
-- if started using the `mpv.desktop` file on Linux (e.g. started from
-  menus or file associations provided by desktop environments)
-- if started from explorer.exe on Windows (technically, if it was
-  started on Windows, and all of the stdout/stderr/stdin handles are
-  unset)
-- started out of the bundle on macOS
-- if you manually use `--player-operation-mode=pseudo-gui` on the
-  command line
+-   if started using the `mpv.desktop` file on Linux (e.g. started from
+    menus or file associations provided by desktop environments)
+-   if started from explorer.exe on Windows (technically, if it was
+    started on Windows, and all of the stdout/stderr/stdin handles are
+    unset)
+-   started out of the bundle on macOS
+-   if you manually use `--player-operation-mode=pseudo-gui` on the
+    command line
 
 This mode applies options from the builtin profile `builtin-pseudo-gui`,
 but only if these haven't been set in the user's config file or on the

@@ -20,10 +20,11 @@ title: Options
 
     Examples
 
-    - `mpv dvd://1 --alang=hu,en` chooses the Hungarian language track
-      on a DVD and falls back on English if Hungarian is not available.
-    - `mpv --alang=jpn example.mkv` plays a Matroska file with Japanese
-      audio.
+    -   `mpv dvd://1 --alang=hu,en` chooses the Hungarian language track
+        on a DVD and falls back on English if Hungarian is not
+        available.
+    -   `mpv --alang=jpn example.mkv` plays a Matroska file with
+        Japanese audio.
 
     </div>
 
@@ -38,13 +39,14 @@ title: Options
 
     Examples
 
-    - `mpv dvd://1 --slang=hu,en` chooses the Hungarian subtitle track
-      on a DVD and falls back on English if Hungarian is not available.
-    - `mpv --slang=jpn example.mkv` plays a Matroska file with Japanese
-      subtitles.
-    - `mpv --slang=pt-BR example.mkv` plays a Matroska file with
-      Brazilian Portuguese subtitles if available, and otherwise any
-      Portuguese subtitles.
+    -   `mpv dvd://1 --slang=hu,en` chooses the Hungarian subtitle track
+        on a DVD and falls back on English if Hungarian is not
+        available.
+    -   `mpv --slang=jpn example.mkv` plays a Matroska file with
+        Japanese subtitles.
+    -   `mpv --slang=pt-BR example.mkv` plays a Matroska file with
+        Brazilian Portuguese subtitles if available, and otherwise any
+        Portuguese subtitles.
 
     </div>
 
@@ -726,105 +728,105 @@ title: Options
 
     The implementation consists of mostly 3 parts:
 
-    - Backward demuxing. This relies on the demuxer cache, so the
-      demuxer cache should (or must, didn't test it) be enabled, and its
-      size will affect performance. If the cache is too small or too
-      large, quadratic runtime behavior may result.
-    - Backward decoding. The decoder library used (libavcodec) does not
-      support this. It is emulated by feeding bits of data in forward,
-      putting the result in a queue, returning the queue data to the VO
-      in reverse, and then starting over at an earlier position. This
-      can require buffering an extreme amount of decoded data, and also
-      completely breaks pipelining.
-    - Backward output. This is relatively simple, because the decoder
-      returns the frames in the needed order. However, this may cause
-      various problems because filters see audio and video going
-      backward.
+    -   Backward demuxing. This relies on the demuxer cache, so the
+        demuxer cache should (or must, didn't test it) be enabled, and
+        its size will affect performance. If the cache is too small or
+        too large, quadratic runtime behavior may result.
+    -   Backward decoding. The decoder library used (libavcodec) does
+        not support this. It is emulated by feeding bits of data in
+        forward, putting the result in a queue, returning the queue data
+        to the VO in reverse, and then starting over at an earlier
+        position. This can require buffering an extreme amount of
+        decoded data, and also completely breaks pipelining.
+    -   Backward output. This is relatively simple, because the decoder
+        returns the frames in the needed order. However, this may cause
+        various problems because filters see audio and video going
+        backward.
 
     Known problems:
 
-    - It's fragile. If anything doesn't work, random behavior may occur.
-      In simple cases, the player will just play nonsense and artifacts.
-      In other cases, it may get stuck or heat the CPU. (Exceeding
-      memory usage significantly beyond the user-set limits would be a
-      bug, though.)
-    - Performance and resource usage isn't good. In part this is
-      inherent to backward playback of normal media formats, and in
-      parts due to implementation choices and tradeoffs.
-    - This is extremely reliant on good demuxer behavior. Although
-      backward demuxing requires no special demuxer support, it is
-      required that the demuxer performs seeks reliably, fulfills some
-      specific requirements about packet metadata, and has deterministic
-      behavior.
-    - Starting playback exactly from the end may or may not work,
-      depending on seeking behavior and file duration detection.
-    - Some container formats, audio, and video codecs are not supported
-      due to their behavior. There is no list, and the player usually
-      does not detect them. Certain live streams (including TV captures)
-      may exhibit problems in particular, as well as some lossy audio
-      codecs. h264 intra-refresh is known not to work due to problems
-      with libavcodec. WAV and some other raw audio formats tend to have
-      problems - there are hacks for dealing with them, which may or may
-      not work.
-    - Backward demuxing of subtitles is not supported. Subtitle display
-      still works for some external text subtitle formats. (These are
-      fully read into memory, and only backward display is needed.) Text
-      subtitles that are cached in the subtitle renderer also have a
-      chance to be displayed correctly.
-    - Some features dealing with playback of broken or hard to deal with
-      files will not work fully (such as timestamp correction).
-    - If demuxer low level seeks (i.e. seeking the actual demuxer
-      instead of just within the demuxer cache) are performed by
-      backward playback, the created seek ranges may not join, because
-      not enough overlap is achieved.
-    - Trying to use this with hardware video decoding will probably
-      exhaust all your GPU memory and then crash a thing or two. Or it
-      will fail because `--hwdec-extra-frames` will certainly be set too
-      low.
-    - Stream recording is broken. `--stream-record` may keep working if
-      you backward play within a cached region only.
-    - Relative seeks may behave weird. Small seeks backward (towards
-      smaller time, i.e. `seek -1`) may not really seek properly, and
-      audio will remain muted for a while. Using hr-seek is recommended,
-      which should have none of these problems.
-    - Some things are just weird. For example, while seek commands
-      manipulate playback time in the expected way (provided they work
-      correctly), the framestep commands are transposed. Backstepping
-      will perform very expensive work to step forward by 1 frame.
+    -   It's fragile. If anything doesn't work, random behavior may
+        occur. In simple cases, the player will just play nonsense and
+        artifacts. In other cases, it may get stuck or heat the CPU.
+        (Exceeding memory usage significantly beyond the user-set limits
+        would be a bug, though.)
+    -   Performance and resource usage isn't good. In part this is
+        inherent to backward playback of normal media formats, and in
+        parts due to implementation choices and tradeoffs.
+    -   This is extremely reliant on good demuxer behavior. Although
+        backward demuxing requires no special demuxer support, it is
+        required that the demuxer performs seeks reliably, fulfills some
+        specific requirements about packet metadata, and has
+        deterministic behavior.
+    -   Starting playback exactly from the end may or may not work,
+        depending on seeking behavior and file duration detection.
+    -   Some container formats, audio, and video codecs are not
+        supported due to their behavior. There is no list, and the
+        player usually does not detect them. Certain live streams
+        (including TV captures) may exhibit problems in particular, as
+        well as some lossy audio codecs. h264 intra-refresh is known not
+        to work due to problems with libavcodec. WAV and some other raw
+        audio formats tend to have problems - there are hacks for
+        dealing with them, which may or may not work.
+    -   Backward demuxing of subtitles is not supported. Subtitle
+        display still works for some external text subtitle formats.
+        (These are fully read into memory, and only backward display is
+        needed.) Text subtitles that are cached in the subtitle renderer
+        also have a chance to be displayed correctly.
+    -   Some features dealing with playback of broken or hard to deal
+        with files will not work fully (such as timestamp correction).
+    -   If demuxer low level seeks (i.e. seeking the actual demuxer
+        instead of just within the demuxer cache) are performed by
+        backward playback, the created seek ranges may not join, because
+        not enough overlap is achieved.
+    -   Trying to use this with hardware video decoding will probably
+        exhaust all your GPU memory and then crash a thing or two. Or it
+        will fail because `--hwdec-extra-frames` will certainly be set
+        too low.
+    -   Stream recording is broken. `--stream-record` may keep working
+        if you backward play within a cached region only.
+    -   Relative seeks may behave weird. Small seeks backward (towards
+        smaller time, i.e. `seek -1`) may not really seek properly, and
+        audio will remain muted for a while. Using hr-seek is
+        recommended, which should have none of these problems.
+    -   Some things are just weird. For example, while seek commands
+        manipulate playback time in the expected way (provided they work
+        correctly), the framestep commands are transposed. Backstepping
+        will perform very expensive work to step forward by 1 frame.
 
     Tuning:
 
-    - Remove all `--vf`/`--af` filters you have set. Disable hardware
-      decoding. Disable functions like SPDIF passthrough.
-    - Increasing `--video-reversal-buffer` might help if reversal queue
-      overflow is reported, which may happen in high bitrate video, or
-      video with large GOP. Hardware decoding mostly ignores this, and
-      you need to increase `--hwdec-extra-frames` instead (until you get
-      playback without logged errors).
-    - The demuxer cache is essential for backward demuxing. Make sure to
-      set `--cache=yes`. The cache size might matter. If it's too small,
-      a queue overflow will be logged, and backward playback cannot
-      continue, or it performs too many low level seeks. If it's too
-      large, implementation tradeoffs may cause general performance
-      issues. Use `--demuxer-max-bytes` to potentially increase the
-      amount of packets the demuxer layer can queue for reverse demuxing
-      (basically it's the `--video-reversal-buffer` equivalent for the
-      demuxer layer).
-    - Setting `--vd-queue-enable=yes` can help a lot to make playback
-      smooth (once it works).
-    - `--demuxer-backward-playback-step` also factors into how many
-      seeks may be performed, and whether backward demuxing could break
-      due to queue overflow. If it's set too high, the backstep
-      operation needs to search through more packets all the time, even
-      if the cache is large enough.
-    - Setting `--demuxer-cache-wait` may be useful to cache the entire
-      file into the demuxer cache. Set `--demuxer-max-bytes` to a large
-      size to make sure it can read the entire cache;
-      `--demuxer-max-back-bytes` should also be set to a large size to
-      prevent that tries to trim the cache.
-    - If audio artifacts are audible, even though the AO does not
-      underrun, increasing `--audio-backward-overlap` might help in some
-      cases.
+    -   Remove all `--vf`/`--af` filters you have set. Disable hardware
+        decoding. Disable functions like SPDIF passthrough.
+    -   Increasing `--video-reversal-buffer` might help if reversal
+        queue overflow is reported, which may happen in high bitrate
+        video, or video with large GOP. Hardware decoding mostly ignores
+        this, and you need to increase `--hwdec-extra-frames` instead
+        (until you get playback without logged errors).
+    -   The demuxer cache is essential for backward demuxing. Make sure
+        to set `--cache=yes`. The cache size might matter. If it's too
+        small, a queue overflow will be logged, and backward playback
+        cannot continue, or it performs too many low level seeks. If
+        it's too large, implementation tradeoffs may cause general
+        performance issues. Use `--demuxer-max-bytes` to potentially
+        increase the amount of packets the demuxer layer can queue for
+        reverse demuxing (basically it's the `--video-reversal-buffer`
+        equivalent for the demuxer layer).
+    -   Setting `--vd-queue-enable=yes` can help a lot to make playback
+        smooth (once it works).
+    -   `--demuxer-backward-playback-step` also factors into how many
+        seeks may be performed, and whether backward demuxing could
+        break due to queue overflow. If it's set too high, the backstep
+        operation needs to search through more packets all the time,
+        even if the cache is large enough.
+    -   Setting `--demuxer-cache-wait` may be useful to cache the entire
+        file into the demuxer cache. Set `--demuxer-max-bytes` to a
+        large size to make sure it can read the entire cache;
+        `--demuxer-max-back-bytes` should also be set to a large size to
+        prevent that tries to trim the cache.
+    -   If audio artifacts are audible, even though the AO does not
+        underrun, increasing `--audio-backward-overlap` might help in
+        some cases.
 
 `--video-reversal-buffer=<bytesize>`, `--audio-reversal-buffer=<bytesize>`
 
@@ -1070,12 +1072,12 @@ title: Options
 
     Examples
 
-    - `--reset-on-next-file=pause` Reset pause mode when switching to
-      the next file.
-    - `--reset-on-next-file=fullscreen,speed` Reset fullscreen and
-      playback speed settings if they were changed during playback.
-    - `--reset-on-next-file=all` Try to reset all settings that were
-      changed during playback.
+    -   `--reset-on-next-file=pause` Reset pause mode when switching to
+        the next file.
+    -   `--reset-on-next-file=fullscreen,speed` Reset fullscreen and
+        playback speed settings if they were changed during playback.
+    -   `--reset-on-next-file=all` Try to reset all settings that were
+        changed during playback.
 
     </div>
 
@@ -1138,11 +1140,11 @@ title: Options
 
         Examples
 
-        - `--script-opts=ytdl_hook-exclude='^youtube%.com'` will exclude
-          any URL that starts with `http://youtube.com` or
-          `https://youtube.com`.
-        - `--script-opts=ytdl_hook-exclude='%.mkv$|%.mp4$'` will exclude
-          any URL that ends with `.mkv` or `.mp4`.
+        -   `--script-opts=ytdl_hook-exclude='^youtube%.com'` will
+            exclude any URL that starts with `http://youtube.com` or
+            `https://youtube.com`.
+        -   `--script-opts=ytdl_hook-exclude='%.mkv$|%.mp4$'` will
+            exclude any URL that ends with `.mkv` or `.mp4`.
 
         </div>
 
@@ -1290,10 +1292,10 @@ title: Options
 
     Example
 
-    - `--ytdl-raw-options=username=user,password=pass`
-    - `--ytdl-raw-options=force-ipv6=`
-    - `--ytdl-raw-options=proxy=[http://127.0.0.1:3128]`
-    - `--ytdl-raw-options-append=proxy=http://127.0.0.1:3128`
+    -   `--ytdl-raw-options=username=user,password=pass`
+    -   `--ytdl-raw-options=force-ipv6=`
+    -   `--ytdl-raw-options=proxy=[http://127.0.0.1:3128]`
+    -   `--ytdl-raw-options-append=proxy=http://127.0.0.1:3128`
 
     </div>
 
@@ -1412,13 +1414,13 @@ title: Options
 
     Examples
 
-    - `--watch-later-options-remove=sid` The subtitle track selection
-      will not be restored.
-    - `--watch-later-options-remove=volume`
-      `--watch-later-options-remove=mute` The volume and mute state
-      won't be saved to watch later files.
-    - `--watch-later-options=start` No option will be saved to watch
-      later files, except the playback position.
+    -   `--watch-later-options-remove=sid` The subtitle track selection
+        will not be restored.
+    -   `--watch-later-options-remove=volume`
+        `--watch-later-options-remove=mute` The volume and mute state
+        won't be saved to watch later files.
+    -   `--watch-later-options=start` No option will be saved to watch
+        later files, except the playback position.
 
     </div>
 
@@ -1596,17 +1598,18 @@ title: Options
 
     This does:
 
-    - Use the demuxer reported FPS for frame dropping. This avoids the
-      player needing to decode 1 frame in advance, lowering total
-      latency in effect. This also means that if the demuxer reported
-      FPS is wrong, or the video filter chain changes FPS (e.g.
-      deinterlacing), then it could drop too many or not enough frames.
-    - Disable waiting for the first video frame. Normally the player
-      waits for the first video frame to be fully rendered before
-      starting playback properly. Some VOs will lazily initialize stuff
-      when rendering the first frame, so if this is not done, there is
-      some likeliness that the VO has to drop some frames if rendering
-      the first frame takes longer than needed.
+    -   Use the demuxer reported FPS for frame dropping. This avoids the
+        player needing to decode 1 frame in advance, lowering total
+        latency in effect. This also means that if the demuxer reported
+        FPS is wrong, or the video filter chain changes FPS (e.g.
+        deinterlacing), then it could drop too many or not enough
+        frames.
+    -   Disable waiting for the first video frame. Normally the player
+        waits for the first video frame to be fully rendered before
+        starting playback properly. Some VOs will lazily initialize
+        stuff when rendering the first frame, so if this is not done,
+        there is some likeliness that the VO has to drop some frames if
+        rendering the first frame takes longer than needed.
 
 `--display-fps-override=<fps>`
 
@@ -1692,17 +1695,19 @@ title: Options
 
     Which method to choose?
 
-    - If you only want to enable hardware decoding at runtime, don't set
-      the parameter, or put `hwdec=no` into your `mpv.conf` (relevant on
-      distros which force-enable it by default, such as on Ubuntu). Use
-      the `Ctrl+h` default binding to enable it at runtime.
-    - If you're not sure, but want hardware decoding always enabled by
-      default, put `hwdec=yes` into your `mpv.conf`, and acknowledge
-      that this may cause problems.
-    - If you want to test available hardware decoding methods, pass
-      `--hwdec=auto --hwdec-codecs=all` and look at the terminal output.
-    - If you're a developer, or want to perform elaborate tests, you may
-      need any of the other possible option values.
+    -   If you only want to enable hardware decoding at runtime, don't
+        set the parameter, or put `hwdec=no` into your `mpv.conf`
+        (relevant on distros which force-enable it by default, such as
+        on Ubuntu). Use the `Ctrl+h` default binding to enable it at
+        runtime.
+    -   If you're not sure, but want hardware decoding always enabled by
+        default, put `hwdec=yes` into your `mpv.conf`, and acknowledge
+        that this may cause problems.
+    -   If you want to test available hardware decoding methods, pass
+        `--hwdec=auto --hwdec-codecs=all` and look at the terminal
+        output.
+    -   If you're a developer, or want to perform elaborate tests, you
+        may need any of the other possible option values.
 
     </div>
 
@@ -2074,9 +2079,11 @@ title: Options
 
     Examples
 
-    - `--video-aspect-override=4:3` or `--video-aspect-override=1.3333`
-    - `--video-aspect-override=16:9` or `--video-aspect-override=1.7777`
-    - `--no-video-aspect-override` or `--video-aspect-override=no`
+    -   `--video-aspect-override=4:3` or
+        `--video-aspect-override=1.3333`
+    -   `--video-aspect-override=16:9` or
+        `--video-aspect-override=1.7777`
+    -   `--no-video-aspect-override` or `--video-aspect-override=no`
 
     </div>
 
@@ -2444,8 +2451,8 @@ title: Options
     resolutions or slow hardware. This works only with the following
     VOs:
 
-    > - `gpu`: requires at least OpenGL 4.4 or Vulkan.
-    > - `libmpv`: The libmpv render API has optional support.
+    > -   `gpu`: requires at least OpenGL 4.4 or Vulkan.
+    > -   `libmpv`: The libmpv render API has optional support.
 
     The `auto` option will try to guess whether DR can improve
     performance on your particular hardware. Currently this enables it
@@ -2870,44 +2877,45 @@ title: Options
 :   Control which audio channels are output (e.g. surround vs. stereo).
     There are the following possibilities:
 
-    - 
+    -   
 
-      `--audio-channels=auto-safe`
+        `--audio-channels=auto-safe`
 
-      :   Use the system's preferred channel layout. If there is none
-          (such as when accessing a hardware device instead of the
-          system mixer), force stereo. Some audio outputs might simply
-          accept any layout and do downmixing on their own.
+        :   Use the system's preferred channel layout. If there is none
+            (such as when accessing a hardware device instead of the
+            system mixer), force stereo. Some audio outputs might simply
+            accept any layout and do downmixing on their own.
 
-          This is the default.
+            This is the default.
 
-    - 
+    -   
 
-      `--audio-channels=auto`
+        `--audio-channels=auto`
 
-      :   Send the audio device whatever it accepts, preferring the
-          audio's original channel layout. Can cause issues with HDMI
-          (see the warning below).
+        :   Send the audio device whatever it accepts, preferring the
+            audio's original channel layout. Can cause issues with HDMI
+            (see the warning below).
 
-    - 
+    -   
 
-      `--audio-channels=layout1,layout2,...`
+        `--audio-channels=layout1,layout2,...`
 
-      :   List of `,`-separated channel layouts which should be allowed.
-          Technically, this only adjusts the filter chain output to the
-          best matching layout in the list, and passes the result to the
-          audio API. It's possible that the audio API will select a
-          different channel layout.
+        :   List of `,`-separated channel layouts which should be
+            allowed. Technically, this only adjusts the filter chain
+            output to the best matching layout in the list, and passes
+            the result to the audio API. It's possible that the audio
+            API will select a different channel layout.
 
-          Using this mode is recommended for direct hardware output,
-          especially over HDMI (see HDMI warning below).
+            Using this mode is recommended for direct hardware output,
+            especially over HDMI (see HDMI warning below).
 
-    - 
+    -   
 
-      `--audio-channels=<stereo|mono>`
+        `--audio-channels=<stereo|mono>`
 
-      :   Force a downmix to stereo or mono. These are special-cases of
-          the previous item. (See paragraphs below for implications.)
+        :   Force a downmix to stereo or mono. These are special-cases
+            of the previous item. (See paragraphs below for
+            implications.)
 
     If a list of layouts is given, each item can be either an explicit
     channel layout name (like `5.1`), or a channel number. Channel
@@ -3398,8 +3406,8 @@ intentionally, but overriding them can be controlled with
 
     Examples
 
-    - `--sub-ass-style-overrides=FontName=Arial,Default.Bold=1`
-    - `--sub-ass-style-overrides=PlayResY=768`
+    -   `--sub-ass-style-overrides=FontName=Arial,Default.Bold=1`
+    -   `--sub-ass-style-overrides=PlayResY=768`
 
     </div>
 
@@ -3802,18 +3810,18 @@ intentionally, but overriding them can be controlled with
     The following steps are taken to determine the final codepage, in
     order:
 
-    - if the specific codepage has a `+`, use that codepage
-    - if the data looks like UTF-8, assume it is UTF-8
-    - if `--sub-codepage` is set to a specific codepage, use that
-    - run uchardet, and if successful, use that
-    - otherwise, use `UTF-8-BROKEN`
+    -   if the specific codepage has a `+`, use that codepage
+    -   if the data looks like UTF-8, assume it is UTF-8
+    -   if `--sub-codepage` is set to a specific codepage, use that
+    -   run uchardet, and if successful, use that
+    -   otherwise, use `UTF-8-BROKEN`
 
     <div class="admonition" markdown="1">
 
     Examples
 
-    - `--sub-codepage=latin2` Use Latin 2 if input is not UTF-8.
-    - `--sub-codepage=+cp1250` Always force recoding to cp1250.
+    -   `--sub-codepage=latin2` Use Latin 2 if input is not UTF-8.
+    -   `--sub-codepage=+cp1250` Always force recoding to cp1250.
 
     </div>
 
@@ -3952,11 +3960,11 @@ intentionally, but overriding them can be controlled with
     `--sub-file-paths=sub:subtitles` is specified, mpv searches for
     subtitle files in these directories:
 
-    - `/path/to/video/`
-    - `/path/to/video/sub/`
-    - `/path/to/video/subtitles/`
-    - the `sub` configuration subdirectory (usually
-      `~/.config/mpv/sub/`)
+    -   `/path/to/video/`
+    -   `/path/to/video/sub/`
+    -   `/path/to/video/subtitles/`
+    -   the `sub` configuration subdirectory (usually
+        `~/.config/mpv/sub/`)
 
     </div>
 
@@ -4020,8 +4028,8 @@ intentionally, but overriding them can be controlled with
 
     Examples
 
-    - `--sub-font='Bitstream Vera Sans'`
-    - `--sub-font='Comic Sans MS'`
+    -   `--sub-font='Bitstream Vera Sans'`
+    -   `--sub-font='Comic Sans MS'`
 
     </div>
 
@@ -4089,26 +4097,26 @@ intentionally, but overriding them can be controlled with
 
 :   The style of the border.
 
-    - `outline-and-shadow`: draw outline and shadow. The size of the
-      outline is determined by `--sub-outline-size`, and the offset of
-      the shadow is determined by `--sub-shadow-offset`. The outline is
-      colored by `--sub-outline-color`, and the shadow is colored by
-      `--sub-back-color`. This corresponds to `BorderStyle=1` in the ASS
-      spec.
-    - `opaque-box`: draw outline and shadow as opaque boxes that tightly
-      wrap each lines of text. The margin of the outline opaque box is
-      determined by `--sub-outline-size`, and the offset of the shadow
-      opaque box is determined by `--sub-shadow-offset`. The outline
-      opaque box is colored by `--sub-outline-color`, and the shadow
-      opaque box is colored by `--sub-back-color`. Despite its name, the
-      opaque box can be semi-transparent. This corresponds to
-      `BorderStyle=3` in the ASS spec.
-    - `background-box`: draw a background box that bounds all lines of
-      text. The background box is colored by `--sub-back-color`, and the
-      margin of the background box is determined by
-      `--sub-shadow-offset`. The behavior of the outline is the same as
-      the `outline-and-shadow` style. This corresponds to
-      `BorderStyle=4`, which is a libass-specific extension.
+    -   `outline-and-shadow`: draw outline and shadow. The size of the
+        outline is determined by `--sub-outline-size`, and the offset of
+        the shadow is determined by `--sub-shadow-offset`. The outline
+        is colored by `--sub-outline-color`, and the shadow is colored
+        by `--sub-back-color`. This corresponds to `BorderStyle=1` in
+        the ASS spec.
+    -   `opaque-box`: draw outline and shadow as opaque boxes that
+        tightly wrap each lines of text. The margin of the outline
+        opaque box is determined by `--sub-outline-size`, and the offset
+        of the shadow opaque box is determined by `--sub-shadow-offset`.
+        The outline opaque box is colored by `--sub-outline-color`, and
+        the shadow opaque box is colored by `--sub-back-color`. Despite
+        its name, the opaque box can be semi-transparent. This
+        corresponds to `BorderStyle=3` in the ASS spec.
+    -   `background-box`: draw a background box that bounds all lines of
+        text. The background box is colored by `--sub-back-color`, and
+        the margin of the background box is determined by
+        `--sub-shadow-offset`. The behavior of the outline is the same
+        as the `outline-and-shadow` style. This corresponds to
+        `BorderStyle=4`, which is a libass-specific extension.
 
     Default: `outline-and-shadow`.
 
@@ -4119,12 +4127,12 @@ intentionally, but overriding them can be controlled with
 
     Profiles
 
-    - `--profile=sub-box` applies the `background-box` style to
-      subtitles
-    - `--profile=osd-box` applies the `background-box` style to the OSD,
-      including stats and console
-    - `--profile=box` applies the `background-box` style to both
-      subtitles and OSD
+    -   `--profile=sub-box` applies the `background-box` style to
+        subtitles
+    -   `--profile=osd-box` applies the `background-box` style to the
+        OSD, including stats and console
+    -   `--profile=box` applies the `background-box` style to both
+        subtitles and OSD
 
     </div>
 
@@ -4145,10 +4153,10 @@ intentionally, but overriding them can be controlled with
 
     Examples
 
-    - `--sub-color=1.0/0.0/0.0` set sub to opaque red
-    - `--sub-color=1.0/0.0/0.0/0.75` set sub to opaque red with 75%
-      alpha
-    - `--sub-color=0.5/0.75` set sub to 50% gray with 75% alpha
+    -   `--sub-color=1.0/0.0/0.0` set sub to opaque red
+    -   `--sub-color=1.0/0.0/0.0/0.75` set sub to opaque red with 75%
+        alpha
+    -   `--sub-color=0.5/0.75` set sub to 50% gray with 75% alpha
 
     </div>
 
@@ -4161,8 +4169,8 @@ intentionally, but overriding them can be controlled with
 
     Examples
 
-    - `--sub-color='#FF0000'` set sub to opaque red
-    - `--sub-color='#C0808080'` set sub to 50% gray with 75% alpha
+    -   `--sub-color='#FF0000'` set sub to opaque red
+    -   `--sub-color='#C0808080'` set sub to 50% gray with 75% alpha
 
     </div>
 
@@ -4968,8 +4976,8 @@ intentionally, but overriding them can be controlled with
 
     Examples
 
-    - `--monitoraspect=4:3` or `--monitoraspect=1.3333`
-    - `--monitoraspect=16:9` or `--monitoraspect=1.7777`
+    -   `--monitoraspect=4:3` or `--monitoraspect=1.3333`
+    -   `--monitoraspect=16:9` or `--monitoraspect=1.7777`
 
     </div>
 
@@ -6138,8 +6146,8 @@ intentionally, but overriding them can be controlled with
 
     Examples
 
-    - `--osd-font='Bitstream Vera Sans'`
-    - `--osd-font='Comic Sans MS'`
+    -   `--osd-font='Bitstream Vera Sans'`
+    -   `--osd-font='Comic Sans MS'`
 
     </div>
 
@@ -8414,7 +8422,7 @@ them.
     :   The min/magnification filter used when sampling from this
         texture.
 
-    BORDER \<CLAMP[\|REPEAT\|](##SUBST##|REPEAT|)MIRROR\>
+    BORDER \<CLAMP\|REPEAT\|MIRROR\>
 
     :   The border wrapping mode used when sampling from this texture.
 
@@ -10749,7 +10757,7 @@ them.
     predefined priorities available under Windows.
 
     Possible values of `<prio>`:
-    idle[\|belownormal\|](##SUBST##|belownormal|)normal[\|abovenormal\|](##SUBST##|abovenormal|)high\|realtime
+    idle\|belownormal\|normal\|abovenormal\|high\|realtime
 
     <div class="warning" markdown="1">
 
@@ -10951,11 +10959,11 @@ them.
     participating input tracks and audio/video output. The following
     rules apply:
 
-    - A label of the form `aidN` selects audio track N as input (e.g.
-      `aid1`).
-    - A label of the form `vidN` selects video track N as input.
-    - A label named `ao` will be connected to the audio output.
-    - A label named `vo` will be connected to the video output.
+    -   A label of the form `aidN` selects audio track N as input (e.g.
+        `aid1`).
+    -   A label of the form `vidN` selects video track N as input.
+    -   A label named `ao` will be connected to the audio output.
+    -   A label named `vo` will be connected to the video output.
 
     Each label can be used only once. If you want to use e.g. an audio
     stream for multiple filters, you need to use the `asplit` filter.
@@ -10978,19 +10986,19 @@ them.
 
     Examples
 
-    - `--lavfi-complex='[aid1] [aid2] amix [ao]'` Play audio track 1 and
-      2 at the same time.
-    - `--lavfi-complex='[vid1] [vid2] vstack [vo]'` Stack video track 1
-      and 2 and play them at the same time. Note that both tracks need
-      to have the same width, or filter initialization will fail (you
-      can add `scale` filters before the `vstack` filter to fix the
-      size). To load a video track from another file, you can use
-      `--external-file=other.mkv`.
-    - `--lavfi-complex='[vid1] [vid2] [vid3] hstack=inputs=3 [vo]'` Use
-      the inputs option to stack more than 2 tracks.
-    - `--lavfi-complex='[aid1] asplit [t1] [ao] ; [t1] showvolume [t2] ; [vid1] [t2] overlay [vo]'`
-      Play audio track 1, and overlay the measured volume for each
-      speaker over video track 1.
+    -   `--lavfi-complex='[aid1] [aid2] amix [ao]'` Play audio track 1
+        and 2 at the same time.
+    -   `--lavfi-complex='[vid1] [vid2] vstack [vo]'` Stack video track
+        1 and 2 and play them at the same time. Note that both tracks
+        need to have the same width, or filter initialization will fail
+        (you can add `scale` filters before the `vstack` filter to fix
+        the size). To load a video track from another file, you can use
+        `--external-file=other.mkv`.
+    -   `--lavfi-complex='[vid1] [vid2] [vid3] hstack=inputs=3 [vo]'`
+        Use the inputs option to stack more than 2 tracks.
+    -   `--lavfi-complex='[aid1] asplit [t1] [ao] ; [t1] showvolume [t2] ; [vid1] [t2] overlay [vo]'`
+        Play audio track 1, and overlay the measured volume for each
+        speaker over video track 1.
 
     </div>
 

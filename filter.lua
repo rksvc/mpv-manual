@@ -89,7 +89,7 @@ function Pandoc(doc)
                 return el
             end
         }
-        local markdown = pandoc.write(doc, 'markdown_mmd')
+        local markdown = pandoc.write(doc, 'markdown_mmd+four_space_rule')
 
         local title = pandoc.utils.stringify(header.content)
         if header.level == 3 then

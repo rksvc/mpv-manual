@@ -349,12 +349,12 @@ sequences. This includes surrogate pairs.
 
 The following non-standard extensions are supported:
 
-> - a list or object item can have a trailing ","
-> - object syntax accepts "=" in addition of ":"
-> - object keys can be unquoted, if they start with a character in
->   "A-Za-z\_" and contain only characters in "A-Za-z0-9\_"
-> - byte escapes with "xAB" are allowed (with AB being a 2 digit hex
->   number)
+> -   a list or object item can have a trailing ","
+> -   object syntax accepts "=" in addition of ":"
+> -   object keys can be unquoted, if they start with a character in
+>     "A-Za-z\_" and contain only characters in "A-Za-z0-9\_"
+> -   byte escapes with "xAB" are allowed (with AB being a 2 digit hex
+>     number)
 
 Example:
 

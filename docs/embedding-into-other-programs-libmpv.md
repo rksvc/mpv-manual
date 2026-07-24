@@ -10,8 +10,8 @@ other languages might be available (see wiki).
 Since libmpv merely allows access to underlying mechanisms that can
 control mpv, further documentation is spread over a few places:
 
-- <https://github.com/mpv-player/mpv/blob/master/include/mpv/client.h>
-- <https://mpv.io/manual/master/#options>
-- <https://mpv.io/manual/master/#list-of-input-commands>
-- <https://mpv.io/manual/master/#properties>
-- <https://github.com/mpv-player/mpv-examples/tree/master/libmpv>
+-   <https://github.com/mpv-player/mpv/blob/master/include/mpv/client.h>
+-   <https://mpv.io/manual/master/#options>
+-   <https://mpv.io/manual/master/#list-of-input-commands>
+-   <https://mpv.io/manual/master/#properties>
+-   <https://github.com/mpv-player/mpv-examples/tree/master/libmpv>

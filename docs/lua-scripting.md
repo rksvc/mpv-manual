@@ -335,12 +335,13 @@ The `mp` module is preloaded, although it can be loaded manually with
     For example, a canceled key binding can happen in the following
     situations:
 
-    - If key A is pressed while key B is being held down, key B is
-      logically released ("canceled" by key A), which stops the current
-      autorepeat action key B has.
-    - If key A is pressed while a mouse button is being held down, the
-      mouse button is logically released, but the mouse button's action
-      will not be called, unless `complex` flag is set to `true`.
+    -   If key A is pressed while key B is being held down, key B is
+        logically released ("canceled" by key A), which stops the
+        current autorepeat action key B has.
+    -   If key A is pressed while a mouse button is being held down, the
+        mouse button is logically released, but the mouse button's
+        action will not be called, unless `complex` flag is set to
+        `true`.
 
     The `name` argument should be a short symbolic string. It allows the
     user to remap the key binding via input.conf using the
@@ -968,15 +969,15 @@ not strictly part of the guaranteed API.
     calling the `subprocess` command with `mp.command_native`. It does
     the following things:
 
-    - copy the table `t`
-    - rename `cancellable` field to `playback_only`
-    - rename `max_size` to `capture_size`
-    - set `capture_stdout` field to `true` if unset
-    - set `name` field to `subprocess`
-    - call `mp.command_native(copied_t)`
-    - if the command failed, create a dummy result table
-    - copy `error_string` to `error` field if the string is non-empty
-    - return the result table
+    -   copy the table `t`
+    -   rename `cancellable` field to `playback_only`
+    -   rename `max_size` to `capture_size`
+    -   set `capture_stdout` field to `true` if unset
+    -   set `name` field to `subprocess`
+    -   call `mp.command_native(copied_t)`
+    -   if the command failed, create a dummy result table
+    -   copy `error_string` to `error` field if the string is non-empty
+    -   return the result table
 
     It is recommended to use `mp.command_native` or
     `mp.command_native_async` directly, instead of calling this legacy
@@ -1189,7 +1190,7 @@ console REPL.
 
     Example:
 
-    > input.select({
+    >     input.select({
     >         items = {
     >             "First playlist entry",
     >             "Second playlist entry",
