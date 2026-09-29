@@ -259,8 +259,8 @@ They support the following operations:
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Set a list of items (using the list separator, escaped with
-backslash)</td>
+<td><p>Set a list of items (using the list separator, escaped with
+backslash)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -268,7 +268,7 @@ backslash)</td>
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Append single item (does not interpret escapes)</td>
+<td><p>Append single item (does not interpret escapes)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -276,7 +276,7 @@ backslash)</td>
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Append 1 or more items (same syntax as -set)</td>
+<td><p>Append 1 or more items (same syntax as -set)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -284,7 +284,7 @@ backslash)</td>
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Prepend 1 or more items (same syntax as -set)</td>
+<td><p>Prepend 1 or more items (same syntax as -set)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -292,7 +292,7 @@ backslash)</td>
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Clear the option (remove all items)</td>
+<td><p>Clear the option (remove all items)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -300,7 +300,7 @@ backslash)</td>
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Delete 1 or more items if present (same syntax as -set)</td>
+<td><p>Delete 1 or more items if present (same syntax as -set)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -308,7 +308,7 @@ backslash)</td>
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Delete item if present (does not interpret escapes)</td>
+<td><p>Delete item if present (does not interpret escapes)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -316,7 +316,8 @@ backslash)</td>
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Append an item, or remove it if it already exists (no escapes)</td>
+<td><p>Append an item, or remove it if it already exists (no
+escapes)</p></td>
 </tr>
 </tbody>
 </table>
@@ -348,7 +349,7 @@ They support the following operations:
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Set a list of items (using <code>,</code> as separator)</td>
+<td><p>Set a list of items (using <code>,</code> as separator)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -356,8 +357,8 @@ They support the following operations:
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Append a single item (escapes for the key, no escapes for the
-value)</td>
+<td><p>Append a single item (escapes for the key, no escapes for the
+value)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -365,7 +366,7 @@ value)</td>
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Append 1 or more items (same syntax as -set)</td>
+<td><p>Append 1 or more items (same syntax as -set)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -373,7 +374,7 @@ value)</td>
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Clear the option (remove all items)</td>
+<td><p>Clear the option (remove all items)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -381,7 +382,7 @@ value)</td>
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Delete 1 or more keys if present (same syntax as -set)</td>
+<td><p>Delete 1 or more keys if present (same syntax as -set)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -389,7 +390,8 @@ value)</td>
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Delete item by key if present (does not interpret escapes)</td>
+<td><p>Delete item by key if present (does not interpret
+escapes)</p></td>
 </tr>
 </tbody>
 </table>
@@ -426,7 +428,7 @@ They support the following operations:
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Set a list of items (using <code>,</code> as separator)</td>
+<td><p>Set a list of items (using <code>,</code> as separator)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -434,7 +436,7 @@ They support the following operations:
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Append single item</td>
+<td><p>Append single item</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -442,7 +444,7 @@ They support the following operations:
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Append 1 or more items (same syntax as -set)</td>
+<td><p>Append 1 or more items (same syntax as -set)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -450,7 +452,7 @@ They support the following operations:
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Prepend 1 or more items (same syntax as -set)</td>
+<td><p>Prepend 1 or more items (same syntax as -set)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -458,7 +460,7 @@ They support the following operations:
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Clear the option (remove all items)</td>
+<td><p>Clear the option (remove all items)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -466,7 +468,7 @@ They support the following operations:
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Delete 1 or items if present (same syntax as -set)</td>
+<td><p>Delete 1 or items if present (same syntax as -set)</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -474,7 +476,7 @@ They support the following operations:
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Append an item, or remove it if it already exists</td>
+<td><p>Append an item, or remove it if it already exists</p></td>
 </tr>
 <tr>
 <td><dl>
@@ -482,7 +484,7 @@ They support the following operations:
 <dd>
 &#10;</dd>
 </dl></td>
-<td>Pseudo operation that prints a help text to the terminal</td>
+<td><p>Pseudo operation that prints a help text to the terminal</p></td>
 </tr>
 </tbody>
 </table>
