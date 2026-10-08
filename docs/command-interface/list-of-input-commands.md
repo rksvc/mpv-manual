@@ -686,7 +686,7 @@ syntax](flat-command-syntax.md)).
 
     `mp.osd_message(mp.command_native({"escape-ass", "foo {bar}"}))`
 
-    This line of Lua prints "foo \\bar}" on the OSD.
+    This line of Lua prints "foo \\{bar}" on the OSD.
 
     </div>
 

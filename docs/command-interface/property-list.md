@@ -1077,7 +1077,7 @@ read-only.
 
 :   Names of the displays that the mpv window covers. On X11, these are
     the xrandr names (LVDS1, HDMI1, DP1, VGA1, etc.). On Windows, these
-    are the GDI names (\\DISPLAY1, \\DISPLAY2, etc.) and the first
+    are the GDI names (\\.DISPLAY1, \\.DISPLAY2, etc.) and the first
     display in the list will be the one that Windows considers
     associated with the window (as determined by the MonitorFromWindow
     API.) On macOS these are the Display Product Names as used in the
