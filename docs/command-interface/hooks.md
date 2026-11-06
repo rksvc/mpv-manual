@@ -28,7 +28,7 @@ The following hooks are currently defined:
     done. For example, you could read and write the
     `stream-open-filename` property to redirect an URL to something else
     (consider support for streaming sites which rarely give the user a
-    direct media URL), or you could set per-file options with by setting
+    direct media URL), or you could set file-local options by setting
     the property `file-local-options/<option name>`. The player will
     wait until all hooks are run.
 
@@ -36,13 +36,12 @@ The following hooks are currently defined:
 
 `on_load_fail`
 
-:   Called after after a file has been opened, but failed to. This can
-    be used to provide a fallback in case native demuxers failed to
-    recognize the file, instead of always running before the native
-    demuxers like `on_load`. Demux will only be retried if
-    `stream-open-filename` was changed. If it fails again, this hook is
-    <span id="not">not</span>\_ called again, and loading definitely
-    fails.
+:   Called after a file has been opened, but failed to. This can be used
+    to provide a fallback in case native demuxers failed to recognize
+    the file, instead of always running before the native demuxers like
+    `on_load`. Demux will only be retried if `stream-open-filename` was
+    changed. If it fails again, this hook is <span id="not">not</span>\_
+    called again, and loading definitely fails.
 
     Ordered after `on_load`, and before `playback-restart` and
     `end-file`.
@@ -50,7 +49,7 @@ The following hooks are currently defined:
 `on_preloaded`
 
 :   Called after a file has been opened, and before tracks are selected
-    and decoders are created. This has some usefulness if an API users
+    and decoders are created. This has some usefulness if an API user
     wants to select tracks manually, based on the set of available
     tracks. It's also useful to initialize `--lavfi-complex` in a
     specific way by API, without having to "probe" the available streams
@@ -62,6 +61,14 @@ The following hooks are currently defined:
     change.
 
     Ordered after `on_load_fail` etc. and before `playback-restart`.
+
+`on_loaded`
+
+:   Called after a file has been loaded, after tracks are selected but
+    before starting playback. This has some usefulness if an API user
+    wants to act on selected track metadata before the media is shown.
+
+    Ordered after `on_preloaded`. and before `playback-restart`.
 
 `on_unload`
 

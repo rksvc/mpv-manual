@@ -68,7 +68,9 @@ the same directory, no file-specific configuration is loaded from
 `~/.config/mpv`. In addition, the `--use-filedir-conf` option enables
 directory-specific configuration files. For this, mpv first tries to
 load a mpv.conf from the same directory as the file played and then
-tries to load any file-specific configuration.
+tries to load any file-specific configuration. The options loaded in
+this way are marked as file-local, which are reset when the current file
+stops playing.
 
 #### Profiles
 
@@ -111,7 +113,7 @@ Example mpv config file with profiles
     [network]
     demuxer-max-back-bytes=512MiB
     # reference a builtin profile
-    profile=fast
+    profile=low-latency
 
 </div>
 

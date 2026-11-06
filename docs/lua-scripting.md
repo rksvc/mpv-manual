@@ -59,7 +59,7 @@ mpv also appends the top level directory of the script to the start of
 Lua's package path so you can import scripts from there too. Be aware
 that this will shadow Lua libraries that use the same package path.
 (Single file scripts do not include mpv specific directories in the Lua
-package path. This was silently changed in mpv 0.32.0.)
+package path.)
 
 Using a script directory is the recommended way to package a script that
 consists of multiple source files, or requires other files (you can use
@@ -100,18 +100,14 @@ mpv sources). The event loop will wait for events and dispatch events
 registered with `mp.register_event`. It will also handle timers added
 with `mp.add_timeout` and similar (by waiting with a timeout).
 
-Since mpv 0.6.0, the player will wait until the script is fully loaded
-before continuing normal operation. The player considers a script as
-fully loaded as soon as it starts waiting for mpv events (or it exits).
-In practice this means the player will more or less hang until the
-script returns from the main chunk (and `mp_event_loop` is called), or
-the script calls `mp_event_loop` or `mp.dispatch_events` directly. This
-is done to make it possible for a script to fully setup event handlers
-etc. before playback actually starts. In older mpv versions, this
-happened asynchronously. With mpv 0.29.0, this changes slightly, and it
-merely waits for scripts to be loaded in this manner before starting
-playback as part of the player initialization phase. Scripts run though
-initialization in parallel. This might change again.
+The player will wait until the script is fully loaded before continuing
+normal operation. The player considers a script as fully loaded as soon
+as it starts waiting for mpv events (or it exits). In practice this
+means the player will more or less hang until the script returns from
+the main chunk (and `mp_event_loop` is called), or the script calls
+`mp_event_loop` or `mp.dispatch_events` directly. This is done to make
+it possible for a script to fully setup event handlers etc. before
+playback actually starts. Scripts run though initialization in parallel.
 
 #### mp functions
 
@@ -163,12 +159,16 @@ The `mp` module is preloaded, although it can be loaded manually with
     `mp.commandv()` (but can be a native type instead of a string).
 
     If the table contains string keys, it's interpreted as command with
-    named arguments. This requires at least an entry with the key `name`
-    to be present, which must be a string, and contains the command
-    name. The special entry `_flags` is optional, and if present, must
-    be an array of [Input Command
+    named arguments. This requires at least an entry with the key
+    `_name` to be present, which must be a string, and contains the
+    command name. For compatibility, if the key `_name` does not exist,
+    then the entry with the key `name` will be used instead. The special
+    entry `_flags` is optional, and if present, must be an array of
+    [Input Command
     Prefixes](command-interface/input-command-prefixes.md) to apply. All
-    other entries are interpreted as arguments.
+    other entries are interpreted as arguments. Note that some commands
+    have arguments named `name`, and can only be used if the command
+    name is specified with key `_name` instead of `name`.
 
     Returns a result table on success (usually empty), or `def, error`
     on error. `def` is the second parameter provided to the function,
@@ -472,10 +472,10 @@ The `mp` module is preloaded, although it can be loaded manually with
     string, and the function fn is a Lua function value.
 
     Some events have associated data. This is put into a Lua table and
-    passed as argument to fn. The Lua table by default contains a `name`
-    field, which is a string containing the event name. If the event has
-    an error associated, the `error` field is set to a string describing
-    the error, on success it's not set.
+    passed as argument to fn. The Lua table by default contains a
+    `event` field, which is a string containing the event name. If the
+    event has an error associated, the `error` field is set to a string
+    describing the error, on success it's not set.
 
     If multiple functions are registered for the same event, they are
     run in registration order, which the first registered function
@@ -973,7 +973,7 @@ not strictly part of the guaranteed API.
     -   rename `cancellable` field to `playback_only`
     -   rename `max_size` to `capture_size`
     -   set `capture_stdout` field to `true` if unset
-    -   set `name` field to `subprocess`
+    -   set `_name` field to `subprocess`
     -   call `mp.command_native(copied_t)`
     -   if the command failed, create a dummy result table
     -   copy `error_string` to `error` field if the string is non-empty
@@ -1030,7 +1030,7 @@ not strictly part of the guaranteed API.
     the trailing text is returned as 3rd return value. (The 3rd return
     value is always there, but with `trail` set, no error is raised.)
 
-`utils.format_json(v)`
+`utils.format_json(v [, pretty])`
 
 :   Format the given Lua table (or value) as a JSON string and return
     it. On error, returns `nil, error`. (Errors usually only happen on
@@ -1038,6 +1038,10 @@ not strictly part of the guaranteed API.
 
     The argument value uses similar conventions as
     `mp.set_property_native()` to distinguish empty objects and arrays.
+
+    If the `pretty` parameter is `true` (or any value equal to `true`),
+    then the output string is formatted and indented for human
+    consumption.
 
 `utils.to_string(v)`
 
@@ -1048,7 +1052,7 @@ not strictly part of the guaranteed API.
 #### mp.input functions
 
 This module lets scripts get textual input from the user using the
-console REPL.
+console.
 
 `input.get(table)`
 
@@ -1067,12 +1071,18 @@ console REPL.
 
     `keep_open`
 
-    :   Whether to keep the console open on submit. Defaults to `false`.
+    :   Whether to keep the console open on submit, allowing further
+        input. Defaults to `false`.
+
+        If calling `input.get()` or `input.select()` again from inside
+        the `submit` callback, setting this option to `true` allows a
+        seamless transition without the console closing and reopening.
 
     `opened`
 
     :   A callback invoked when the console is shown. This can be used
-        to present a list of options with `input.set_log()`.
+        to override keybinds set by the console with
+        `mp.add_forced_key_binding()`.
 
     `edited`
 
@@ -1082,16 +1092,23 @@ console REPL.
     `complete`
 
     :   A callback invoked when the user edits the text or moves the
-        cursor. The first argument is the text before the cursor. The
-        callback should return a table of the string candidate
-        completion values and the 1-based cursor position from which the
-        completion starts. console will show the completions that
-        fuzzily match the text between this position and the cursor and
-        allow selecting them.
+        cursor. The first argument is the text before the cursor, and
+        the second argument is a response function which can be called
+        to present completion values to the user.
 
-        The third and optional return value is a string that will be
-        appended to the input line without displaying it in the
-        completions.
+        The first argument to the response function is a table of the
+        string candidate completion values, and the second argument is
+        the 1-based cursor position from which the completion starts.
+        console will show the completions that fuzzily match the text
+        between this position and the cursor, which the user can select
+        with `TAB`. The completions will only be shown to the user if
+        the text before the cursor has not since changed. The response
+        function should be called with an empty table if there are no
+        completion values to display.
+
+        The third and optional argument to the response function is a
+        string that will be appended to the input line without
+        displaying it in the completions.
 
     `autoselect_completion`
 
@@ -1125,26 +1142,28 @@ console REPL.
         to use among the ones stored for `input.get()` calls. Defaults
         to the calling script name with `prompt` appended.
 
+    `console_opt_overrides`
+
+    :   A table containing configuration overrides for the console
+        script. Can be used to change the visual style of the text
+        input, among other things. See [CONSOLE](console.md) for the
+        full list of options.
+
 `input.terminate()`
 
-:   Close the console.
+:   Closes any currently active input request. This will not close
+    requests made by other scripts.
 
 `input.log(message, style, terminal_style)`
 
-:   Add a line to the log buffer. `style` can contain additional ASS
-    tags to apply to `message`, and `terminal_style` can contain escape
-    sequences that are used when the console is displayed in the
-    terminal.
-
-`input.log_error(message)`
-
-:   Helper to add a line to the log buffer with the same color as the
-    one used for commands that error. Useful when the user submits
-    invalid input.
+:   Add a line to the log buffer of the latest `input.get()` request.
+    `style` can contain additional ASS tags to apply to `message`, and
+    `terminal_style` can contain escape sequences that are used when the
+    console is displayed in the terminal.
 
 `input.set_log(log)`
 
-:   Replace the entire log buffer.
+:   Replace the entire log buffer of the latest `input.get()` request.
 
     `log` is a table of strings, or tables with `text`, `style` and
     `terminal_style` keys.
@@ -1186,7 +1205,41 @@ console REPL.
 
     `keep_open`
 
-    :   Whether to keep the console open on submit. Defaults to `false`.
+    :   Whether to keep the console open on submit, allowing further
+        input. Defaults to `false`.
+
+        If calling `input.get()` or `input.select()` again from inside
+        the `submit` callback, setting this option to `true` allows a
+        seamless transition without the console closing and reopening.
+
+    `opened`
+
+    :   A callback invoked when the console is shown. This can be used
+        to override keybinds set by the console with
+        `mp.add_forced_key_binding()`.
+
+    `closed`
+
+    :   A callback invoked when the console is hidden, either because
+        `input.terminate()` was invoked from the other callbacks, or
+        because the user closed it with a key binding. The first
+        argument is the text in the console, and the second argument is
+        the cursor position.
+
+    `default_text`
+
+    :   A string to pre-fill the input field with.
+
+    `cursor_position`
+
+    :   The initial cursor position, starting from 1.
+
+    `console_opt_overrides`
+
+    :   A table containing configuration overrides for the console
+        script. Can be used to change the visual style of the select
+        window, among other things. See [CONSOLE](console.md) for the
+        full list of options.
 
     Example:
 

@@ -12,8 +12,6 @@ caveats with some properties (due to historical reasons):
     contains no audio track with ID 5, the `aid` property will return
     `no`.
 
-    Before mpv 0.31.0, you could set existing tracks at runtime only.
-
 `display-fps`
 
 :   This inconsistent behavior is deprecated. Post-deprecation, the
@@ -27,11 +25,6 @@ caveats with some properties (due to historical reasons):
     filter chain does not change. On the other hand, the next video to
     be played will fail, because the initial filter chain cannot be
     created.
-
-    This behavior changed in mpv 0.31.0. Before this, the new value was
-    rejected *iff* a video (for `vf`) or an audio (for `af`) track was
-    active. If playback was not active, the behavior was the same as the
-    current one.
 
 `playlist`
 

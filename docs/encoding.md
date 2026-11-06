@@ -149,7 +149,7 @@ facility.
 
     "`--oremove-metadata=comment,genre`"
 
-    :   excludes copying of the the comment and genre tags to the output
+    :   excludes copying of the comment and genre tags to the output
         file.
 
     </div>

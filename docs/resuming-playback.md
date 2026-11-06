@@ -22,6 +22,9 @@ audio/subtitles, and restores their values the next time the file is
 played. Which options are saved can be configured with the
 `--watch-later-options` option.
 
+The options applied in this way are marked as file-local, and they are
+reset when playback of the file associated with it stops.
+
 When playing multiple playlist entries, mpv checks if one them has a
 resume config file associated, and if it finds one it restarts playback
 from it. For example, if you use `quit-watch-later` on the 5th episode

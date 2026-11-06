@@ -1,5 +1,5 @@
 ---
-title: Commands
+title: Console commands
 ---
 
 This script allows running and completing input commands in the console
@@ -32,7 +32,7 @@ interactively, and also adds mpv's log to the console's log.
 
     :   Enter a percent position to seek to.
 
-    `Ctrl+o script-message-to console type "loadfile ''" 11`
+    `Ctrl+o script-message-to commands type "loadfile ''" 11`
 
     :   Enter a file or URL to play, with autocompletion of paths in the
         filesystem.

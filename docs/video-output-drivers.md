@@ -167,8 +167,7 @@ Available video output drivers are:
 :   Shared memory video output driver without hardware acceleration that
     works whenever X11 is present.
 
-    Since mpv 0.30.0, you may need to use `--profile=sw-fast` to get
-    decent performance.
+    You may need to use `--profile=sw-fast` to get decent performance.
 
     <div class="note" markdown="1">
 
@@ -432,7 +431,7 @@ Available video output drivers are:
 
 `dmabuf-wayland`
 
-:   Experimental Wayland output driver designed for use with either drm
+:   Special Wayland output driver designed for use with either drm
     stateless or VA API hardware decoding. The driver is designed to
     avoid any GPU to CPU copies, and to perform scaling and color space
     conversion using fixed-function hardware, if available, rather than
@@ -456,8 +455,8 @@ Available video output drivers are:
 
     This driver is not required for mpv to work on Wayland. `vo=gpu` and
     `vo=gpu-next` will switch to the appropriate Wayland context
-    automatically. This driver is experimental and generally lower
-    quality than `gpu`/`gpu-next`.
+    automatically. This video output is geared towards power efficiency
+    and has generally lower quality than `gpu`/`gpu-next`.
 
     </div>
 
@@ -468,6 +467,18 @@ Available video output drivers are:
     compatibility. This is low quality, and has issues with OSD. We
     strongly recommend that you use `--vo=gpu` with `--hwdec=vaapi`
     instead.
+
+    <div class="warning" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Warning
+
+    </div>
+
+    This VO is deprecated will be removed next release.
+
+    </div>
 
     The following global options are supported by this video output:
 
@@ -554,8 +565,7 @@ Available video output drivers are:
     also supported (see below). On Windows it requires an ansi terminal
     such as mintty.
 
-    Since mpv 0.30.0, you may need to use `--profile=sw-fast` to get
-    decent performance.
+    You may need to use `--profile=sw-fast` to get decent performance.
 
     Note: the TCT image output is not synchronized with other terminal
     output from mpv, which can lead to broken images. The options
@@ -574,32 +584,6 @@ Available video output drivers are:
 
         :   Uses spaces. Causes vertical resolution to drop twofolds,
             but in theory works in more places.
-
-    `--vo-tct-buffering=<pixel|line|frame>`
-
-    :   Specifies the size of data batches buffered before being sent to
-        the terminal.
-
-        TCT image output is not synchronized with other terminal output
-        from mpv, which can lead to broken images. Sending data to the
-        terminal in small batches may improve parallelism between
-        terminal processing and mpv processing but incurs a static
-        overhead of generating tens of thousands of small writes. Also,
-        depending on the terminal used, sending frames in one chunk
-        might help with tearing of the output, especially if not used
-        with `--really-quiet` and other logs interrupt the data stream.
-
-        pixel
-
-        :   Send data to terminal for each pixel.
-
-        line
-
-        :   Send data to terminal for each line. (Default)
-
-        frame
-
-        :   Send data to terminal for each frame.
 
     `--vo-tct-width=<width>` `--vo-tct-height=<height>`
 
@@ -672,11 +656,6 @@ Available video output drivers are:
 :   Graphical output for the terminal, using sixels. Tested with
     `mlterm` and `xterm`.
 
-    Note: the Sixel image output is not synchronized with other terminal
-    output from mpv, which can lead to broken images. The option
-    `--really-quiet` can help with that, and is recommended. On some
-    platforms, using the `--vo-sixel-buffered` option may work as well.
-
     You may need to use `--profile=sw-fast` to get decent performance.
 
     Note: at the time of writing, `xterm` does not enable sixel by
@@ -698,25 +677,24 @@ Available video output drivers are:
 
     `--vo-sixel-cols=<columns>`, `--vo-sixel-rows=<rows>` (default: 0)
 
-    :   Specify the terminal size in character cells, otherwise (0) read
-        it from the terminal, or fall back to 80x25. Note that mpv
-        doesn't use the the last row with sixel because this seems to
-        result in scrolling.
+    :   Size of the area the image may use, in character cells. The
+        default (0) is the terminal size from the position the image
+        starts at, or 80x25 if the terminal size cannot be read. The
+        last row is left free for the status line.
 
     `--vo-sixel-width=<width>`, `--vo-sixel-height=<height>` (default: 0)
 
-    :   Specify the available size in pixels, otherwise (0) read it from
-        the terminal, or fall back to 320x240. Other than excluding the
-        last line, the height is also further rounded down to a multiple
-        of 6 (sixel unit height) to avoid overflowing below the
-        designated size.
+    :   Size of the area the image may use, in pixels. The default (0)
+        is what the terminal reports for the rows and columns above, or
+        320x240 if it reports nothing. Other than excluding the last
+        row, the height is rounded down to a multiple of 6, the height
+        of a sixel band.
 
     `--vo-sixel-left=<col>`, `--vo-sixel-top=<row>` (default: 0)
 
-    :   Specify the position in character cells where the image starts
-        (1 is the first column or row). If 0 (default) then try to
-        automatically determine it according to the other values and the
-        image aspect ratio and zoom.
+    :   Position in character cells where the area the image may use
+        starts (1 is the first column or row). 0 (default) is the same
+        as 1.
 
     `--vo-sixel-pad-x=<pad_x>`, `--vo-sixel-pad-y=<pad_y>` (default: -1)
 
@@ -739,17 +717,6 @@ Available video output drivers are:
         terminal to its previous state on exit. When set to no, the last
         sixel image stays on screen after quit, with the cursor
         following it.
-
-        `--vo-sixel-exit-clear` is a deprecated alias for this option
-        and may be removed in the future.
-
-    `--vo-sixel-buffered=<yes|no>` (default: no)
-
-    :   Buffers the full output sequence before writing it to the
-        terminal. On POSIX platforms, this can help prevent interruption
-        (including from other applications) and thus broken images, but
-        may come at a performance cost with some terminals and is
-        subject to implementation details.
 
     Sixel image quality options:
 
@@ -897,8 +864,7 @@ Available video output drivers are:
     acceleration (if you need this, check the `drm` backend for `gpu`
     VO).
 
-    Since mpv 0.30.0, you may need to use `--profile=sw-fast` to get
-    decent performance.
+    You may need to use `--profile=sw-fast` to get decent performance.
 
     The following global options are supported by this video output:
 
@@ -964,14 +930,15 @@ Available video output drivers are:
         OSD at a lower resolution (the video when handled by the hwdec
         will be on the drmprime-video plane and at full 4K resolution)
 
-    `--drm-format=<xrgb8888|xbgr8888|xrgb2101010|xbgr2101010|yuyv>`
+    `--drm-format=<xrgb8888|xbgr8888|xrgb2101010|xbgr2101010|rgb565|yuyv>`
 
     :   Select the DRM format to use (default: xrgb8888). This allows
         you to choose the bit depth and color type of the DRM mode.
 
         xrgb8888 is your usual 24bpp packed RGB format with 8 bits of
         padding. xrgb2101010 is a 30bpp packed RGB format with 2 bits of
-        padding. yuyv is a 32bpp packed YUV 4:2:2 format. No planar
+        padding. rgb565 is a 16bpp packed RGB format with reduced colour
+        accuracy. yuyv is a 32bpp packed YUV 4:2:2 format. No planar
         formats are currently supported.
 
         There are cases when xrgb2101010 will work with the `drm` VO,
@@ -1035,8 +1002,7 @@ Available video output drivers are:
 :   Shared memory video output driver without hardware acceleration that
     works whenever Wayland is present.
 
-    Since mpv 0.30.0, you may need to use `--profile=sw-fast` to get
-    decent performance.
+    You may need to use `--profile=sw-fast` to get decent performance.
 
     <div class="note" markdown="1">
 

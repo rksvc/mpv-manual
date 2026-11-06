@@ -41,6 +41,10 @@ read-only.
     correct, but looks better for display purposes. Use the `path`
     property to get an unmodified filename.)
 
+    If the server reported a file name for the stream, as with the HTTP
+    `Content-Disposition` header, that name is returned instead of the
+    one derived from the URL.
+
     This has a sub-property:
 
     `filename/no-ext`
@@ -86,6 +90,27 @@ read-only.
 
     This is only an estimate. (It's computed from two unreliable
     quantities: fps and possibly rounded timestamps.)
+
+    </div>
+
+`env`
+
+:   Read-only table of all the environment variables. A specific
+    variable can be accessed as a sub-property, e.g. `${env/HOME}`
+    returns `$HOME` if set.
+
+    <div class="note" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Note
+
+    </div>
+
+    On certain platforms (e.g Windows) environment variables are case
+    insensitive and so `${env/PATH}` and `${env/Path}` will resolve to
+    the same thing. However, the returned table will contain the
+    variable name as is without any case-normalization.
 
     </div>
 
@@ -146,9 +171,6 @@ read-only.
 :   Duration of the current file in seconds. If the duration is unknown,
     the property is unavailable. Note that the file duration is not
     always exactly known, so this is an estimate.
-
-    This replaces the `length` property, which was deprecated after the
-    mpv 0.9 release. (The semantics are the same.)
 
     This has a sub-property:
 
@@ -218,12 +240,6 @@ read-only.
     `time-pos/full`
 
     :   `time-pos` with milliseconds.
-
-`time-start`
-
-:   Deprecated. Always returns 0. Before mpv 0.14, this used to return
-    the start time of the file (could affect e.g. transport streams).
-    See `--rebase-start-time` option.
 
 `time-remaining`
 
@@ -307,14 +323,12 @@ read-only.
     will restart playback. The number of the first edition is 0.
 
     For Matroska files, this is the edition. For DVD/Blu-ray, this is
-    the title.
+    the title. For MPEG-TS, HLS, and EDL streams, this maps to the
+    underlying program/variant.
 
-    Before mpv 0.31.0, this showed the actual edition selected at
-    runtime, if you didn't set the option or property manually. With mpv
-    0.31.0 and later, this strictly returns the user-set option or
-    property value, and the `current-edition` property was added to
-    return the runtime selected edition (this matters with
-    `--edition=auto`, the default).
+    This strictly returns the user-set option or property value, and the
+    `current-edition` property returns the runtime selected edition
+    (this matters with `--edition=auto`, the default).
 
 `current-edition`
 
@@ -323,6 +337,13 @@ read-only.
     difference between having no editions and a single edition, which
     will be reflected by the property, although in practice it does not
     matter.)
+
+`disc-menu-active`
+
+:   `yes` when the current optical-disc stream (DVD or Blu-ray) is
+    showing an interactive menu (a DVD menu domain, or a visible Blu-ray
+    menu overlay), and `no` otherwise. Unavailable when the currently
+    playing source is not an optical disc.
 
 `chapters`
 
@@ -357,6 +378,10 @@ read-only.
 
     :   Edition title as stored in the file. Not always available.
 
+    `edition-list/N/metadata`
+
+    :   Per-edition metadata key/value pairs.
+
     When querying the property with the client API using
     `MPV_FORMAT_NODE`, or with Lua `mp.get_property_native`, this will
     return a mpv_node with the following contents:
@@ -366,6 +391,7 @@ read-only.
                 "id"                MPV_FORMAT_INT64
                 "title"             MPV_FORMAT_STRING
                 "default"           MPV_FORMAT_FLAG
+                "metadata"          MPV_FORMAT_NODE_MAP
 
 `metadata`
 
@@ -381,7 +407,7 @@ read-only.
 
     This has a number of sub-properties:
 
-    `metadata/by-key/<key>`
+    `metadata/by-key/<key>` (RW)
 
     :   Value of metadata entry `<key>`.
 
@@ -448,7 +474,8 @@ read-only.
 
 `deinterlace-active`
 
-:   Returns `yes`/true if mpv's deinterlacing filter is active. Note
+:   Returns `yes`/true if mpv's deinterlacing filter is active. This is
+    only a guess with `--deinterlace=auto` and may not be accurate. Note
     that it will not detect any manually inserted deinterlacing filters
     done via `--vf`.
 
@@ -467,7 +494,7 @@ read-only.
 
     This also returns `yes`/true if playback is restarting or if nothing
     is playing at all. In other words, it's only `no`/false if there's
-    actually video playing. (Behavior since mpv 0.7.0.)
+    actually video playing.
 
 `cache-speed`
 
@@ -552,8 +579,8 @@ read-only.
         MPV_FORMAT_NODE_MAP
             "seekable-ranges"   MPV_FORMAT_NODE_ARRAY
                 MPV_FORMAT_NODE_MAP
-                    "start"             MPV_FORMAT_DOUBLE
-                    "end"               MPV_FORMAT_DOUBLE
+                    "start"           MPV_FORMAT_DOUBLE
+                    "end"             MPV_FORMAT_DOUBLE
             "bof-cached"        MPV_FORMAT_FLAG
             "eof-cached"        MPV_FORMAT_FLAG
             "fw-bytes"          MPV_FORMAT_INT64
@@ -564,10 +591,10 @@ read-only.
             "raw-input-rate"    MPV_FORMAT_INT64
             "ts-per-stream"     MPV_FORMAT_NODE_ARRAY
                 MPV_FORMAT_NODE_MAP
-                      "type"            MPV_FORMAT_STRING
-                      "cache-duration"  MPV_FORMAT_DOUBLE
-                      "reader-pts"      MPV_FORMAT_DOUBLE
-                      "cache-end"       MPV_FORMAT_DOUBLE
+                    "type"            MPV_FORMAT_STRING
+                    "cache-duration"  MPV_FORMAT_DOUBLE
+                    "reader-pts"      MPV_FORMAT_DOUBLE
+                    "cache-end"       MPV_FORMAT_DOUBLE
 
     Other fields (might be changed or removed in the future):
 
@@ -630,8 +657,7 @@ read-only.
 
 :   Whether the audio mixer is active.
 
-    This option is relatively useless. Before mpv 0.18.1, it could be
-    used to infer behavior of the `volume` property.
+    This option is relatively useless.
 
 `ao-volume` (RW)
 
@@ -715,9 +741,8 @@ read-only.
     will perform a seek to refresh the video properly.) You can watch
     the other hwdec properties to see whether this was successful.
 
-    Unlike in mpv 0.9.x and before, this does not return the currently
-    active hardware decoder. Since mpv 0.18.0, `hwdec-current` is
-    available for this purpose.
+    This does not return the currently active hardware decoder.
+    `hwdec-current` is available for this purpose.
 
 `hwdec-current`
 
@@ -931,6 +956,7 @@ read-only.
             "dw"                MPV_FORMAT_INT64
             "dh"                MPV_FORMAT_INT64
             "aspect"            MPV_FORMAT_DOUBLE
+            "aspect-name"       MPV_FORMAT_STRING
             "par"               MPV_FORMAT_DOUBLE
             "colormatrix"       MPV_FORMAT_STRING
             "colorlevels"       MPV_FORMAT_STRING
@@ -1210,9 +1236,16 @@ read-only.
     `mouse-pos/hover`
 
     :   Boolean - whether the mouse pointer hovers the video window. The
-        coordinates should be ignored when this value is false, because
-        the video backends update them only when the pointer hovers the
-        window.
+        coordinates should be ignored when this value is false if no
+        mouse button is being pressed, because the video backends update
+        them only when the pointer hovers the window in this case.
+
+        If a mouse button is pressed while the pointer hovers the video
+        window and then the mouse pointer moves out of window region
+        without releasing the button, some video backends "capture" the
+        pointer and still report the coordinates. In this case, the
+        value of this property may be true or false depending on the
+        video backend.
 
 `touch-pos`
 
@@ -1278,6 +1311,53 @@ read-only.
     `tablet-pos/pad-btns/N`
 
     :   The state of the Nth tablet pad button, `pressed` or `released`.
+
+        MPV_FORMAT_NODE_MAP
+            "x"                  MPV_FORMAT_INT64
+            "y"                  MPV_FORMAT_INT64
+            "tool-in-proximity"  MPV_FORMAT_FLAG
+            "tool-tip"           MPV_FORMAT_STRING
+            "tool-stylus-btn1"   MPV_FORMAT_STRING
+            "tool-stylus-btn2"   MPV_FORMAT_STRING
+            "tool-stylus-btn3"   MPV_FORMAT_STRING
+            "pad-focus"          MPV_FORMAT_FLAG
+            "pad-btns"           MPV_FORMAT_NODE_MAP
+               (key and string value for each pad-btn entry)
+
+`dropped-files`
+
+:   Information of the most recent drag-and-drop event mpv received. A
+    client can observe this property to detect when a drag-and-drop
+    event happens. This property is unavailable if no drag-and-drop
+    event has happened.
+
+    Has the following sub-properties:
+
+    `dropped-files/time`
+
+    :   The timestamp of the last drag-and-drop event mpv received, in
+        nanoseconds. This uses the same clock as `mpv_get_time_ns()`.
+
+    `dropped-files/action`
+
+    :   The action of the drag-and-drop event. This is normally
+        `replace`. Depending on the platform, this can also be `append`
+        in some cases, such as shift key being held while files are
+        dropped.
+
+    `dropped-files/files`
+
+    :   The dropped file names of the drag-and-drop event.
+
+    When querying the property with the client API using
+    `MPV_FORMAT_NODE`, or with Lua `mp.get_property_native`, this will
+    return a mpv_node with the following contents:
+
+        MPV_FORMAT_NODE_MAP
+            "time"    MPV_FORMAT_INT64
+            "action"  MPV_FORMAT_STRING
+            "files"   MPV_FORMAT_NODE_ARRAY
+                MPV_FORMAT_STRING
 
 `sub-ass-extradata`
 
@@ -1354,6 +1434,29 @@ read-only.
 
 :   Same as `sub-end`, but for the secondary subtitles.
 
+`sub-lines`
+
+:   The list of subtitle lines in memory. Not available if the subtitle
+    is not text-based (i.e. DVD/BD subtitles).
+
+    When querying the property with the client API using
+    `MPV_FORMAT_NODE`, or with Lua `mp.get_property_native`, this will
+    return a mpv_node with the following contents:
+
+        MPV_FORMAT_NODE_ARRAY
+            MPV_FORMAT_NODE_MAP (for each subtitle line)
+                "text"  MPV_FORMAT_STRING
+                "start" MPV_FORMAT_DOUBLE
+                "end"   MPV_FORMAT_DOUBLE
+
+    ASS tags are stripped from `text`.
+
+    `end` is absent if unknown.
+
+`secondary-sub-lines`
+
+:   Same as `sub-lines`, but for the secondary subtitles.
+
 `playlist-pos` (RW)
 
 :   Current position on playlist. The first entry is on position 0.
@@ -1366,8 +1469,7 @@ read-only.
     is "current", this property returns -1. Likewise, writing -1 will
     put the player into idle mode (or exit playback if idle mode is not
     enabled). If an out of range index is written to the property, this
-    behaves as if writing -1. (Before mpv 0.33.0, instead of returning
-    -1, this property was unavailable if no playlist entry was current.)
+    behaves as if writing -1.
 
     Writing the current value back to the property will have no effect.
     Use `playlist-play-index` to restart the playback of the current
@@ -1452,12 +1554,13 @@ read-only.
     :   `yes`/true if the `playlist-current-pos` property points to this
         entry, `no`/false or unavailable otherwise.
 
-    `playlist/N/title`
+    `playlist/N/title` (RW)
 
     :   Name of the Nth entry. Available if the playlist file contains
         such fields and mpv's parser supports it for the given playlist
         format, or if the playlist entry has been opened before and a
-        media-title other than filename has been acquired.
+        media-title other than filename has been acquired, or if set by
+        the user.
 
     `playlist/N/id`
 
@@ -1478,15 +1581,18 @@ read-only.
 
         MPV_FORMAT_NODE_ARRAY
             MPV_FORMAT_NODE_MAP (for each playlist entry)
-                "filename"  MPV_FORMAT_STRING
-                "current"   MPV_FORMAT_FLAG (might be missing; since mpv 0.7.0)
-                "playing"   MPV_FORMAT_FLAG (same)
-                "title"     MPV_FORMAT_STRING (optional)
-                "id"        MPV_FORMAT_INT64
+                "filename"      MPV_FORMAT_STRING
+                "current"       MPV_FORMAT_FLAG (might be missing)
+                "playing"       MPV_FORMAT_FLAG (same)
+                "title"         MPV_FORMAT_STRING (optional)
+                "id"            MPV_FORMAT_INT64
+                "playlist-path" MPV_FORMAT_STRING (optional)
 
 `track-list`
 
-:   List of audio/video/sub tracks, current entry marked.
+:   List of audio/video/sub tracks, current entry marked. When the file
+    has editions, only tracks belonging to the currently selected
+    edition are listed.
 
     This has a number of sub-properties. Replace `N` with the 0-based
     track index.
@@ -1581,7 +1687,14 @@ read-only.
 
     `track-list/N/program-id`
 
-    :   The program ID of the HLS stream, if available.
+    :   The first program ID this stream belongs to, if any. Deprecated,
+        use `track-list/N/program-ids`.
+
+    `track-list/N/program-ids`
+
+    :   A list of all program IDs this stream belongs to. A stream can
+        belong to more than one program (e.g. in MPEG-TS or HLS).
+        Unavailable if the stream does not belong to any program.
 
     `track-list/N/codec`
 
@@ -1625,7 +1738,8 @@ read-only.
         that this can be potentially wrong if a demuxer other than
         libavformat (`--demuxer=lavf`) is used. For mkv files, the index
         will usually match even if the default (builtin) demuxer is
-        used, but there is no hard guarantee.
+        used, but there is no hard guarantee. May be unavailable if no
+        known mapping exists.
 
     `track-list/N/decoder`
 
@@ -1670,8 +1784,7 @@ read-only.
 
     `track-list/N/demux-bitrate`
 
-    :   Audio average bitrate, in bits per second. (Not always
-        accurate.)
+    :   Average bitrate, in bits per second. (Not always accurate.)
 
     `track-list/N/demux-rotation`
 
@@ -1680,6 +1793,10 @@ read-only.
     `track-list/N/demux-par`
 
     :   Pixel aspect ratio.
+
+    `track-list/N/demux-duration`
+
+    :   Track duration as indicated by the container.
 
     `track-list/N/format-name`
 
@@ -1735,6 +1852,7 @@ read-only.
                 "hearing-impaired"  MPV_FORMAT_FLAG
                 "hls-bitrate"       MPV_FORMAT_INT64
                 "program-id"        MPV_FORMAT_INT64
+                "program-ids"       MPV_FORMAT_NODE_ARRAY[MPV_FORMAT_INT64]
                 "selected"          MPV_FORMAT_FLAG
                 "main-selection"    MPV_FORMAT_INT64
                 "external"          MPV_FORMAT_FLAG
@@ -1783,6 +1901,9 @@ read-only.
     If tracks of the requested type are selected via `--lavfi-complex`,
     the first one is returned.
 
+    Note that this property cannot be used directly, a sub-property is
+    required.
+
 `chapter-list` (RW)
 
 :   List of chapters, current entry marked.
@@ -1825,8 +1946,7 @@ read-only.
                 "label"     MPV_FORMAT_STRING [optional]
                 "enabled"   MPV_FORMAT_FLAG [optional]
                 "params"    MPV_FORMAT_NODE_MAP [optional]
-                    "key"   MPV_FORMAT_STRING
-                    "value" MPV_FORMAT_STRING
+                    (key and string value for each param entry)
 
     It's also possible to write the property using this format.
 
@@ -1953,15 +2073,16 @@ read-only.
     return a mpv_node with the following contents:
 
         MPV_FORMAT_NODE_MAP
-        "TYPE" MPV_FORMAT_NODE_ARRAY
-            MPV_FORMAT_NODE_MAP
-                "desc"    MPV_FORMAT_STRING
-                "last"    MPV_FORMAT_INT64
-                "avg"     MPV_FORMAT_INT64
-                "peak"    MPV_FORMAT_INT64
-                "count"   MPV_FORMAT_INT64
-                "samples" MPV_FORMAT_NODE_ARRAY
-                     MP_FORMAT_INT64
+            (key and array value for each TYPE entry)
+            MPV_FORMAT_NODE_ARRAY (for each pass entry)
+                MPV_FORMAT_NODE_MAP
+                    "desc"    MPV_FORMAT_STRING
+                    "last"    MPV_FORMAT_INT64
+                    "avg"     MPV_FORMAT_INT64
+                    "peak"    MPV_FORMAT_INT64
+                    "count"   MPV_FORMAT_INT64
+                    "samples" MPV_FORMAT_NODE_ARRAY
+                         MPV_FORMAT_INT64
 
     Note that directly accessing this structure via subkeys is not
     supported, the only access is through aforementioned
@@ -2098,6 +2219,13 @@ read-only.
         margins respectively. Values are between 0.0 and 1.0, normalized
         to window width/height.
 
+    `user-data/osc/draw-preview`
+
+    :   Used to communicate between osc and compatible thumbnailer (if
+        installed). See [OSC Preview
+        API](../on-screen-controller.md#osc-preview-api) section for
+        more details.
+
     `user-data/mpv/ytdl`
 
     :   Data shared by the builtin ytdl hook script.
@@ -2119,10 +2247,14 @@ read-only.
 
     :   Whether the console is open.
 
+    `user-data/mpv/context-menu/open`
+
+    :   Whether the context menu script is open.
+
 `menu-data` (RW)
 
 :   This property stores the raw menu definition. See [Context
-    Menu](../interactive-control.md#context-menu) section for details.
+    Menu](../context-menu.md) section for details.
 
     `type`
 
@@ -2263,6 +2395,19 @@ read-only.
     a somewhat weird form (apparently "hex BCD"), indicating the release
     version of the libass library linked to mpv.
 
+`libplacebo-version`
+
+:   The contents of the `PL_VERSION` macro. This is a string which
+    identifies the build in some way, either through a release version
+    number, or a git hash.
+
+`subrandr-version`
+
+:   The value of `sbr_library_version()` as a string in the format
+    `<major>.<minor>.<patch>`, indicating the release version of the
+    subrandr library at runtime. This property is unavailable if mpv is
+    not compiled with subrandr enabled.
+
 `platform`
 
 :   Returns a string describing what target platform mpv was built for.
@@ -2285,9 +2430,15 @@ read-only.
 `file-local-options/<name>` (RW)
 
 :   Similar to `options/<name>`, but when setting an option through this
-    property, the option is reset to its old value once the current file
-    has stopped playing. Trying to write an option while no file is
-    playing (or is being loaded) results in an error.
+    property, the option is marked as file-local, which causes it to
+    reset to its old value once the current file has stopped playing.
+    Trying to write an option while no file is playing (or is being
+    loaded) results in an error.
+
+    If an option is applied through a file specific mechanism such as
+    per-file options, watch later, `options` parameter of the `loadfile`
+    command, or file-specific configuration files, the option is
+    similarly marked as file-local.
 
     (Note that if an option is marked as file-local, even `options/`
     will access the local value, and the `old` value, which will be
@@ -2347,6 +2498,18 @@ read-only.
         choice options, but are not actual choice options internally,
         may not have this info available.
 
+        MPV_FORMAT_NODE_MAP
+            "name"                    MPV_FORMAT_STRING
+            "type"                    MPV_FORMAT_STRING
+            "set-from-commandline"    MPV_FORMAT_FLAG
+            "set-locally"             MPV_FORMAT_FLAG
+            "expects-file"            MPV_FORMAT_FLAG
+            "default-value"           MPV_FORMAT_NODE (optional, value of "type")
+            "min"                     MPV_FORMAT_DOUBLE (optional)
+            "max"                     MPV_FORMAT_DOUBLE (optional)
+            "choices"                 MPV_FORMAT_NODE_ARRAY (optional)
+                MPV_FORMAT_STRING
+
 `property-list`
 
 :   The list of top-level properties.
@@ -2364,6 +2527,14 @@ read-only.
     The `profile-restore` field is currently missing if it holds the
     default value (either because it was not set, or set explicitly to
     `default`), but in the future it might hold the value `default`.
+
+        MPV_FORMAT_NODE_ARRAY
+            MPV_FORMAT_NODE_MAP (for each profile entry)
+                "name"       MPV_FORMAT_STRING
+                "options"    MPV_FORMAT_NODE_ARRAY (for each option entry)
+                    MPV_FORMAT_NODE_MAP
+                        "key"      MPV_FORMAT_STRING
+                        "value"    MPV_FORMAT_STRING
 
 `command-list`
 
@@ -2406,9 +2577,12 @@ read-only.
                 "vararg"  MPV_FORMAT_FLAG
                 "args"    MPV_FORMAT_NODE_ARRAY
                     MPV_FORMAT_NODE_MAP
-                        "name"     MPV_FORMAT_STRING
-                        "type"     MPV_FORMAT_STRING
-                        "optional" MPV_FORMAT_FLAG
+                        "name"           MPV_FORMAT_STRING
+                        "type"           MPV_FORMAT_STRING
+                        "optional"       MPV_FORMAT_FLAG
+                        "default-value"  MPV_FORMAT_NODE (optional, value of "type")
+                        "choices"        MPV_FORMAT_NODE_ARRAY (optional)
+                            MPV_FORMAT_STRING
 
 `input-bindings`
 
@@ -2461,6 +2635,16 @@ read-only.
         `f cycle bla # toggle bla` would result in an entry with
         `comment = "toggle bla", cmd = "cycle bla"`.)
 
+        MPV_FORMAT_NODE_ARRAY
+            MPV_FORMAT_NODE_MAP
+                "key"         MPV_FORMAT_STRING
+                "cmd"         MPV_FORMAT_STRING
+                "is_weak"     MPV_FORMAT_FLAG
+                "owner"       MPV_FORMAT_STRING (optional)
+                "section"     MPV_FORMAT_STRING
+                "priority"    MPV_FORMAT_INT64
+                "comment"     MPV_FORMAT_STRING (optional)
+
     This property is read-only, and change notification is not
     supported.
 
@@ -2499,10 +2683,35 @@ read-only.
 
     </div>
 
+    <div class="warning" markdown="1">
+
+    <div class="title" markdown="1">
+
+    Warning
+
+    </div>
+
+    Since mpv 0.42.0, this property does not return the current
+    clipboard content on certain platforms if `--clipboard-monitor=no`.
+    When reading clipboard content, you must run `update-clipboard`
+    command to update the clipboard content manually in this case.
+
+    </div>
+
+        MPV_FORMAT_NODE_MAP
+            "text"            MPV_FORMAT_STRING
+            "text-primary"    MPV_FORMAT_STRING
+
 `current-clipboard-backend`
 
 :   A string containing the currently active clipboard backend. See
     `--clipboard-backends` option for the list of available backends.
+
+`player-operation-mode`
+
+:   A read-only string of the current player operation mode, mirroring
+    the `--player-operation-mode` option. To set operation mode, set the
+    option at startup instead.
 
 `clock`
 

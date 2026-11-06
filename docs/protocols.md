@@ -47,22 +47,44 @@ title: Protocols
 > Play a Blu-ray disc. Since libbluray 1.0.1, you can read from ISO
 > files by passing them to `--bluray-device`.
 >
+> A Blu-ray `.iso` image passed directly (e.g. `mpv disc.iso`) is also
+> detected and opened.
+>
 > `title` can be: `longest` or `first` (selects the default playlist);
-> `mpls/<number>` (selects \<number\>.mpls playlist); `<number>` (select
-> playlist with the same index). mpv will list the available playlists
-> on loading.
+> `menu` (starts in the disc menu, see `--disc-menu` and the `discnav`
+> command); `mpls/<number>` (selects \<number\>.mpls playlist);
+> `<number>` (select playlist with the same index). mpv will list the
+> available playlists on loading.
 >
 > `bluray://` is an alias.
 
 `dvd://[title][/device]` `--dvd-device=PATH`
 
-> Play a DVD. DVD menus are not supported. If no title is given, the
-> longest title is auto-selected. Without `--dvd-device`, it will
-> probably try to open an actual optical drive, if available and
+> Play a DVD. If no title is given, the longest title is auto-selected.
+> `title` can also be `menu` to start in the disc menu (see
+> `--disc-menu` and the `discnav` command). Without `--dvd-device`, it
+> will probably try to open an actual optical drive, if available and
 > implemented for the OS.
+>
+> A DVD-Video `.iso` image passed directly (e.g. `mpv disc.iso`) is also
+> detected and opened.
 >
 > `dvdnav://` is an old alias for `dvd://` and does exactly the same
 > thing.
+
+`dvda://[title][/device]` `--dvda-device=PATH`
+
+> Play the AUDIO_TS zone of a DVD-Audio disc. Titles correspond to the
+> disc's audio groups, tracks are exposed as chapters. If no title is
+> given, the longest title is auto-selected. Menus are not supported.
+>
+> Still images (ASVS), such as cover art or booklet pages a disc
+> associates with its tracks, are exposed as a video track and shown by
+> default. Can be disabled with `--vid=no`.
+>
+> A DVD-Audio `.iso` image passed directly (e.g. `mpv disc.iso`) is also
+> detected and opened. For hybrid discs, the DVD-Audio zone is preferred
+> over the DVD-Video zone.
 
 `dvb://[cardnumber@]channel` `--dvbin-...`
 
@@ -173,22 +195,48 @@ title: Protocols
 >
 > Only works with seekable streams.
 >
-> Examples:
+> <div class="admonition" markdown="1">
+>
+> Example
 >
 >     mpv slice://1g-2g@cap.ts
 >
->     This starts reading from cap.ts after seeking 1 GiB, then
->     reads until reaching 2 GiB or end of file.
+> This starts reading from cap.ts after seeking 1 GiB, then reads until
+> reaching 2 GiB or end of file.
 >
 >     mpv slice://1g-+2g@cap.ts
 >
->     This starts reading from cap.ts after seeking 1 GiB, then
->     reads until reaching 3 GiB or end of file.
+> This starts reading from cap.ts after seeking 1 GiB, then reads until
+> reaching 3 GiB or end of file.
 >
 >     mpv slice://100m@appending://cap.ts
 >
->     This starts reading from cap.ts after seeking 100MiB, then
->     reads until end of file.
+> This starts reading from cap.ts after seeking 100MiB, then reads until
+> end of file.
+>
+> </div>
+
+`aes-ctr://key:iv@URL`
+
+> Decrypt a stream that was encrypted as a whole with AES in CTR mode.
+>
+> `key` is the AES key as 32, 48 or 64 hex digits. `iv` is the initial
+> counter block as 32 hex digits. The counter block is incremented as a
+> 128 bit big endian number, which is what `openssl enc -aes-128-ctr`
+> does.
+>
+> Seeking works if the stream behind `URL` is seekable.
+>
+> <div class="admonition" markdown="1">
+>
+> Example
+>
+>     mpv aes-ctr://000102030405060708090a0b0c0d0e0f:f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff@video.mkv.enc
+>
+> This plays a file that was encrypted with
+> `openssl enc -aes-128-ctr -K 000102030405060708090a0b0c0d0e0f -iv f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff -in video.mkv -out video.mkv.enc`.
+>
+> </div>
 
 `null://`
 
@@ -204,3 +252,23 @@ title: Protocols
 `hex://data`
 
 > Like `memory://`, but the string is interpreted as hexdump.
+
+`archive://[ARCHIVE PATH]|[FILE PATH IN ARCHIVE]`
+
+> Open a file at the specified path inside an archive. Requires
+> libarchive feature enabled. The archive path must have all `%` and `|`
+> characters URL escaped. The file path should not be URL escaped.
+>
+> <div class="admonition" markdown="1">
+>
+> Example
+>
+>     mpv "archive://file.zip|video.mkv"
+>
+> This will play `video.mkv` in the archive file `file.zip`.
+>
+> </div>
+
+`env://variable`
+
+> Read the environment variable `variable` as source data.

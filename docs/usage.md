@@ -32,10 +32,8 @@ the option a filename. `mpv -fs no` will attempt to play a file named
 option changes and its parameter becomes optional, then a command line
 using the alternative syntax will break.
 
-Until mpv 0.31.0, there was no difference whether an option started with
-`--` or a single `-`. Newer mpv releases strictly expect that you pass
-the option value after a `=`. For example, before `mpv --log-file f.txt`
-would write a log to `f.txt`, but now this command line fails, as
+For options starting with `--`, mpv expects that you pass the option
+value after a `=`. For example, `mpv --log-file f.txt` will fail, as
 `--log-file` expects an option value, and `f.txt` is simply considered a
 normal file to be played (as in `mpv f.txt`).
 
@@ -77,10 +75,9 @@ receives the `"` quotes.
 
 The `[...]` form of quotes wraps everything between `[` and `]`. It's
 useful with shells that don't interpret these characters in the middle
-of an argument (like bash). These quotes are balanced (since mpv 0.9.0):
-the `[` and `]` nest, and the quote terminates on the last `]` that has
-no matching `[` within the string. (For example, `[a[b]c]` results in
-`a[b]c`.)
+of an argument (like bash). These quotes are balanced: the `[` and `]`
+nest, and the quote terminates on the last `]` that has no matching `[`
+within the string. (For example, `[a[b]c]` results in `a[b]c`.)
 
 The fixed-length quoting syntax is intended for use with external
 scripts and programs.
@@ -121,6 +118,14 @@ before that might be interpreted as protocol prefix, even though `://`
 can be part of a legal UNIX path. To avoid problems with arbitrary
 paths, you should be sure that absolute paths passed to mpv start with
 `/`, and prefix relative paths with `./`.
+
+URLs that are passed to mpv should be percent-encoded for it to work
+reliably. There are some heuristics in place that tries to automatically
+do it, but these heuristics are not foolproof. For example, in order to
+play a file literally named `foo%20.mp4`, using
+`http://localhost/foo%20.mp4` without any percent-encoding will not
+work. Percent-encoding it as `http://localhost/foo%2520.mp4` will work
+as expected.
 
 Using the `file://` pseudo-protocol is discouraged, because it involves
 strange URL unescaping rules.
@@ -213,7 +218,8 @@ not reset when a new file is played.
 
 Sometimes, it is useful to change options per-file. This can be achieved
 by adding the special per-file markers `--{` and `--}`. (Note that you
-must escape these on some shells.) Example:
+must escape these on some shells.) When a file is loaded, the associated
+per-file options are applied and marked as file-local options. Example:
 
     mpv --a file1.mkv --b --\{ --c file2.mkv --d file3.mkv --e --\} file4.mkv --f
 
@@ -226,8 +232,9 @@ must escape these on some shells.) Example:
 
 Additionally, any file-local option changed at runtime is reset when the
 current file stops playing. If option `--c` is changed during playback
-of `file2.mkv`, it is reset when advancing to `file3.mkv`. This only
-affects file-local options. The option `--a` is never reset here.
+of `file2.mkv`, it is reset when advancing to `file3.mkv`, or when
+restarting the current file with the `playlist-play-index` command. This
+only affects file-local options. The option `--a` is never reset here.
 
 #### List Options
 
@@ -403,8 +410,6 @@ If you want to pass a value without interpreting it for escapes or `,`,
 it is recommended to use the `-append` variant. When using libmpv,
 prefer using `MPV_FORMAT_NODE_MAP`; when using a scripting backend or
 the JSON IPC, use an appropriate structured data type.
-
-Prior to mpv 0.33, `:` was also recognized as separator by `-set`.
 
 ##### Object settings list options
 

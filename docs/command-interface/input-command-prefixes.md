@@ -48,8 +48,7 @@ Multiple prefixes can be specified. They are separated by whitespace.
 :   For some commands, keeping a key pressed doesn't run the command
     repeatedly. This prefix forces enabling key repeat in any case. For
     a list of commands: the first command determines the repeatability
-    of the whole list (up to and including version 0.33 - a list was
-    always repeatable).
+    of the whole list.
 
 `nonrepeatable`
 

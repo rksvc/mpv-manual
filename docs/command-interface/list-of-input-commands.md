@@ -51,10 +51,6 @@ syntax](flat-command-syntax.md)).
     and `absolute-percent` seeks, while `exact` is used for `absolute`
     seeks.
 
-    Before mpv 0.9, the `keyframes` and `exact` flags had to be passed
-    as 3rd parameter (essentially using a space instead of `+`). The 3rd
-    parameter is still parsed, but is considered deprecated.
-
     This is a scalable command. See the documentation of `nonscalable`
     input command prefix in [Input Command
     Prefixes](input-command-prefixes.md) for details.
@@ -300,7 +296,7 @@ syntax](flat-command-syntax.md)).
 :   Go to the first of the previous entries on the playlist with a
     different `playlist-path`.
 
-`playlist-play-index <integer|current|none>`
+`playlist-play-index <integer|current|none> [preserve-options]`\]
 
 :   Start (or restart) playback of the given playlist index. In addition
     to the 0-based playlist entry index, it supports the following
@@ -317,6 +313,10 @@ syntax](flat-command-syntax.md)).
 
     :   Playback is stopped. If idle mode (`--idle`) is enabled, the
         player will enter idle mode, otherwise it will exit.
+
+    Setting `preserve-options` (`MPV_FORMAT_FLAG`) will not reset
+    file-local options when the playback of the current playlist index
+    is restarted.
 
     This command is similar to `loadfile` in that it only manipulates
     the state of what to play next, without waiting until the current
@@ -347,27 +347,43 @@ syntax](flat-command-syntax.md)).
 
     :   Append the file to the playlist.
 
+    \<insert-next\>
+
+    :   Insert the file into the playlist, directly after the current
+        entry.
+
+    \<insert-at\>
+
+    :   Insert the file into the playlist, at the index given in the
+        third argument.
+
+    \<play\>
+
+    :   If nothing is currently playing, start playback. (Always starts
+        with the added file, even if the playlist was not empty before
+        running this command).
+
+    Multiple flags can be combined, e.g.: `append+play`.
+
+    By default, `append`, `insert-next`, and `insert-at` will not
+    immediately start playback even if the playlist was previously
+    empty. Adding the `play` flag to them forces playback to start.
+
+    The following values are considered deprecated and were the old way
+    (before mpv 0.42) of forcing playback to start before the `play`
+    flag was added.
+
     \<append-play\>
 
     :   Append the file, and if nothing is currently playing, start
         playback. (Always starts with the added file, even if the
         playlist was not empty before running this command.)
 
-    \<insert-next\>
-
-    :   Insert the file into the playlist, directly after the current
-        entry.
-
     \<insert-next-play\>
 
     :   Insert the file next, and if nothing is currently playing, start
         playback. (Always starts with the added file, even if the
         playlist was not empty before running this command.)
-
-    \<insert-at\>
-
-    :   Insert the file into the playlist, at the index given in the
-        third argument.
 
     \<insert-at-play\>
 
@@ -377,11 +393,11 @@ syntax](flat-command-syntax.md)).
         running this command.)
 
     The third argument is an insertion index, used only by the
-    `insert-at` and `insert-at-play` actions. When used with those
-    actions, the new item will be inserted at the index position in the
-    playlist, or appended to the end if index is less than 0 or greater
-    than the size of the playlist. This argument will be ignored for all
-    other actions. This argument is added in mpv 0.38.0.
+    `insert-at` action. When used with those actions, the new item will
+    be inserted at the index position in the playlist, or appended to
+    the end if index is less than 0 or greater than the size of the
+    playlist. This argument will be ignored for all other actions. This
+    argument was added in mpv 0.38.0.
 
     The fourth argument is a list of options and values which should be
     set while the file is playing. It is of the form
@@ -423,6 +439,32 @@ syntax](flat-command-syntax.md)).
     :   Append the new playlist at the end of the current internal
         playlist.
 
+    \<insert-next\>
+
+    :   Insert the new playlist into the current internal playlist,
+        directly after the current entry.
+
+    \<insert-at\>
+
+    :   Insert the new playlist at the index given in the third
+        argument.
+
+    \<play\>
+
+    :   If nothing is currently playing, start playback. (Always starts
+        with the added playlist, even if the internal playlist was not
+        empty before running this command).
+
+    Multiple flags can be combined, e.g.: `append+play`.
+
+    By default, `append`, `insert-next`, and `insert-at` will not
+    immediately start playback even if the playlist was previously
+    empty. Adding the `play` flag to them forces playback to start.
+
+    The following values are considered deprecated and were the old way
+    (before mpv 0.42) of forcing playback to start before the `play`
+    flag was added.
+
     \<append-play\>
 
     :   Append the new playlist, and if nothing is currently playing,
@@ -430,22 +472,12 @@ syntax](flat-command-syntax.md)).
         the internal playlist was not empty before running this
         command.)
 
-    \<insert-next\>
-
-    :   Insert the new playlist into the current internal playlist,
-        directly after the current entry.
-
     \<insert-next-play\>
 
     :   Insert the new playlist, and if nothing is currently playing,
         start playback. (Always starts with the new playlist, even if
         the internal playlist was not empty before running this
         command.)
-
-    \<insert-at\>
-
-    :   Insert the new playlist at the index given in the third
-        argument.
 
     \<insert-at-play\>
 
@@ -455,11 +487,11 @@ syntax](flat-command-syntax.md)).
         playlist was not empty before running this command.)
 
     The third argument is an insertion index, used only by the
-    `insert-at` and `insert-at-play` actions. When used with those
-    actions, the new playlist will be inserted at the index position in
-    the internal playlist, or appended to the end if index is less than
-    0 or greater than the size of the internal playlist. This argument
-    will be ignored for all other actions.
+    `insert-at` action. When used with those actions, the new playlist
+    will be inserted at the index position in the internal playlist, or
+    appended to the end if index is less than 0 or greater than the size
+    of the internal playlist. This argument will be ignored for all
+    other actions. This argument was added in mpv 0.38.0.
 
 `playlist-clear`
 
@@ -535,6 +567,14 @@ syntax](flat-command-syntax.md)).
     \<default\>
 
     > Marks the track as default.
+
+    \<original\>
+
+    > Marks the track as being in the original language.
+
+    \<commentary\>
+
+    > Marks the track as containing commentary.
 
     \<attached-picture\> (only for `video-add`)
 
@@ -755,7 +795,7 @@ syntax](flat-command-syntax.md)).
 :   Show the progress bar, the elapsed time and the total duration of
     the file on the OSD. `no-osd` has no effect on this command.
 
-`overlay-add <id> <x> <y> <file> <offset> <fmt> <w> <h> <stride> <dw> <dh>`
+`overlay-add <id> <x> <y> <file> <offset> <fmt> <w> <h> <stride> [<dw> [<dh> [<video_colorspace> [<max_luma> [<primaries> [<transfer>]]]]]]`
 
 :   Add an OSD overlay sourced from raw data. This might be useful for
     scripts and applications controlling mpv, and which want to display
@@ -781,22 +821,17 @@ syntax](flat-command-syntax.md)).
 
     `file` specifies the file the raw image data is read from. It can be
     either a numeric UNIX file descriptor prefixed with `@` (e.g. `@4`),
-    or a filename. The file will be mapped into memory with `mmap()`,
-    copied, and unmapped before the command returns (changed in mpv
-    0.18.1).
+    or a filename. The file will be read into memory before the command
+    returns. Note that since mpv 0.42.0, if a file descriptor is
+    specified, the file offset of the descriptor will be modified.
 
     It is also possible to pass a raw memory address for use as bitmap
     memory by passing a memory address as integer prefixed with an `&`
     character. Passing the wrong thing here will crash the player. This
     mode might be useful for use with libmpv. The `offset` parameter is
-    simply added to the memory address (since mpv 0.8.0, ignored
-    before).
+    simply added to the memory address.
 
     `offset` is the byte offset of the first pixel in the source file.
-    (The current implementation always mmap's the whole file from
-    position 0 to the end of the image, so large offsets should be
-    avoided. Before mpv 0.8.0, the offset was actually passed directly
-    to `mmap`, but it was changed to make using it easier.)
 
     `fmt` is a string identifying the image format. Currently, only
     `bgra` is defined. This format has 4 bytes per pixels, with 8 bits
@@ -824,6 +859,25 @@ syntax](flat-command-syntax.md)).
     to in display to `dw` and `dh`. If parameters are not present, the
     values for `w` and `h` are used.
 
+    `video_colorspace` (default: no) interprets the overlay in the
+    video's colorspace, including HDR metadata, so it is tone mapped
+    exactly like the video.
+
+    `max_luma` specifies the (optional) luminance peak of the overlay in
+    cd/m². If unset, it is inferred from the overlay's colorspace, or
+    taken from the video for `video_colorspace` overlays.
+
+    `primaries` and `transfer` specify the (optional) colorspace the
+    overlay is encoded in, and accept the same values as `--target-prim`
+    and `--target-trc`. The default `auto` means sRGB (BT.709 primaries
+    and sRGB transfer). They are ignored if `video_colorspace` is set.
+
+    Currently only `--vo=gpu-next` honors these parameters. `--vo=gpu`
+    always assumes the overlay is sRGB and adapts it to the display.
+    Other VOs ignore these parameters, and either blend the overlay
+    without any colorspace conversion or pass it to the system
+    compositor.
+
     <div class="note" markdown="1">
 
     <div class="title" markdown="1">
@@ -832,12 +886,21 @@ syntax](flat-command-syntax.md)).
 
     </div>
 
+    Before mpv 0.42.0, the file was mapped into memory with `mmap()`,
+    copied, and unmapped before the command returns. Changing the file
+    before the command returns is highly discouraged as this could lead
+    to crashes on versions before 0.42.0.
+
     Before mpv 0.18.1, you had to do manual "double buffering" when
     updating an overlay by replacing it with a different memory buffer.
-    Since mpv 0.18.1, the memory is simply copied and doesn't reference
-    any of the memory indicated by the command's arguments after the
-    command returns. If you want to use this command before mpv 0.18.1,
-    reads the old docs to see how to handle this correctly.
+    If you want to use this command before mpv 0.18.1, read the old docs
+    to see how to handle this correctly.
+
+    Larger offsets should be avoided as mpv versions before 0.42.0 used
+    to mmap the whole file from position 0 to the end of the image.
+    Before mpv 0.8.0, the offset was actually passed directly to `mmap`.
+    Since mpv 0.42.0, no mmap happens, so offset is handled by seeking
+    on the file.
 
     </div>
 
@@ -1117,11 +1180,11 @@ syntax](flat-command-syntax.md)).
 
 `run <command> [<arg1> [<arg2> [...]]]`
 
-:   Run the given command. Unlike in MPlayer/mplayer2 and earlier
-    versions of mpv (0.2.x and older), this doesn't call the shell.
-    Instead, the command is run directly, with each argument passed
-    separately. Each argument is expanded like in [Property
-    Expansion](property-expansion.md).
+:   Run the given command.
+
+    This doesn't call the shell. Instead, the command is run directly,
+    with each argument passed separately. Each argument is expanded like
+    in [Property Expansion](property-expansion.md).
 
     This command has a variable number of arguments, and cannot be used
     with named arguments.
@@ -1229,8 +1292,7 @@ syntax](flat-command-syntax.md)).
     `passthrough_stdin` (`MPV_FORMAT_FLAG`)
 
     :   If enabled, wire the new process' stdin to mpv's stdin (default:
-        no). Before mpv 0.33.0, this argument did not exist, but the
-        behavior was as if this was set to true.
+        no).
 
     The command returns the following result (as `MPV_FORMAT_NODE_MAP`):
 
@@ -1313,7 +1375,7 @@ syntax](flat-command-syntax.md)).
     Example
 
         local r = mp.command_native({
-            name = "subprocess",
+            _name = "subprocess",
             playback_only = false,
             capture_stdout = true,
             args = {"cat", "/proc/cpuinfo"},
@@ -1384,7 +1446,7 @@ syntax](flat-command-syntax.md)).
     1.  The string `key-binding`.
     2.  The name of the binding (as established above).
     3.  The key state as string (see below).
-    4.  The key name (since mpv 0.15.0).
+    4.  The key name.
     5.  The text the key would produce, or empty string if not
         applicable.
     6.  The scale of the key, such as the ones produced by `WHEEL_*`
@@ -1426,6 +1488,9 @@ syntax](flat-command-syntax.md)).
     On success, returns a `mpv_node` with a `client_id` field set to the
     return value of the `mpv_client_id()` API call of the newly created
     script handle.
+
+        MPV_FORMAT_NODE_MAP
+            "client_id"    MPV_FORMAT_STRING
 
 ##### Screenshot Commands
 
@@ -1478,11 +1543,13 @@ syntax](flat-command-syntax.md)).
     If you combine this command with another one using `;`, you can use
     the `async` flag to make encoding/writing the image file
     asynchronous. For normal standalone commands, this is always
-    asynchronous, and the flag has no effect. (This behavior changed
-    with mpv 0.29.0.)
+    asynchronous, and the flag has no effect.
 
     On success, returns a `mpv_node` with a `filename` field set to the
     saved screenshot location.
+
+        MPV_FORMAT_NODE_MAP
+            "filename"    MPV_FORMAT_STRING
 
 `screenshot-to-file <filename> [<flags>]`
 
@@ -1546,6 +1613,13 @@ syntax](flat-command-syntax.md)).
 
     The `flags` argument is like the first argument to `screenshot` and
     supports `subtitles`, `video`, `window`.
+
+        MPV_FORMAT_NODE_MAP
+            "w"         MPV_FORMAT_INT64
+            "h"         MPV_FORMAT_INT64
+            "stride"    MPV_FORMAT_INT64
+            "format"    MPV_FORMAT_STRING
+            "data"      MPV_FORMAT_BYTE_ARRAY
 
 ##### Filter Commands
 
@@ -1776,6 +1850,97 @@ syntax](flat-command-syntax.md)).
 `context-menu`
 
 :   Show context menu on the video window. See [Context
-    Menu](../interactive-control.md#context-menu) section for details.
+    Menu](../context-menu.md) section for details.
+
+`discnav <action> [<x> <y>]`
+
+:   Send a navigation command to the optical-disc stream that is
+    currently playing. The command does nothing when no disc is being
+    played.
+
+    `<action>` is one of:
+
+    up, down, left, right
+
+    :   Move the on-disc button selection.
+
+    select
+
+    :   Activate the currently highlighted button.
+
+    menu
+
+    :   Jump to the root menu of the current title set (DVD: VTSM root
+        menu, BD: HDMV top menu).
+
+    title-menu
+
+    :   Jump to the disc's title menu (DVD: VMGM title menu, treated
+        like `menu` on BD).
+
+    popup
+
+    :   Show / dismiss the Blu-ray popup menu. For DVDs, falls back to
+        the chapter menu where available.
+
+    audio-menu, sub-menu, angle-menu
+
+    :   Jump to the disc's audio, subtitle or angle menu. DVD only,
+        discs are not required to have them and nothing happens when
+        they do not.
+
+    up-menu
+
+    :   Play the "go up" program chain the disc authored for the current
+        position, which usually leads to a higher level menu. DVD only,
+        and nothing happens when the disc did not author one.
+
+    prev
+
+    :   Return from a menu to playback, or to the previous menu domain.
+
+    red, green, yellow, blue
+
+    :   Send a colored remote key. Blu-ray only.
+
+    mouse-move
+
+    :   Forward a mouse position to the disc, so it can update the
+        focused button under the cursor. With no `<x> <y>` arguments,
+        the position is read from the `mouse-pos` property and mapped
+        from window into source-video coordinates automatically.
+
+    mouse-click
+
+    :   Like `mouse-move` but also activates the button under the
+        cursor.
+
+    `<x>` and `<y>` are optional and only meaningful for the `mouse-*`
+    actions. They are normalized coordinates in the range 0..1 (top-left
+    at `0,0`), and are used instead of the live `mouse-pos`.
+
+    mpv ships default bindings for this command in the `{discnav}` input
+    section (`UP`/`DOWN`/`LEFT`/`RIGHT` for navigation, `ENTER` to
+    select, `ESC` / `BS` to leave, `MBTN_LEFT` / `MOUSE_MOVE` for
+    mouse). The player enables and disables that section automatically
+    as the menu appears and disappears, so the bindings only shadow the
+    normal ones while a menu is actually on screen.
+
+`update-clipboard <type> [timeout]`
+
+:   Update the clipboard content so that the `clipboard` property
+    reflects up-to-date value. This command is required to update the
+    `clipboard` property value if `--clipboard-monitor=no`. `<type>`
+    must be `text` or `text-primary` to indicate whether to update
+    clipboard or primary selection. `[timeout]` specifies the maximum
+    timeout in ms to wait for the clipboard content to be updated. A
+    negative timeout means infinite. The default timeout is 10 ms.
+
+    This command returns as soon as the clipboard content is updated or
+    the timeout has reached. On some platforms, this command does
+    nothing and returns immediately.
+
+    This command can be asynchronously aborted via API. See
+    [Asynchronous command details](asynchronous-command-details.md).
 
 Undocumented commands: `ao-reload` (experimental/internal).

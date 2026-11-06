@@ -150,6 +150,12 @@ functions](lua-scripting.md#mpoptions-functions).
 
     Whether to clip lines to the terminal width.
 
+`track_info_selected_only`
+
+:   Default: yes
+
+    Show track info for selected tracks only instead of all tracks.
+
 `plot_perfdata`
 
 :   Default: no

@@ -29,7 +29,7 @@ The profile is currently defined as follows:
     [builtin-pseudo-gui]
     terminal=no
     force-window=yes
-    idle=once
+    idle=yes
     screenshot-directory=~~desktop/
 
 The `pseudo-gui` profile exists for compatibility. The options in the
@@ -49,8 +49,13 @@ Warning
 </div>
 
 Currently, you can extend the `pseudo-gui` profile in the config file
-the normal way. This is deprecated. In future mpv releases, the behavior
-might change, and not apply your additional settings, and/or use a
-different profile name.
+the normal way. This is deprecated and will be removed in future mpv
+releases.
+
+As an alternative, a conditional autoprofile can be used instead:
+
+>     [gui]
+>     profile-cond=p["player-operation-mode"]=="pseudo-gui"
+>     idle=once
 
 </div>

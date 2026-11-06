@@ -179,6 +179,17 @@ l
 
 :   Set/clear A-B loop points. See `ab-loop` command for details.
 
+Ctrl+m
+
+:   Jump to the disc menu when playing a DVD or Blu-ray (see the
+    `discnav` command). While a menu with a button highlight is on
+    screen, the arrow keys, ENTER, ESC/BACKSPACE and the mouse control
+    the menu instead of their usual functions.
+
+Ctrl+M
+
+:   Show or hide the Blu-ray popup menu.
+
 L
 
 :   Toggle infinite looping.
@@ -286,6 +297,11 @@ Ctrl+v
     is currently playing, it is played immediately. Only works on
     platforms that support the `clipboard` property.
 
+Ctrl+r
+
+:   Reload the current file, preserving the time position and any
+    changed option. Empties any network cache.
+
 i and I
 
 :   Show/toggle an overlay displaying statistics about the currently
@@ -383,8 +399,11 @@ g-e
 
 g-l
 
-:   Select a subtitle line to seek to. This currently requires `ffmpeg`
-    in `PATH`, or in the same folder as mpv on Windows.
+:   Select a subtitle line to seek to.
+
+g-L
+
+:   Select a secondary subtitle line to seek to.
 
 g-d
 
@@ -409,11 +428,15 @@ g-r
 
 :   Show the values of all properties.
 
-g-m, MENU, Ctrl+p
+g-m, Ctrl+p
 
 :   Show a menu with miscellaneous entries.
 
 See [SELECT](select.md) for more information.
+
+MENU, Shift+F10
+
+:   Show the context menu (see [CONTEXT MENU](context-menu.md)).
 
 (The following keys are valid if you have a keyboard with multimedia
 keys.)
@@ -450,7 +473,7 @@ Left double click
 
 Right click
 
-:   Toggle pause on/off.
+:   Show the context menu (see [CONTEXT MENU](context-menu.md)).
 
 Forward/Back button
 
@@ -468,12 +491,3 @@ Ctrl+Wheel up/down
 
 :   Change video zoom keeping the part of the video hovered by the
     cursor under it.
-
-#### Context Menu
-
-Context Menu is a menu that pops up on the video window on user
-interaction (mouse right click, etc.).
-
-To use this feature, you need to fill the `menu-data` property with menu
-definition data, and add a keybinding to run the `context-menu` command,
-which can be done with a user script.

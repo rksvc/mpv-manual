@@ -103,6 +103,14 @@ Ctrl+r
 :   Search the command history. See [SELECT](select.md) for the key
     bindings in this mode.
 
+Shift+UP
+
+:   Scroll the log one line up.
+
+Shift+DOWN
+
+:   Scroll the log one line down.
+
 INSERT
 
 :   Toggle insert mode.
@@ -156,6 +164,8 @@ This script can be customized through a config file
 the `--script-opts` command-line option. The configuration syntax is
 described in [mp.options
 functions](lua-scripting.md#mpoptions-functions).
+
+Note that `mp.input` clients can selectively override these options.
 
 ##### Configurable Options
 

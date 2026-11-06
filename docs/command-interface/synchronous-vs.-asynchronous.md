@@ -28,11 +28,6 @@ affect how the command behaves by itself. There are the following cases:
     when a command does not have an asynchronous implementation. The
     async libmpv API still never blocks the caller in these cases.
 
-Before mpv 0.29.0, the `async` prefix was only used by screenshot
-commands, and made them run the file saving code in a detached manner.
-This is the default now, and `async` changes behavior only in the ways
-mentioned above.
-
 Currently the following commands have different waiting characteristics
 with sync vs. async: sub-add, audio-add, sub-reload, audio-reload,
 rescan-external-files, screenshot, screenshot-to-file, dump-cache,

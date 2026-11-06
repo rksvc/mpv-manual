@@ -69,8 +69,7 @@ brackets:
 
         `error`
 
-        :   An error happened. In this case, an `error` field is present
-            with the error string.
+        :   An error happened.
 
         `redirect`
 
@@ -93,10 +92,7 @@ brackets:
     `file_error`
 
     :   Set to mpv error string describing the approximate reason why
-        playback failed. Unset if no error known. (In Lua scripting,
-        this value was set on the `error` field directly. This is
-        deprecated since mpv 0.33.0. In the future, this `error` field
-        will be unset for this specific event.)
+        playback failed. Unset if no error known.
 
     `playlist_insert_id`
 
