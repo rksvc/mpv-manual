@@ -33,10 +33,10 @@ document$.subscribe(() => {
       timerId = setTimeout(() => {
         timerId = undefined
 
-        const keywords = [...input.value.matchAll(/\w+/g).map(m => m[0])]
+        const keywords = [...input.value.matchAll(/\w+/g).map(m => m[0].toLowerCase())]
         const regExp = new RegExp(keywords.join('|'), 'gi')
         for (const dt of dl.querySelectorAll('& > dt'))
-          if (keywords.every(keyword => dt.innerText.includes(keyword))) {
+          if (keywords.every(keyword => dt.innerText.toLowerCase().includes(keyword))) {
             dt.style.display = dt.nextElementSibling.style.display = ''
             for (const highlight of dt.querySelectorAll('mark'))
               highlight.outerHTML = highlight.innerHTML
