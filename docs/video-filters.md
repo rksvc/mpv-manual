@@ -451,12 +451,12 @@ Available mpv-only filters are:
 
     `<light>`
 
-    :   Light type of the scene. This is mostly correctly inferred based
-        on the gamma function, but it can be useful to override this
-        when viewing raw camera footage (e.g. V-Log), which is normally
-        scene-referred instead of display-referred.
-
-        Available light types are:
+    :   > Light type of the scene. This is mostly correctly inferred
+        > based on the gamma function, but it can be useful to override
+        > this when viewing raw camera footage (e.g. V-Log), which is
+        > normally scene-referred instead of display-referred.
+        >
+        > Available light types are:
 
         auto
         :   Automatic selection (default)

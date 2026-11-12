@@ -252,82 +252,16 @@ options use `:` (Unix) or `;` (Windows) as separator, instead of `,`.
 
 They support the following operations:
 
-<table>
-<thead>
-<tr>
-<th>Suffix</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><dl>
-<dt><code>-set</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Set a list of items (using the list separator, escaped with
-backslash)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-append</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Append single item (does not interpret escapes)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-add</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Append 1 or more items (same syntax as -set)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-pre</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Prepend 1 or more items (same syntax as -set)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-clr</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Clear the option (remove all items)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-del</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Delete 1 or more items if present (same syntax as -set)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-remove</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Delete item if present (does not interpret escapes)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-toggle</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Append an item, or remove it if it already exists (no
-escapes)</p></td>
-</tr>
-</tbody>
-</table>
+| Suffix | Meaning |
+|----|----|
+| -set | Set a list of items (using the list separator, escaped with backslash) |
+| -append | Append single item (does not interpret escapes) |
+| -add | Append 1 or more items (same syntax as -set) |
+| -pre | Prepend 1 or more items (same syntax as -set) |
+| -clr | Clear the option (remove all items) |
+| -del | Delete 1 or more items if present (same syntax as -set) |
+| -remove | Delete item if present (does not interpret escapes) |
+| -toggle | Append an item, or remove it if it already exists (no escapes) |
 
 `-append` is meant as a simple way to append a single item without
 having to escape the argument (you may still need to escape on the shell
@@ -342,66 +276,14 @@ the order might matter.
 
 They support the following operations:
 
-<table>
-<thead>
-<tr>
-<th>Suffix</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><dl>
-<dt><code>-set</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Set a list of items (using <code>,</code> as separator)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-append</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Append a single item (escapes for the key, no escapes for the
-value)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-add</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Append 1 or more items (same syntax as -set)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-clr</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Clear the option (remove all items)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-del</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Delete 1 or more keys if present (same syntax as -set)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-remove</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Delete item by key if present (does not interpret
-escapes)</p></td>
-</tr>
-</tbody>
-</table>
+| Suffix | Meaning |
+|----|----|
+| -set | Set a list of items (using `,` as separator) |
+| -append | Append a single item (escapes for the key, no escapes for the value) |
+| -add | Append 1 or more items (same syntax as -set) |
+| -clr | Clear the option (remove all items) |
+| -del | Delete 1 or more keys if present (same syntax as -set) |
+| -remove | Delete item by key if present (does not interpret escapes) |
 
 Keys are unique within the list. If an already present key is set, the
 existing key is removed before the new value is appended.
@@ -419,80 +301,16 @@ FILTERS](video-filters.md) for details.
 
 They support the following operations:
 
-<table>
-<thead>
-<tr>
-<th>Suffix</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><dl>
-<dt><code>-set</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Set a list of items (using <code>,</code> as separator)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-append</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Append single item</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-add</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Append 1 or more items (same syntax as -set)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-pre</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Prepend 1 or more items (same syntax as -set)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-clr</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Clear the option (remove all items)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-remove</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Delete 1 or items if present (same syntax as -set)</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-toggle</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Append an item, or remove it if it already exists</p></td>
-</tr>
-<tr>
-<td><dl>
-<dt><code>-help</code></dt>
-<dd>
-&#10;</dd>
-</dl></td>
-<td><p>Pseudo operation that prints a help text to the terminal</p></td>
-</tr>
-</tbody>
-</table>
+| Suffix  | Meaning                                                  |
+|---------|----------------------------------------------------------|
+| -set    | Set a list of items (using `,` as separator)             |
+| -append | Append single item                                       |
+| -add    | Append 1 or more items (same syntax as -set)             |
+| -pre    | Prepend 1 or more items (same syntax as -set)            |
+| -clr    | Clear the option (remove all items)                      |
+| -remove | Delete 1 or items if present (same syntax as -set)       |
+| -toggle | Append an item, or remove it if it already exists        |
+| -help   | Pseudo operation that prints a help text to the terminal |
 
 ##### General
 
